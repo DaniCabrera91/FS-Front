@@ -40,8 +40,9 @@ build/Release
 
 # Dependency directories
 node_modules/
+package-lock.json
 jspm_packages/
-
+.prettierrc.json
 # Snowpack dependency directory (https://snowpack.dev/)
 web_modules/
 
@@ -78,6 +79,9 @@ web_modules/
 .env.test.local
 .env.production.local
 .env.local
+
+.old
+*.old
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
@@ -128,3 +132,7 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+
+
+.DS_Store
+*.config.js

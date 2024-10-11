@@ -7,8 +7,25 @@ const login = async (userData) => {
   return response.data
 }
 
+const logout = async () => {
+  const token = localStorage.getItem('user')
+    ? JSON.parse(localStorage.getItem('user')).token
+    : null
+  if (!token) return
+
+  await axios.post(
+    `${API_URL}/logout`,
+    {},
+    {
+      headers: { Authorization: token },
+    },
+  )
+  localStorage.removeItem('user')
+}
+
 const userService = {
   login,
+  logout,
 }
 
 export default userService

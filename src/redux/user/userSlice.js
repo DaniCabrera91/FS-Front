@@ -13,6 +13,15 @@ export const login = createAsyncThunk(
   },
 )
 
+export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
+  try {
+    await userService.logout()
+    return
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.response.data)
+  }
+})
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -22,14 +31,7 @@ const userSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {
-    logout: (state) => {
-      state.user = null
-      state.token = null
-      state.isLoggedIn = false
-      localStorage.removeItem('user')
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addCase(login.pending, (state) => {
@@ -50,15 +52,19 @@ const userSlice = createSlice({
             surname: action.payload.user.surname,
           },
         }
-        console.log(action.payload.user._id),
-          localStorage.setItem('user', JSON.stringify(userInfo)) // Guardar el objeto en localStorage
+        localStorage.setItem('user', JSON.stringify(userInfo))
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
       })
+      .addCase(logout.fulfilled, (state) => {
+        state.user = null
+        state.token = null
+        state.isLoggedIn = false
+      })
   },
 })
 
-export const { logout } = userSlice.actions
+export const {} = userSlice.actions
 export default userSlice.reducer

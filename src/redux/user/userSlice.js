@@ -1,13 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import userService from './userService'
 
-// Crear una acción asíncrona para el login
 export const login = createAsyncThunk(
   'user/login',
   async (userData, thunkAPI) => {
     try {
       const response = await userService.login(userData)
-      return response // Devuelve la respuesta para que sea manejada en el reducer
+      return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -28,7 +27,7 @@ const userSlice = createSlice({
       state.user = null
       state.token = null
       state.isLoggedIn = false
-      localStorage.removeItem('token')
+      localStorage.removeItem('user')
     },
   },
   extraReducers: (builder) => {
@@ -42,7 +41,17 @@ const userSlice = createSlice({
         state.isLoggedIn = true
         state.user = action.payload.user
         state.token = action.payload.token
-        localStorage.setItem('token', action.payload.token)
+
+        const userInfo = {
+          token: action.payload.token,
+          user: {
+            id: action.payload.user._id,
+            name: action.payload.user.name,
+            surname: action.payload.user.surname,
+          },
+        }
+        console.log(action.payload.user._id),
+          localStorage.setItem('user', JSON.stringify(userInfo)) // Guardar el objeto en localStorage
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false

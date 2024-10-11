@@ -27,8 +27,7 @@ const Login = () => {
     dispatch(login({ dni, password })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
         console.log('Conectado con éxito')
-        // Redirigir después de iniciar sesión
-        navigate('/')
+        // navigate('/')
       }
     })
   }
@@ -52,6 +51,7 @@ const Login = () => {
           <label htmlFor='dni'>DNI</label>
           <input
             type='text'
+            id='dni'
             name='dni'
             value={dni}
             onChange={onChange}
@@ -68,6 +68,7 @@ const Login = () => {
           <label htmlFor='password'>Contraseña</label>
           <input
             type='password'
+            id='password'
             name='password'
             value={password}
             onChange={onChange}

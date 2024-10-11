@@ -26,8 +26,9 @@ const Login = () => {
     e.preventDefault()
     dispatch(login({ dni, password })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
-        // navigate('/')
         console.log('Conectado con éxito')
+        // Redirigir después de iniciar sesión
+        navigate('/')
       }
     })
   }
@@ -44,36 +45,47 @@ const Login = () => {
   }, [token, dispatch])
 
   return (
-    <div>
-      <h1>Login</h1>
+    <div className='login-container'>
+      <h1>Iniciar Sesión</h1>
       <form onSubmit={onSubmit}>
-        <div>
+        <div className='form-group'>
+          <label htmlFor='dni'>DNI</label>
           <input
             type='text'
             name='dni'
             value={dni}
             onChange={onChange}
-            placeholder='Enter DNI'
+            placeholder='Introduce tu DNI'
             required
+            inputMode='numeric'
+            autoComplete='username'
           />
+          {error && error.field === 'dni' && (
+            <p className='error'>{error.message}</p>
+          )}
         </div>
-        <div>
+        <div className='form-group'>
+          <label htmlFor='password'>Contraseña</label>
           <input
             type='password'
             name='password'
             value={password}
             onChange={onChange}
-            placeholder='Enter password'
+            placeholder='Introduce tu contraseña'
             required
+            autoComplete='current-password'
           />
+          {error && error.field === 'password' && (
+            <p className='error'>{error.message}</p>
+          )}
         </div>
-        <div>
+        <div className='form-group'>
           <button type='submit' disabled={isLoading}>
-            {isLoading ? 'Loading...' : 'Login'}
+            {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
           </button>
         </div>
-        {error && (
-          <p>
+        {error && !error.field && (
+          <p className='error'>
             {error.message ===
             'Token expirado, por favor inicia sesión de nuevo'
               ? 'Tu sesión ha expirado. Por favor, inicia sesión nuevamente.'

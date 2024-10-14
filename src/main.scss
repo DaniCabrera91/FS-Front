@@ -1,9 +1,15 @@
+@font-face {
+    font-family: 'Inter';
+    src: url('./fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal; 
+}
 html, body {
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+}
 .phone {
     width: 375px;
     max-width: 100%;
@@ -12,4 +18,5 @@ html, body {
     border: 1px solid #F4F5F6;
     box-shadow: 0 0 10px #BDB8AA;
     background-color: #F4F5F6;
+    font-family: 'Inter', sans-serif;
 }

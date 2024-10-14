@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loginAdmin, logoutAdmin } from '../../redux/admin/adminSlice'
+import { loginAdmin } from '../../redux/admin/adminSlice'
 import { useNavigate } from 'react-router-dom'
 
 const AdminLogin = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { isLoading, error, token } = useSelector((state) => state.admin)
+  const { isLoading, error } = useSelector((state) => state.admin)
 
   const [formData, setFormData] = useState({
     email: '',
@@ -27,42 +27,42 @@ const AdminLogin = () => {
   const onSubmit = (e) => {
     e.preventDefault()
 
-    console.log('Form submitted with:', formData) // Agregar log para el formulario
-
     if (!isEmailValid(email)) {
       alert('Por favor, introduce un email válido')
       return
     }
 
+    // Limpiar localStorage antes de iniciar sesión
+    localStorage.removeItem('token')
+    localStorage.removeItem('admin')
+
     dispatch(loginAdmin({ email, password }))
       .then((result) => {
-        console.log('Login result:', result) // Log para verificar el resultado del login
         if (result.meta.requestStatus === 'fulfilled') {
           console.log('Admin conectado con éxito')
+          localStorage.setItem('token', result.payload.token)
+          localStorage.setItem('admin', JSON.stringify(result.payload))
           navigate('/admin/dashboard')
         } else {
-          console.log('Error en el login:', result)
+          console.error('Error en el login:', result.error)
+          alert(result.error.message || 'Error en el inicio de sesión')
         }
       })
-      .catch((err) => console.error('Error during login:', err)) // Catch en caso de error
+      .catch((err) => {
+        console.error('Error durante el inicio de sesión:', err)
+        // Limpiar localStorage si hay error en el inicio de sesión
+        localStorage.removeItem('token')
+        localStorage.removeItem('admin')
+      })
   }
 
+  // Efecto para redirigir si ya hay un token
   useEffect(() => {
-    if (token) {
+    const savedToken = localStorage.getItem('token')
+    if (savedToken) {
       navigate('/admin/dashboard')
     }
-  }, [token, navigate])
-
-  useEffect(() => {
-    if (token) {
-      const payload = JSON.parse(atob(token.split('.')[1]))
-      const now = Date.now() / 1000
-
-      if (payload.exp < now) {
-        dispatch(logoutAdmin())
-      }
-    }
-  }, [token, dispatch])
+  }, [navigate]) // Dependencia correcta
 
   return (
     <div className='admin-login-container'>

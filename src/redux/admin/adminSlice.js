@@ -40,12 +40,13 @@ export const getAllUsers = createAsyncThunk(
 )
 
 // Create User
+// Create User
 export const createUser = createAsyncThunk(
   'admins/createUser',
   async (userData, thunkAPI) => {
     try {
       const response = await adminService.createUser(userData)
-      return response // Los usuarios actualizados después de crear uno
+      return response // Debe devolver el usuario creado
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -57,19 +58,20 @@ export const updateUser = createAsyncThunk(
   async ({ userId, userData }, thunkAPI) => {
     try {
       const response = await adminService.updateUser(userId, userData)
-      return response // Return the updated user data
+      return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
   },
 )
+
 // Delete User
 export const deleteUser = createAsyncThunk(
   'admin/deleteUser',
   async (userId, thunkAPI) => {
     try {
-      const updatedUsers = await adminService.deleteUser(userId)
-      return updatedUsers // Retornar los usuarios actualizados
+      await adminService.deleteUser(userId) // Solo elimina el usuario
+      return userId // Devuelve el ID del usuario eliminado
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -94,7 +96,7 @@ export const createTransaction = createAsyncThunk(
   async (transactionData, thunkAPI) => {
     try {
       const response = await adminService.createTransaction(transactionData)
-      return response // Las transacciones actualizadas después de crear una
+      return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -108,7 +110,7 @@ export const deleteTransaction = createAsyncThunk(
       const updatedTransactions = await adminService.deleteTransaction(
         transactionId,
       )
-      return updatedTransactions // Retornar las transacciones actualizadas
+      return updatedTransactions
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -120,7 +122,7 @@ const adminSlice = createSlice({
   initialState: {
     admin: null,
     token: null,
-    isLoggedIn: false,
+    isLoggedIn: !!localStorage.getItem('token'), // Verifica el token en el inicio
     isLoading: false,
     error: null,
     users: [],
@@ -137,9 +139,9 @@ const adminSlice = createSlice({
         state.isLoading = false
         state.admin = action.payload
         state.token = action.payload.token
-        state.isLoggedIn = true
+        state.isLoggedIn = true // Cambiar el estado a logueado
+        localStorage.setItem('token', action.payload.token) // Guardar el token
       })
-
       .addCase(loginAdmin.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.payload
@@ -152,14 +154,20 @@ const adminSlice = createSlice({
       .addCase(getAllUsers.fulfilled, (state, action) => {
         state.users = action.payload
       })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.users.push(action.payload) // Asegúrate de agregar el nuevo usuario al estado
+      })
       .addCase(updateUser.fulfilled, (state, action) => {
         const updatedUser = action.payload.updatedUser
         const index = state.users.findIndex(
           (user) => user._id === updatedUser._id,
         )
         if (index !== -1) {
-          state.users[index] = updatedUser // Update user in the state
+          state.users[index] = updatedUser // Actualiza el usuario en el estado
         }
+      })
+      .addCase(deleteUser.fulfilled, (state, action) => {
+        state.users = state.users.filter((user) => user._id !== action.payload) // Elimina el usuario de la lista
       })
   },
 })

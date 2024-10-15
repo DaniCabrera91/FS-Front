@@ -22,12 +22,14 @@ const Login = () => {
     }))
   }
 
+  // En el componente Login
   const onSubmit = (e) => {
     e.preventDefault()
     dispatch(login({ dni, password })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
         console.log('Conectado con éxito')
-        // navigate('/')
+        localStorage.setItem('token', result.payload.token) // Almacenar token del usuario
+        navigate('/user/dashboard') // Redirigir al dashboard de usuario
       }
     })
   }

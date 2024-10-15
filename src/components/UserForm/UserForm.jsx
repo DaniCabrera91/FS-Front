@@ -1,7 +1,10 @@
-// UserForm.jsx
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { createUser, updateUser } from '../../redux/admin/adminSlice'
+import {
+  createUser,
+  updateUser,
+  getAllUsers,
+} from '../../redux/admin/adminSlice'
 
 const UserForm = ({ userId, onSave }) => {
   const dispatch = useDispatch()
@@ -59,9 +62,12 @@ const UserForm = ({ userId, onSave }) => {
     if (isEditMode) {
       dispatch(updateUser({ userId: user._id, userData: user }))
     } else {
-      dispatch(createUser(user))
+      dispatch(createUser(user)).then(() => {
+        // Después de crear el usuario, vuelve a cargar la lista de usuarios
+        dispatch(getAllUsers())
+      })
     }
-    onSave() // Llama a la función onSave para resetear el estado de edición
+    onSave() // Resetea el estado de edición
   }
 
   return (

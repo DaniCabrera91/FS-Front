@@ -12,7 +12,8 @@ const registerAdmin = async (adminData) => {
 const loginAdmin = async (adminData) => {
   const response = await axios.post(`${API_URL}/login`, adminData)
   if (response.status === 200) {
-    return response.data // Asegúrate de guardar el token en localStorage al iniciar sesión
+    localStorage.setItem('token', response.data.token) // Guardar el token
+    return response.data
   } else {
     throw new Error('Login failed')
   }
@@ -20,7 +21,7 @@ const loginAdmin = async (adminData) => {
 
 // Cerrar sesión como administrador
 const logoutAdmin = async () => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   if (!token) return
 
   await axios.post(
@@ -34,17 +35,16 @@ const logoutAdmin = async () => {
   localStorage.removeItem('token') // Limpiar el token
 }
 
-// Obtener todos los usuarios
 const getAllUsers = async () => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   const response = await axios.get(`${API_URL}/users`, {
-    headers: { Authorization: token }, // Usar el token sin "Bearer"
+    headers: { Authorization: token }, // Usar el token directamente
   })
   return response.data
 }
 
 const createUser = async (userData) => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   const response = await axios.post(`${API_URL}/create-user`, userData, {
     headers: { Authorization: token }, // Usar el token sin "Bearer"
   })
@@ -52,7 +52,7 @@ const createUser = async (userData) => {
 }
 
 const updateUser = async (userId, userData) => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   const response = await axios.put(
     `${API_URL}/update-user/${userId}`,
     userData,
@@ -64,7 +64,7 @@ const updateUser = async (userId, userData) => {
 }
 
 const deleteUser = async (userId) => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   await axios.delete(`${API_URL}/delete-user/${userId}`, {
     headers: { Authorization: token }, // Usar el token sin "Bearer"
   })
@@ -73,7 +73,7 @@ const deleteUser = async (userId) => {
 
 // Obtener todas las transacciones
 const getAllTransactions = async () => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   const response = await axios.get(`${API_URL}/transactions`, {
     headers: { Authorization: token }, // Usar el token sin "Bearer"
   })
@@ -82,7 +82,7 @@ const getAllTransactions = async () => {
 
 // Crear una nueva transacción
 const createTransaction = async (transactionData) => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   const response = await axios.post(
     `${API_URL}/create-transaction`,
     transactionData,
@@ -95,7 +95,7 @@ const createTransaction = async (transactionData) => {
 
 // Eliminar una transacción
 const deleteTransaction = async (transactionId) => {
-  const token = localStorage.getItem('token') // Obtener el token de localStorage
+  const token = localStorage.getItem('token')
   await axios.delete(`${API_URL}/delete-transaction/${transactionId}`, {
     headers: { Authorization: token }, // Usar el token sin "Bearer"
   })

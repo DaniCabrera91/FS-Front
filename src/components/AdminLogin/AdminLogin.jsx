@@ -1,3 +1,4 @@
+// src/components/AdminLogin/AdminLogin.js
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAdmin } from '../../redux/admin/adminSlice'
@@ -22,15 +23,8 @@ const AdminLogin = () => {
     }))
   }
 
-  const isEmailValid = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
-
   const onSubmit = (e) => {
     e.preventDefault()
-
-    if (!isEmailValid(email)) {
-      alert('Por favor, introduce un email válido')
-      return
-    }
 
     // Limpiar localStorage antes de iniciar sesión
     localStorage.removeItem('token')
@@ -50,7 +44,6 @@ const AdminLogin = () => {
       })
       .catch((err) => {
         console.error('Error durante el inicio de sesión:', err)
-        // Limpiar localStorage si hay error en el inicio de sesión
         localStorage.removeItem('token')
         localStorage.removeItem('admin')
       })
@@ -62,7 +55,7 @@ const AdminLogin = () => {
     if (savedToken) {
       navigate('/admin/dashboard')
     }
-  }, [navigate]) // Dependencia correcta
+  }, [navigate])
 
   return (
     <div className='admin-login-container'>

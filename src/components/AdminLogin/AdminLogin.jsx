@@ -1,8 +1,9 @@
-// src/components/AdminLogin/AdminLogin.js
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAdmin } from '../../redux/admin/adminSlice'
 import { useNavigate } from 'react-router-dom'
+import Keyboard from '../Keyboard/Keyboard' // Asegúrate de que la ruta sea correcta
+import './AdminLogin.styled.scss' // Estilos que añadiremos para el botón en el footer
 
 const AdminLogin = () => {
   const dispatch = useDispatch()
@@ -23,13 +24,7 @@ const AdminLogin = () => {
     }))
   }
 
-  const onSubmit = (e) => {
-    e.preventDefault()
-
-    // Limpiar localStorage antes de iniciar sesión
-    localStorage.removeItem('token')
-    localStorage.removeItem('admin')
-
+  const onSubmit = () => {
     dispatch(loginAdmin({ email, password }))
       .then((result) => {
         if (result.meta.requestStatus === 'fulfilled') {
@@ -44,12 +39,9 @@ const AdminLogin = () => {
       })
       .catch((err) => {
         console.error('Error durante el inicio de sesión:', err)
-        localStorage.removeItem('token')
-        localStorage.removeItem('admin')
       })
   }
 
-  // Efecto para redirigir si ya hay un token
   useEffect(() => {
     const savedToken = localStorage.getItem('token')
     if (savedToken) {
@@ -57,10 +49,23 @@ const AdminLogin = () => {
     }
   }, [navigate])
 
+  const handleKeyPress = (key) => {
+    if (key === 'C') {
+      setFormData((prev) => ({ ...prev, password: prev.password.slice(0, -1) })) // Borra el último carácter
+    } else {
+      setFormData((prev) => ({ ...prev, password: prev.password + key })) // Añade el carácter presionado
+    }
+  }
+
   return (
     <div className='admin-login-container'>
       <h1>Iniciar Sesión como Administrador</h1>
-      <form onSubmit={onSubmit}>
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          onSubmit()
+        }}
+      >
         <div className='form-group'>
           <label htmlFor='email'>Email</label>
           <input
@@ -81,14 +86,9 @@ const AdminLogin = () => {
             name='password'
             value={password}
             onChange={onChange}
-            placeholder='Introduce tu contraseña'
+            placeholder='Clave'
             required
           />
-        </div>
-        <div className='form-group'>
-          <button type='submit' disabled={isLoading}>
-            {isLoading ? 'Cargando...' : 'Iniciar Sesión'}
-          </button>
         </div>
         {error && (
           <p className='error'>
@@ -96,6 +96,18 @@ const AdminLogin = () => {
           </p>
         )}
       </form>
+
+      <Keyboard onKeyPress={handleKeyPress} />
+
+      <footer className='submit-footer'>
+        <button
+          className='submit-button'
+          onClick={onSubmit}
+          disabled={isLoading}
+        >
+          {isLoading ? 'Cargando...' : 'Acceder'}
+        </button>
+      </footer>
     </div>
   )
 }

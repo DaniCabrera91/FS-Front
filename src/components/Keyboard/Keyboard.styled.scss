@@ -1,0 +1,38 @@
+.keyboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+
+  .keypad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); // 5 columnas
+    grid-template-rows: repeat(2, 1fr); // 2 filas
+    gap: 10px;
+
+    .key {
+      padding: 15px;
+      font-size: 20px;
+      text-align: center;
+      background-color: #f1f1f1;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #ddd;
+      }
+    }
+
+    .delete-key {
+      grid-row: span 2; // Ocupa dos filas
+      background-color: #f44336; // Color rojo para el botón de borrar
+      color: white;
+
+      &:hover {
+        background-color: #d32f2f;
+      }
+    }
+  }
+}

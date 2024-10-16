@@ -1,0 +1,27 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+}
+
+.header__icon {
+  font-size: 24px;
+  margin-left: 20px;
+  cursor: pointer;
+
+  &:hover {
+    color: #007bff;
+  }
+}

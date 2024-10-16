@@ -1,4 +1,3 @@
-// src/App.js
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Home from './components/UserDashboard/UserDashboard'
@@ -6,12 +5,14 @@ import Login from './components/Login/Login'
 import AdminLogin from './components/adminLogin/adminLogin'
 import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
+import TheHeader from './components/TheHeader/TheHeader'
 import './App.scss'
 
 function App() {
   return (
     <div className='App'>
       <BrowserRouter>
+        <TheHeader />
         <Routes>
           <Route
             path='/'
@@ -26,7 +27,6 @@ function App() {
           <Route path='/login' element={<Login />} />
           <Route path='/admin/login' element={<AdminLogin />} />
 
-          {/* Ruta privada para el dashboard de admin */}
           <Route
             path='/admin/dashboard'
             element={
@@ -36,7 +36,6 @@ function App() {
             }
           />
 
-          {/* Ruta privada para el dashboard de usuario */}
           <Route
             path='/user/dashboard'
             element={

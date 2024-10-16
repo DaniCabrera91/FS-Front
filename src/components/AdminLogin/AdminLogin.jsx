@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginAdmin } from '../../redux/admin/adminSlice'
 import { useNavigate } from 'react-router-dom'
-import Keyboard from '../Keyboard/Keyboard' // Asegúrate de que la ruta sea correcta
-import './AdminLogin.styled.scss' // Estilos que añadiremos para el botón en el footer
+import Keyboard from '../Keyboard/Keyboard'
+import './AdminLogin.styled.scss'
 
 const AdminLogin = () => {
   const dispatch = useDispatch()
@@ -51,9 +51,9 @@ const AdminLogin = () => {
 
   const handleKeyPress = (key) => {
     if (key === 'C') {
-      setFormData((prev) => ({ ...prev, password: prev.password.slice(0, -1) })) // Borra el último carácter
+      setFormData((prev) => ({ ...prev, password: prev.password.slice(0, -1) }))
     } else {
-      setFormData((prev) => ({ ...prev, password: prev.password + key })) // Añade el carácter presionado
+      setFormData((prev) => ({ ...prev, password: prev.password + key }))
     }
   }
 

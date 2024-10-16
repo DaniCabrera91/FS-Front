@@ -4,6 +4,7 @@ import './Keyboard.styled.scss'
 const Keyboard = ({ onKeyPress }) => {
   const keys = ['5', '0', '1', '4', '2', '7', '3', '8', '9', '6'] // Números
   const deleteKey = 'C' // Borrar
+
   const handleKeyPress = (key) => {
     onKeyPress(key)
   }
@@ -20,13 +21,13 @@ const Keyboard = ({ onKeyPress }) => {
             {key}
           </button>
         ))}
-        <button
-          className='key delete-key' // Clave especial para el botón de borrar
-          onClick={() => handleKeyPress(deleteKey)}
-        >
-          {deleteKey}
-        </button>
       </div>
+      <button
+        className='key delete-key' // Clave especial para el botón de borrar
+        onClick={() => handleKeyPress(deleteKey)}
+      >
+        {deleteKey}
+      </button>
     </div>
   )
 }

@@ -1,0 +1,38 @@
+$primary-color: #007a87;
+
+.admin-dashboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  width: 100%;
+  max-height: 90vh; // Limitar la altura máxima al 90% de la altura de la ventana
+  overflow-y: auto; // Agregar desplazamiento vertical si es necesario
+  box-sizing: border-box; // Asegurarse de que el padding se incluya en el tamaño total
+
+  h1 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  h2 {
+    margin: 20px 0;
+    text-align: center;
+  }
+
+  .error {
+    color: red;
+    margin: 10px 0;
+  }
+
+  // Agregar estilos para el contenedor de la tabla si es necesario
+  .ant-table {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 500px; // Ancho máximo del formulario
+    margin: 0 auto; // Centrar el formulario
+    padding: 20px;
+  }
+}

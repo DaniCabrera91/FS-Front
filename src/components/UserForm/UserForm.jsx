@@ -5,6 +5,7 @@ import {
   updateUser,
   getAllUsers,
 } from '../../redux/admin/adminSlice'
+import './UserForm.styled.scss' // Importa el archivo de estilos
 
 const UserForm = ({ userId, onSave }) => {
   const dispatch = useDispatch()
@@ -71,7 +72,7 @@ const UserForm = ({ userId, onSave }) => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='user-form-container' onSubmit={handleSubmit}>
       <h3>{isEditMode ? 'Editar Usuario' : 'Crear Usuario'}</h3>
       <input
         type='text'

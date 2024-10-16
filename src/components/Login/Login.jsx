@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/user/userSlice'
 import { useNavigate } from 'react-router-dom'
 import Keyboard from '../Keyboard/Keyboard'
-import './Login.styled.scss' // Importamos los estilos para el footer y el botón
+import './Login.styled.scss'
+import fingerPrint from '../../assets/fingerPrint.png'
 
 const Login = () => {
   const dispatch = useDispatch()
@@ -17,21 +18,19 @@ const Login = () => {
   })
 
   const { dni, password, rememberDni } = formData
-
   const [hiddenDni, setHiddenDni] = useState('')
 
   useEffect(() => {
     const savedDni = localStorage.getItem('savedDni')
     if (savedDni) {
-      const unmaskedDni = savedDni.replace(/\*/g, '') // Elimina los asteriscos
+      const unmaskedDni = savedDni.replace(/\*/g, '')
       setFormData((prevState) => ({
         ...prevState,
-        dni: unmaskedDni, // Guardar el DNI completo en el estado
-        rememberDni: true, // Si se guardó previamente, marcar la opción
+        dni: unmaskedDni,
+        rememberDni: true,
       }))
-      // Ocultar parte del DNI, dejando los últimos 4 dígitos visibles
       const maskedDni = '***' + unmaskedDni.slice(-4)
-      setHiddenDni(maskedDni) // Guardar la versión oculta del DNI
+      setHiddenDni(maskedDni)
     }
   }, [])
 
@@ -42,62 +41,71 @@ const Login = () => {
     }))
   }
 
+  // La función onSubmit no recibe el evento
   const onSubmit = () => {
-    const maskedDni = '***' + dni.slice(-4) // Crea la versión oculta del DNI
+    // Asegúrate de que el DNI y la contraseña sean válidos
+    console.log('Intentando iniciar sesión con:', { dni, password })
 
-    if (rememberDni) {
-      localStorage.setItem('savedDni', maskedDni) // Guardar el DNI oculto en localStorage
-    } else {
-      localStorage.removeItem('savedDni') // Eliminar el DNI si no se selecciona "Recordar DNI"
+    if (!dni || !password) {
+      alert('DNI y contraseña son requeridos')
+      return
     }
 
     dispatch(login({ dni, password })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
         localStorage.setItem('token', result.payload.token)
-        navigate('/user/dashboard') // Redirigir al dashboard tras el login
+        navigate('/user/dashboard')
+      } else {
+        console.error('Error en el login:', result.error)
+        alert(result.error.message || 'Error en el inicio de sesión')
       }
     })
   }
 
   const handleKeyPress = (key) => {
     if (key === 'C') {
-      setFormData({ ...formData, password: password.slice(0, -1) }) // Borrar el último carácter de la contraseña
-    } else if (key === 'OK') {
-      onSubmit() // Llama a la función de envío cuando se presione "OK"
+      setFormData((prev) => ({ ...prev, password: prev.password.slice(0, -1) }))
     } else {
-      setFormData({ ...formData, password: password + key }) // Añadir el carácter presionado a la contraseña
+      // Añade el carácter a la contraseña
+      setFormData((prev) => ({ ...prev, password: prev.password + key }))
     }
   }
 
   return (
     <div className='login-container'>
       <h1>¡Hola de nuevo!</h1>
-      <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          onSubmit() // Enviar el formulario al presionar "Enter" si se usa teclado físico
-        }}
-      >
+      <form onSubmit={(e) => e.preventDefault()}>
+        {' '}
+        {/* Previene el comportamiento por defecto */}
         <div className='form-group'>
-          <label htmlFor='dni'>DNI</label>
           <input
             type='text'
             id='dni'
             name='dni'
-            value={hiddenDni || dni} // Mostrar el DNI oculto si está disponible
+            value={hiddenDni || dni}
             onChange={onChange}
             placeholder='Introduce tu DNI'
             required
             inputMode='numeric'
             autoComplete='username'
-            readOnly={hiddenDni} // Evitar que el usuario cambie el DNI si está oculto
+            readOnly={hiddenDni} // Mantén el campo DNI solo lectura si está oculto
           />
+          <label>
+            <input
+              type='checkbox'
+              name='rememberDni'
+              checked={rememberDni}
+              onChange={(e) =>
+                setFormData({ ...formData, rememberDni: e.target.checked })
+              }
+            />
+            Recordar DNI
+          </label>
           {error && error.field === 'dni' && (
             <p className='error'>{error.message}</p>
           )}
         </div>
         <div className='form-group'>
-          <label htmlFor='password'>Contraseña</label>
           <input
             type='password'
             id='password'
@@ -112,19 +120,8 @@ const Login = () => {
             <p className='error'>{error.message}</p>
           )}
         </div>
-        <div className='form-group'>
-          <label>
-            <input
-              type='checkbox'
-              name='rememberDni'
-              checked={rememberDni}
-              onChange={(e) =>
-                setFormData({ ...formData, rememberDni: e.target.checked })
-              }
-            />
-            Recordar DNI
-          </label>
-        </div>
+        <Keyboard onKeyPress={handleKeyPress} />{' '}
+        {/* El teclado solo afecta al campo de contraseña */}
         {error && !error.field && (
           <p className='error'>
             {error.message ===
@@ -134,16 +131,20 @@ const Login = () => {
           </p>
         )}
       </form>
-      <Keyboard onKeyPress={handleKeyPress} />
       <footer className='submit-footer'>
         <button
+          type='button' // Cambiamos a 'button' para evitar el comportamiento por defecto del formulario
           className='submit-button'
-          onClick={onSubmit}
+          onClick={onSubmit} // Llama a la función onSubmit directamente
           disabled={isLoading}
         >
-          {isLoading ? 'Cargando...' : 'Enviar'}
+          {isLoading ? 'Cargando...' : 'Acceder'}
         </button>
       </footer>
+      <div className='biometric-login' onClick={() => {}}>
+        <img src={fingerPrint} alt='huella' className='biometric-icon' />
+        <p>Acceder con biometría</p>
+      </div>
     </div>
   )
 }

@@ -8,6 +8,9 @@ import {
 } from '../../redux/admin/adminSlice'
 import UserForm from '../UserForm/UserForm'
 import UsersList from '../UsersList/UsersList'
+import { Button, Modal, message } from 'antd' // Importar Modal
+import './AdminDashboard.styled.scss'
+
 const AdminDashboard = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -16,6 +19,7 @@ const AdminDashboard = () => {
   )
 
   const [editingUserId, setEditingUserId] = useState(null)
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -23,38 +27,64 @@ const AdminDashboard = () => {
       return
     }
 
-    // Cargar usuarios al inicio
     if (users.length === 0) {
       dispatch(getAllUsers())
     }
   }, [dispatch, navigate, users.length, isLoggedIn])
 
   const handleDeleteUser = (userId) => {
-    dispatch(deleteUser(userId)) // Esto actualizará automáticamente la lista de usuarios
+    dispatch(deleteUser(userId))
+      .unwrap() // Usar unwrap para manejar el resultado directamente
+      .then(() => {
+        message.success('Usuario eliminado con éxito.')
+      })
+      .catch(() => {
+        message.error('Error al eliminar el usuario.')
+      })
   }
 
   const handleEditUser = (userId) => {
     setEditingUserId(userId)
+    setIsModalVisible(true) // Abrir el modal al editar un usuario
+  }
+
+  const showModal = () => {
+    setIsModalVisible(true)
+  }
+
+  const handleCancel = () => {
+    setIsModalVisible(false)
+    setEditingUserId(null)
   }
 
   return (
     <div className='admin-dashboard'>
       <h1>Panel de Control del Administrador</h1>
       {error && <p className='error'>{error}</p>}
-      {isLoading ? ( // Mostrar un indicador de carga
+      {isLoading ? (
         <p>Cargando usuarios...</p>
       ) : (
         <>
           <h2>Gestión de Usuarios</h2>
-          <UserForm
-            userId={editingUserId}
-            onSave={() => setEditingUserId(null)}
-          />
+          <Button type='primary' onClick={showModal}>
+            Crear Nuevo Usuario
+          </Button>
           <UsersList
             users={users}
-            onDeleteUser={handleDeleteUser}
             onEditUser={handleEditUser}
+            onDeleteUser={handleDeleteUser}
           />
+          <Modal
+            title={editingUserId ? 'Editar Usuario' : 'Crear Usuario'}
+            open={isModalVisible}
+            footer={null}
+            onCancel={handleCancel}
+          >
+            <UserForm
+              userId={editingUserId}
+              onSave={handleCancel} // Resetea el estado de edición y cierra el modal
+            />
+          </Modal>
         </>
       )}
     </div>

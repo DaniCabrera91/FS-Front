@@ -1,25 +1,49 @@
 import React from 'react'
+import { Table, Button } from 'antd'
+import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 
 const UsersList = ({ users, onDeleteUser, onEditUser }) => {
-  console.log('Usuarios en UsersList:', users) // Verifica si hay usuarios aquí
+  const columns = [
+    {
+      title: 'Nombre',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Apellido',
+      dataIndex: 'surname',
+      key: 'surname',
+    },
+    {
+      title: 'Acciones',
+      key: 'actions',
+      render: (text, record) => (
+        <>
+          <Button
+            icon={<EditOutlined />}
+            onClick={() => onEditUser(record._id)}
+            size='small'
+            style={{ marginRight: 8 }}
+          />
+          <Button
+            icon={<DeleteOutlined />}
+            onClick={() => onDeleteUser(record._id)}
+            size='small'
+            danger
+          />
+        </>
+      ),
+    },
+  ]
 
   return (
     <div>
       <h3>Lista de Usuarios</h3>
-      <ul>
-        {users.length > 0 ? (
-          users.map((user) => (
-            <li key={user._id}>
-              {' '}
-              {user.name} {user.surname}
-              <button onClick={() => onDeleteUser(user._id)}>Eliminar</button>
-              <button onClick={() => onEditUser(user._id)}>Editar</button>
-            </li>
-          ))
-        ) : (
-          <li>No hay usuarios registrados.</li>
-        )}
-      </ul>
+      <Table
+        dataSource={users}
+        columns={columns}
+        rowKey='_id' // Asegúrate de que este sea el identificador correcto de los usuarios
+      />
     </div>
   )
 }

@@ -17,11 +17,14 @@
 }
 
 .header__icon {
+  color: #007a83;
   font-size: 24px;
   margin-left: 20px;
   cursor: pointer;
+}
 
-  &:hover {
-    color: #007bff;
-  }
+.header__logo {
+  height: 2rem;
+  margin-left: 20px;
+  cursor: pointer;
 }

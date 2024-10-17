@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import CategoryCard from './CategoryCard'
 
 function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
-    
-  const [selectedType, setSelectedType] = useState('expenses')
+  
+  const [selectedType, setSelectedType] = useState('incomes')
 
   const handleButtonClick = (type) => {
     setSelectedType(type)
@@ -13,16 +13,16 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
     <>
       <div className="flex border-b mt-4">
         <button
-          className={`expenses px-4 py-2 ${selectedType === 'expenses' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-600'}`}
-          onClick={() => handleButtonClick('expenses')}
-        >
-          Gastos
-        </button>
-        <button
           className={`incomes px-4 py-2 ${selectedType === 'incomes' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-600'}`}
           onClick={() => handleButtonClick('incomes')}
         >
           Ingresos
+        </button>
+        <button
+          className={`expenses px-4 py-2 ${selectedType === 'expenses' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-600'}`}
+          onClick={() => handleButtonClick('expenses')}
+        >
+          Gastos
         </button>
       </div>
 

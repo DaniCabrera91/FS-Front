@@ -5,7 +5,6 @@ import { getTotalBalance, getMonthlyTransactions } from '../../redux/trans/trans
 
 import TheFooter from '../TheFooter/TheFooter'
 import Chart from '../Chart/Chart'
-import CategoryCard from '../CategoryCard/CategoryCard'
 import CategoryCardPanel from '../CategoryCard/CategoryCardPanel'
 
 function MyFinances() {
@@ -33,42 +32,30 @@ console.log("monthlyexpense" +monthlyExpense)
         </p>
 
         <Chart />
+
+        <div className="flex justify-between mt-4 text-sm">
+          <div>
+            <span className="inline-block w-3 h-3 bg-red-500 mr-2"></span>
+            Ingresos
+            <span className="ml-2 font-semibold">{monthlyIncome.toFixed()} €</span>
+          </div>
+          <div>
+            <span className="inline-block w-3 h-3 bg-gray-600 mr-2"></span>
+            Gastos
+            <span className="ml-2 font-semibold">{monthlyExpense.toFixed()} €</span>
+          </div>
+        </div>
+
         <CategoryCardPanel
-          /*  key={key} */
            transactions={transactions}
            monthlyIncome={monthlyIncome}
            monthlyExpense={monthlyExpense}
         />
 
-       {/*  <div className="flex border-b mt-4">
-          <button className="expenses px-4 py-2 text-red-500 border-b-2 border-red-500">Gastos</button>
-          <button className="incomes px-4 py-2 text-gray-600">Ingresos</button>
-        </div> */}
-
-        {/* logica para crear las cartas de gastos mensuales por categoria  */}
-        {/* {transactions && transactions.map((category) => (
-          Object.keys(category).map((key) => {
-            const amount = category[key].transactions.reduce((total, t) => total + t.amount, 0)
-          
-            const percentage = monthlyIncome > 0 ? (Math.abs(amount) / monthlyIncome) * 100 : 0
-
-            return (
-              category[key].name !== 'Ingresos' ? (
-                <CategoryCard
-                  key={key}
-                  name={category[key].name}
-                  amount={Math.abs(amount).toFixed(2)}
-                  percentage={percentage.toFixed()}
-                />
-              ) : null
-            )
-          })
-        ))
-        } */}
-
       </div>
 
-        <TheFooter />
+      <TheFooter />
+
     </>
   )
 }

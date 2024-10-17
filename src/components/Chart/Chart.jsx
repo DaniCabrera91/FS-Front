@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { getLastFiveMonthsData } from '../../redux/trans/transSlice'
 
 function Chart() {
+
   const dispatch = useDispatch()
 
   const { lastFiveMonthsData, isLoading, error } = useSelector((state) => state.trans)
@@ -44,19 +45,6 @@ function Chart() {
           <Bar dataKey="Gastos" fill="#3E413F" />
         </BarChart>
       </ResponsiveContainer>
-
-      <div className="flex justify-between mt-4 text-sm">
-        <div>
-          <span className="inline-block w-3 h-3 bg-red-500 mr-2"></span>
-          Ingresos
-          <span className="ml-2 font-semibold">{data[data.length - 1]?.Ingresos} €</span>
-        </div>
-        <div>
-          <span className="inline-block w-3 h-3 bg-gray-600 mr-2"></span>
-          Gastos
-          <span className="ml-2 font-semibold">{data[data.length - 1]?.Gastos} €</span>
-        </div>
-      </div>
     </>
   )
 }

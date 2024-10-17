@@ -8,7 +8,6 @@ const getAllTransactions = async () => {
   return response.data;
 }
 
-//añadir posibilidad de month y year
 const getMonthlyTransactions = async (dni) => {
   const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni })
 
@@ -32,30 +31,27 @@ const getMonthlyTransactions = async (dni) => {
 
 const getMonthlyTransactionsByMonth = async (dni, year, month) => {
   try {
-    console.log("getMonthlyTransactionsByMonth dni"+dni+" year "+year+" month "+month)
   const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni, month, year })
-console.log(response)
-  const transactions = response.data.categories
-  let income = 0;
-  let expenses = 0;
+    const transactions = response.data.categories
+    let income = 0;
+    let expenses = 0;
 
-  transactions.forEach(category => {
-    Object.values(category).forEach(cat => {
-      cat.transactions.forEach(transaction => {
-        if (transaction.type === 'incomes') {
-          income += transaction.amount;
-        } else if (transaction.type === 'expenses') {
-          expenses += transaction.amount;
-        }
+    transactions.forEach(category => {
+      Object.values(category).forEach(cat => {
+        cat.transactions.forEach(transaction => {
+          if (transaction.type === 'incomes') {
+            income += transaction.amount;
+          } else if (transaction.type === 'expenses') {
+            expenses += transaction.amount;
+          }
+        })
       })
     })
-  })
-
-  return { month, income, expenses };
-} catch (error) {
-  console.error(`Error al obtener las transacciones del mes ${month}:`, error);
-  throw error;
-}
+    return { month, income, expenses };
+  } catch (error) {
+    console.error(`Error al obtener las transacciones del mes ${month}:`, error);
+    throw error;
+  }
 }
 
 const getLastFiveMonthsData = async (dni) => {

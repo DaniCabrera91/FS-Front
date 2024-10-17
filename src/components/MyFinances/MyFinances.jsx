@@ -23,9 +23,9 @@ console.log("monthlyexpense" +monthlyExpense)
 
   return (
     <>
-      <div>Mis finanzas {totalBalance.toFixed(2)}</div>
+      <div className="my-10 text-center " >Mis finanzas</div>
 
-      <div className="bg-white rounded-lg shadow p-4 mb-4">
+      <div className="bg-white rounded-lg shadow p-4 mb-4 mx-6">
         <h2 className="text-lg font-semibold mb-2">Ingresos y gastos</h2>
         <p className="text-sm text-gray-600 mb-4">
           Consulta, ordena, agrupa y compara tus gastos e ingresos

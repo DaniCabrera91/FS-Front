@@ -23,7 +23,7 @@ console.log("monthlyexpense" +monthlyExpense)
 
   return (
     <>
-      <div>My Finances: {totalBalance.toFixed(2)}</div>
+      <div>Mis finanzas {totalBalance.toFixed(2)}</div>
 
       <div className="bg-white rounded-lg shadow p-4 mb-4">
         <h2 className="text-lg font-semibold mb-2">Ingresos y gastos</h2>

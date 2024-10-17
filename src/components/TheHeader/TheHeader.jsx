@@ -1,21 +1,31 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
+import {
+  BellOutlined,
+  MenuOutlined,
+  LogoutOutlined,
+  LeftOutlined,
+} from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
-import { BellOutlined, MenuOutlined, LogoutOutlined } from '@ant-design/icons'
 import { logout } from '../../redux/user/userSlice'
 import { logoutAdmin } from '../../redux/admin/adminSlice'
+import NotificationsModal from '../NotificationsModal/NotificationsModal' // Importar el modal
 import './TheHeader.scss'
 import logo from '../../assets/logoKutxabank.png'
 
 const TheHeader = () => {
   const navigate = useNavigate()
+  const location = useLocation()
   const dispatch = useDispatch()
+
   const { user } = useSelector((state) => state.user)
   const { isLoggedIn, tokenAdmin } = useSelector((state) => state.admin)
+  const notifications = useSelector((state) => state.notifications) // Traemos las notificaciones del estado Redux
+
+  const [isModalVisible, setIsModalVisible] = useState(false) // Estado local para mostrar/ocultar modal
 
   const onLogout = async (e) => {
     e.preventDefault()
-
     const isAdminDashboard = window.location.pathname.includes('/admin')
 
     try {
@@ -31,20 +41,51 @@ const TheHeader = () => {
     }
   }
 
+  // Comprobar si estamos en una ruta donde queremos mostrar la flecha "Atrás"
+  const isSpecialPage =
+    location.pathname !== '/admin/dashboard' &&
+    location.pathname !== '/user/dashboard'
+
   return (
     <div className='header'>
       <div className='header__left'>
-        <img src={logo} alt='logo' className='header__logo' />
+        {isSpecialPage ? (
+          <LeftOutlined
+            className='header__back-arrow'
+            onClick={() => navigate(-1)}
+            style={{ fontSize: '24px', cursor: 'pointer' }}
+          />
+        ) : (
+          <img
+            src={logo}
+            alt='logo'
+            className='header__logo'
+            onClick={() => navigate('/')}
+            style={{ cursor: 'pointer' }}
+          />
+        )}
       </div>
       <div className='header__right'>
         {user || isLoggedIn ? (
           <>
-            <BellOutlined className='header__icon' aria-label='Notifications' />
+            {/* Ícono de campana que abre el modal */}
+            <BellOutlined
+              className='header__icon'
+              onClick={() => setIsModalVisible(true)} // Controlamos el estado del modal al hacer clic en la campana
+              aria-label='Notifications'
+            />
             <MenuOutlined className='header__icon' aria-label='Menu' />
             <LogoutOutlined
               className='header__icon'
               onClick={onLogout}
               aria-label='Logout'
+            />
+
+            {/* Agregar el componente del modal aquí */}
+            <NotificationsModal
+              visible={isModalVisible} // Control de visibilidad del modal
+              setVisible={setIsModalVisible} // Función para cambiar la visibilidad
+              notifications={notifications} // Pasar las notificaciones desde Redux
             />
           </>
         ) : (

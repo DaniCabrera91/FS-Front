@@ -36,6 +36,11 @@ const Login = () => {
     dispatch(login({ dni, password })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
         navigate('/user/dashboard')
+
+        //prueba para probar metodos más facil
+        localStorage.setItem('dni', dni); 
+
+
       } else {
         console.error('Error en el login:', result.error)
         alert(result.error.message || 'Error en el inicio de sesión')

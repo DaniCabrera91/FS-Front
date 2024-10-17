@@ -61,6 +61,7 @@ const transSlice = createSlice({
     transactions: [],
     totalBalance: 0,
     monthlyIncome: 0,
+    monthlyExpense: 0,
     lastFiveMonthsData: [],
     isLoading: false,
     error: null,
@@ -100,6 +101,7 @@ const transSlice = createSlice({
       state.isLoading = false
       state.transactions = action.payload.transactions 
       state.monthlyIncome = action.payload.monthlyIncome 
+      state.monthlyExpense = action.payload.monthlyExpense 
     })
     .addCase(getMonthlyTransactions.rejected, (state, action) => {
       state.isLoading = false

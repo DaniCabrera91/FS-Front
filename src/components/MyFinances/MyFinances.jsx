@@ -6,13 +6,14 @@ import { getTotalBalance, getMonthlyTransactions } from '../../redux/trans/trans
 import TheFooter from '../TheFooter/TheFooter'
 import Chart from '../Chart/Chart'
 import CategoryCard from '../CategoryCard/CategoryCard'
+import CategoryCardPanel from '../CategoryCard/CategoryCardPanel'
 
 function MyFinances() {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const { totalBalance, transactions, isLoading, error, monthlyIncome } = useSelector((state) => state.trans)
-
+  const { totalBalance, transactions, isLoading, error, monthlyIncome, monthlyExpense } = useSelector((state) => state.trans)
+console.log("monthlyexpense" +monthlyExpense)
   useEffect(() => {
     const dni = localStorage.getItem('dni')
     if (dni){
@@ -32,19 +33,23 @@ function MyFinances() {
         </p>
 
         <Chart />
+        <CategoryCardPanel
+          /*  key={key} */
+           transactions={transactions}
+           monthlyIncome={monthlyIncome}
+           monthlyExpense={monthlyExpense}
+        />
 
-
-        <div className="flex border-b mt-4">
-          <button className="px-4 py-2 text-red-500 border-b-2 border-red-500">Gastos</button>
-          <button className="px-4 py-2 text-gray-600">Ingresos</button>
-        </div>
+       {/*  <div className="flex border-b mt-4">
+          <button className="expenses px-4 py-2 text-red-500 border-b-2 border-red-500">Gastos</button>
+          <button className="incomes px-4 py-2 text-gray-600">Ingresos</button>
+        </div> */}
 
         {/* logica para crear las cartas de gastos mensuales por categoria  */}
-        {transactions && transactions.map((category) => (
+        {/* {transactions && transactions.map((category) => (
           Object.keys(category).map((key) => {
             const amount = category[key].transactions.reduce((total, t) => total + t.amount, 0)
-           /*  console.log("monthly income" + monthlyIncome)
-            console.log("amount" +amount) */
+          
             const percentage = monthlyIncome > 0 ? (Math.abs(amount) / monthlyIncome) * 100 : 0
 
             return (
@@ -59,7 +64,7 @@ function MyFinances() {
             )
           })
         ))
-        }
+        } */}
 
       </div>
 

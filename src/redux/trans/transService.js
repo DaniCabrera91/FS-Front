@@ -13,16 +13,21 @@ const getMonthlyTransactions = async (dni) => {
   const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni })
 
   let monthlyIncome = 0
+  let monthlyExpense = 0
   response.data.categories.forEach(category => {
     Object.values(category).forEach(cat => {
       cat.transactions.forEach(transaction => {
         if (transaction.type === 'incomes') {
           monthlyIncome += transaction.amount
         }
+        else{
+          monthlyExpense+= transaction.amount
+          console.log("desde servi ce" +monthlyExpense)
+        }
       })
     })
   })
-  return { transactions: response.data.categories, monthlyIncome }
+  return { transactions: response.data.categories, monthlyIncome, monthlyExpense: Math.abs(monthlyExpense) }
 }
 
 const getMonthlyTransactionsByMonth = async (dni, year, month) => {

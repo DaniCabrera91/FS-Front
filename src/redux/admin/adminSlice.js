@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import adminService from './adminService'
 
-// Login Admin
 export const loginAdmin = createAsyncThunk(
   'admins/login',
   async (adminData, thunkAPI) => {
@@ -14,40 +13,41 @@ export const loginAdmin = createAsyncThunk(
   },
 )
 
-// Logout Admin
 export const logoutAdmin = createAsyncThunk(
   'admins/logout',
   async (_, thunkAPI) => {
     try {
       await adminService.logoutAdmin()
+      return true
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
   },
 )
 
-// Get All Users
 export const getAllUsers = createAsyncThunk(
   'admins/getAllUsers',
-  async (_, thunkAPI) => {
+  async ({ page = 1, limit = 10 }, thunkAPI) => {
     try {
-      const response = await adminService.getAllUsers()
-      return response
+      const response = await adminService.getAllUsers(page, limit)
+      return response.users
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
   },
 )
 
-// Create User
-// Create User
 export const createUser = createAsyncThunk(
   'admins/createUser',
   async (userData, thunkAPI) => {
     try {
-      const response = await adminService.createUser(userData)
-      return response // Debe devolver el usuario creado
+      const newUser = await adminService.createUser(userData)
+      return newUser
     } catch (error) {
+      console.error(
+        'Error in createUser thunk:',
+        error.response ? error.response.data : error.message,
+      )
       return thunkAPI.rejectWithValue(error.response.data)
     }
   },
@@ -65,20 +65,18 @@ export const updateUser = createAsyncThunk(
   },
 )
 
-// Delete User
 export const deleteUser = createAsyncThunk(
-  'admin/deleteUser',
+  'admins/deleteUser',
   async (userId, thunkAPI) => {
     try {
-      await adminService.deleteUser(userId) // Solo elimina el usuario
-      return userId // Devuelve el ID del usuario eliminado
+      await adminService.deleteUser(userId)
+      return userId
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
   },
 )
 
-// Transactions Thunks
 export const getAllTransactions = createAsyncThunk(
   'admins/getAllTransactions',
   async (_, thunkAPI) => {
@@ -121,8 +119,8 @@ const adminSlice = createSlice({
   name: 'admins',
   initialState: {
     admin: null,
-    token: null,
-    isLoggedIn: !!localStorage.getItem('token'), // Verifica el token en el inicio
+    tokenAdmin: localStorage.getItem('tokenAdmin') || null,
+    isLoggedIn: !!localStorage.getItem('tokenAdmin'),
     isLoading: false,
     error: null,
     users: [],
@@ -137,10 +135,10 @@ const adminSlice = createSlice({
       })
       .addCase(loginAdmin.fulfilled, (state, action) => {
         state.isLoading = false
-        state.admin = action.payload
-        state.token = action.payload.token
-        state.isLoggedIn = true // Cambiar el estado a logueado
-        localStorage.setItem('token', action.payload.token) // Guardar el token
+        state.admin = action.payload.admin
+        state.tokenAdmin = action.payload.token
+        state.isLoggedIn = true
+        localStorage.setItem('tokenAdmin', action.payload.token)
       })
       .addCase(loginAdmin.rejected, (state, action) => {
         state.isLoading = false
@@ -148,29 +146,30 @@ const adminSlice = createSlice({
       })
       .addCase(logoutAdmin.fulfilled, (state) => {
         state.admin = null
-        state.token = null
+        state.tokenAdmin = null
         state.isLoggedIn = false
+        localStorage.removeItem('tokenAdmin')
       })
       .addCase(getAllUsers.fulfilled, (state, action) => {
         state.users = action.payload
       })
       .addCase(createUser.fulfilled, (state, action) => {
-        state.users.push(action.payload) // Asegúrate de agregar el nuevo usuario al estado
+        state.users.push(action.payload)
       })
+
       .addCase(updateUser.fulfilled, (state, action) => {
         const updatedUser = action.payload.updatedUser
         const index = state.users.findIndex(
           (user) => user._id === updatedUser._id,
         )
         if (index !== -1) {
-          state.users[index] = updatedUser // Actualiza el usuario en el estado
+          state.users[index] = updatedUser
         }
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
-        state.users = state.users.filter((user) => user._id !== action.payload) // Elimina el usuario de la lista
+        state.users = state.users.filter((user) => user._id !== action.payload)
       })
   },
 })
 
-export const {} = adminSlice.actions
 export default adminSlice.reducer

@@ -38,6 +38,7 @@ $primary-color: #007a87;
   }
 
   .biometric-login {
+    margin-top: 3rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,7 +65,7 @@ $primary-color: #007a87;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: 100%;
+    width: 20rem;
 
     &:active {
       background-color: darken($primary-color, 10%);

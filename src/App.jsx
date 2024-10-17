@@ -1,18 +1,35 @@
 import React from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  useLocation,
+} from 'react-router-dom'
 import Home from './components/UserDashboard/UserDashboard'
 import Login from './components/Login/Login'
 import AdminLogin from './components/adminLogin/adminLogin'
 import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import TheHeader from './components/TheHeader/TheHeader'
+import TheHeaderLogin from './components/TheHeaderLogin/TheHeaderLogin'
 import './App.scss'
+
+const HeaderSelector = () => {
+  const location = useLocation()
+
+  const isLoginPage =
+    location.pathname === '/login' || location.pathname === '/admin/login'
+
+  return isLoginPage ? <TheHeaderLogin /> : <TheHeader />
+}
 
 function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <TheHeader />
+        <HeaderSelector />
+
         <Routes>
           <Route
             path='/'

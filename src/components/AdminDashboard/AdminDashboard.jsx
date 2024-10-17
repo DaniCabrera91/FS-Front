@@ -2,53 +2,42 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import {
+  createUser,
   getAllUsers,
-  logoutAdmin,
-  deleteUser,
+  updateUser,
 } from '../../redux/admin/adminSlice'
 import UserForm from '../UserForm/UserForm'
 import UsersList from '../UsersList/UsersList'
-import { Button, Modal, message } from 'antd' // Importar Modal
+import { Button, Modal, message, Spin } from 'antd'
 import './AdminDashboard.styled.scss'
 
 const AdminDashboard = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const { isLoading, error, users, isLoggedIn } = useSelector(
-    (state) => state.admin,
-  )
-
+  const { isLoggedIn, users } = useSelector((state) => state.admin)
   const [editingUserId, setEditingUserId] = useState(null)
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/admin/login')
       return
     }
-
-    if (users.length === 0) {
-      dispatch(getAllUsers())
-    }
-  }, [dispatch, navigate, users.length, isLoggedIn])
-
-  const handleDeleteUser = (userId) => {
-    dispatch(deleteUser(userId))
-      .unwrap() // Usar unwrap para manejar el resultado directamente
-      .then(() => {
-        message.success('Usuario eliminado con éxito.')
-      })
-      .catch(() => {
-        message.error('Error al eliminar el usuario.')
-      })
-  }
+    setIsLoading(true)
+    dispatch(getAllUsers({ page: 1, limit: 10 }))
+      .unwrap()
+      .catch((error) => message.error('Error al cargar los usuarios.'))
+      .finally(() => setIsLoading(false))
+  }, [navigate, isLoggedIn, dispatch])
 
   const handleEditUser = (userId) => {
     setEditingUserId(userId)
-    setIsModalVisible(true) // Abrir el modal al editar un usuario
+    setIsModalVisible(true)
   }
 
   const showModal = () => {
+    setEditingUserId(null)
     setIsModalVisible(true)
   }
 
@@ -57,36 +46,48 @@ const AdminDashboard = () => {
     setEditingUserId(null)
   }
 
+  const handleSaveUser = async (userData) => {
+    try {
+      setIsLoading(true)
+      if (editingUserId) {
+        await dispatch(updateUser({ userId: editingUserId, userData })).unwrap()
+        message.success('Usuario actualizado con éxito.')
+      } else {
+        await dispatch(createUser(userData)).unwrap()
+        message.success('Usuario creado con éxito.')
+      }
+
+      handleCancel()
+      await dispatch(getAllUsers({ page: 1, limit: 10 }))
+    } catch (error) {
+      message.error('Error al guardar el usuario.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <div className='admin-dashboard'>
       <h1>Panel de Control del Administrador</h1>
-      {error && <p className='error'>{error}</p>}
+      <h2>Gestión de Usuarios</h2>
+      <Button type='primary' onClick={showModal}>
+        Crear Nuevo Usuario
+      </Button>
       {isLoading ? (
-        <p>Cargando usuarios...</p>
+        <Spin />
+      ) : users && users.length > 0 ? (
+        <UsersList users={users} onEditUser={handleEditUser} />
       ) : (
-        <>
-          <h2>Gestión de Usuarios</h2>
-          <Button type='primary' onClick={showModal}>
-            Crear Nuevo Usuario
-          </Button>
-          <UsersList
-            users={users}
-            onEditUser={handleEditUser}
-            onDeleteUser={handleDeleteUser}
-          />
-          <Modal
-            title={editingUserId ? 'Editar Usuario' : 'Crear Usuario'}
-            open={isModalVisible}
-            footer={null}
-            onCancel={handleCancel}
-          >
-            <UserForm
-              userId={editingUserId}
-              onSave={handleCancel} // Resetea el estado de edición y cierra el modal
-            />
-          </Modal>
-        </>
+        <p>No hay usuarios disponibles.</p>
       )}
+      <Modal
+        title={editingUserId ? 'Editar Usuario' : 'Crear Usuario'}
+        open={isModalVisible}
+        footer={null}
+        onCancel={handleCancel}
+      >
+        <UserForm userId={editingUserId} onSave={handleSaveUser} />
+      </Modal>
     </div>
   )
 }

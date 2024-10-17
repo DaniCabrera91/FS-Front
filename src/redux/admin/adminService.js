@@ -2,107 +2,108 @@ import axios from 'axios'
 
 const API_URL = 'http://localhost:3000/admins'
 
-// Registrar un nuevo administrador
 const registerAdmin = async (adminData) => {
   const response = await axios.post(`${API_URL}/register`, adminData)
   return response.data
 }
 
-// Iniciar sesión como administrador
 const loginAdmin = async (adminData) => {
   const response = await axios.post(`${API_URL}/login`, adminData)
   if (response.status === 200) {
-    localStorage.setItem('token', response.data.token) // Guardar el token
+    localStorage.setItem('tokenAdmin', response.data.token)
     return response.data
-  } else {
-    throw new Error('Login failed')
   }
+  throw new Error('Login failed')
 }
 
-// Cerrar sesión como administrador
 const logoutAdmin = async () => {
-  const token = localStorage.getItem('token')
-  if (!token) return
-
-  await axios.post(
+  const token = localStorage.getItem('tokenAdmin')
+  const response = await axios.post(
     `${API_URL}/logout`,
     {},
     {
-      headers: { Authorization: token }, // Usar el token sin "Bearer"
+      headers: {
+        Authorization: token,
+      },
     },
   )
-  localStorage.removeItem('admin') // Limpiar la información del admin
-  localStorage.removeItem('token') // Limpiar el token
+  localStorage.removeItem('tokenAdmin')
+  localStorage.removeItem('admin')
+  return response.data
 }
 
 const getAllUsers = async () => {
-  const token = localStorage.getItem('token')
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
   const response = await axios.get(`${API_URL}/users`, {
-    headers: { Authorization: token }, // Usar el token directamente
+    headers: { Authorization: tokenAdmin },
   })
   return response.data
 }
 
 const createUser = async (userData) => {
-  const token = localStorage.getItem('token')
-  const response = await axios.post(`${API_URL}/create-user`, userData, {
-    headers: { Authorization: token }, // Usar el token sin "Bearer"
-  })
-  return getAllUsers() // Obtener todos los usuarios después de crear uno
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
+  try {
+    const response = await axios.post(`${API_URL}/create-user`, userData, {
+      headers: { Authorization: tokenAdmin },
+    })
+    return response.data
+  } catch (error) {
+    console.error(
+      'Error creating user:',
+      error.response ? error.response.data : error.message,
+    )
+    throw error
+  }
 }
 
 const updateUser = async (userId, userData) => {
-  const token = localStorage.getItem('token')
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
   const response = await axios.put(
     `${API_URL}/update-user/${userId}`,
     userData,
     {
-      headers: { Authorization: token }, // Usar el token sin "Bearer"
+      headers: { Authorization: tokenAdmin },
     },
   )
   return response.data
 }
 
 const deleteUser = async (userId) => {
-  const token = localStorage.getItem('token')
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
   await axios.delete(`${API_URL}/delete-user/${userId}`, {
-    headers: { Authorization: token }, // Usar el token sin "Bearer"
+    headers: { Authorization: tokenAdmin },
   })
-  return getAllUsers() // Obtener todos los usuarios después de eliminar uno
+  return getAllUsers()
 }
 
-// Obtener todas las transacciones
 const getAllTransactions = async () => {
-  const token = localStorage.getItem('token')
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
   const response = await axios.get(`${API_URL}/transactions`, {
-    headers: { Authorization: token }, // Usar el token sin "Bearer"
+    headers: { Authorization: tokenAdmin },
   })
   return response.data
 }
 
-// Crear una nueva transacción
 const createTransaction = async (transactionData) => {
-  const token = localStorage.getItem('token')
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
   const response = await axios.post(
     `${API_URL}/create-transaction`,
     transactionData,
     {
-      headers: { Authorization: token }, // Usar el token sin "Bearer"
+      headers: { Authorization: tokenAdmin },
     },
   )
-  return getAllTransactions() // Obtener todas las transacciones después de crear una
+  return getAllTransactions()
 }
 
-// Eliminar una transacción
 const deleteTransaction = async (transactionId) => {
-  const token = localStorage.getItem('token')
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
   await axios.delete(`${API_URL}/delete-transaction/${transactionId}`, {
-    headers: { Authorization: token }, // Usar el token sin "Bearer"
+    headers: { Authorization: tokenAdmin },
   })
-  return getAllTransactions() // Obtener todas las transacciones después de eliminar una
+  return getAllTransactions()
 }
 
-// Exportar los servicios
 const adminService = {
   registerAdmin,
   loginAdmin,

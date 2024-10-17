@@ -28,8 +28,6 @@ const AdminLogin = () => {
     dispatch(loginAdmin({ email, password }))
       .then((result) => {
         if (result.meta.requestStatus === 'fulfilled') {
-          console.log('Admin conectado con éxito')
-          localStorage.setItem('token', result.payload.token)
           localStorage.setItem('admin', JSON.stringify(result.payload))
           navigate('/admin/dashboard')
         } else {

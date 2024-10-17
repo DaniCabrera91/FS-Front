@@ -1,17 +1,15 @@
-// Keyboard.styled.scss
-
 .keyboard {
   display: flex;
   justify-content: center;
-  align-items: stretch; // Permite que los hijos ocupen el alto del contenedor
+  align-items: stretch;
   margin-top: 20px;
 
   .keypad {
     display: grid;
-    grid-template-columns: repeat(5, 1fr); // 4 columnas para los números
-    grid-template-rows: repeat(2, 1fr); // 2 filas
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     gap: 10px;
-    flex-grow: 1; // Permitir que el keypad crezca
+    flex-grow: 1;
 
     .key {
       padding: 15px;
@@ -30,13 +28,12 @@
   }
 
   .delete-key {
-    background-color: #f44336; // Color rojo para el botón de borrar
-    color: white;
-    padding: 15px; // Estilo de padding similar a las otras teclas
-    border: 1px solid #ccc; // Añade un borde para mantener la uniformidad
-    border-radius: 5px; // Bordes redondeados
-    margin-left: 10px; // Espacio entre el keypad y el botón de borrar
-    flex-grow: 0; // No permitir que el botón de borrar crezca
+    background-color: #f44336;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-left: 10px;
+    flex-grow: 0;
 
     &:hover {
       background-color: #d32f2f;

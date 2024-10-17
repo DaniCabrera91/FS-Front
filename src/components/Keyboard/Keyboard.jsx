@@ -2,8 +2,8 @@ import React from 'react'
 import './Keyboard.styled.scss'
 
 const Keyboard = ({ onKeyPress }) => {
-  const keys = ['5', '0', '1', '4', '2', '7', '3', '8', '9', '6'] // Números
-  const deleteKey = 'C' // Borrar
+  const keys = ['5', '0', '1', '4', '2', '7', '3', '8', '9', '6']
+  const deleteKey = 'C'
 
   const handleKeyPress = (key) => {
     onKeyPress(key)
@@ -23,7 +23,7 @@ const Keyboard = ({ onKeyPress }) => {
         ))}
       </div>
       <button
-        className='key delete-key' // Clave especial para el botón de borrar
+        className='key delete-key'
         onClick={() => handleKeyPress(deleteKey)}
       >
         {deleteKey}

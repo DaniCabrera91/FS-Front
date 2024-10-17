@@ -1,8 +1,36 @@
-import React from 'react'
-import { Table, Button } from 'antd'
+import React, { useEffect } from 'react'
+import { Table, Button, Empty, Spin, message } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { getAllUsers, deleteUser } from '../../redux/admin/adminSlice'
 
-const UsersList = ({ users, onDeleteUser, onEditUser }) => {
+const UsersList = ({ onEditUser }) => {
+  const dispatch = useDispatch()
+  const { users, isLoading, error } = useSelector((state) => state.admin)
+  const [currentPage, setCurrentPage] = React.useState(1)
+  const [pageSize, setPageSize] = React.useState(10)
+
+  useEffect(() => {
+    dispatch(getAllUsers({ page: currentPage, limit: pageSize }))
+  }, [dispatch, currentPage, pageSize])
+
+  const handleDeleteUser = (userId) => {
+    dispatch(deleteUser(userId))
+      .unwrap()
+      .then(() => {
+        message.success('Usuario eliminado con éxito.')
+        dispatch(getAllUsers({ page: currentPage, limit: pageSize }))
+      })
+      .catch(() => {
+        message.error('Error al eliminar el usuario.')
+      })
+  }
+
+  const handleTableChange = (pagination) => {
+    setCurrentPage(pagination.current)
+    setPageSize(pagination.pageSize)
+  }
+
   const columns = [
     {
       title: 'Nombre',
@@ -27,7 +55,7 @@ const UsersList = ({ users, onDeleteUser, onEditUser }) => {
           />
           <Button
             icon={<DeleteOutlined />}
-            onClick={() => onDeleteUser(record._id)}
+            onClick={() => handleDeleteUser(record._id)}
             size='small'
             danger
           />
@@ -36,14 +64,27 @@ const UsersList = ({ users, onDeleteUser, onEditUser }) => {
     },
   ]
 
+  if (isLoading) return <Spin tip='Cargando usuarios...' />
+
   return (
     <div>
       <h3>Lista de Usuarios</h3>
-      <Table
-        dataSource={users}
-        columns={columns}
-        rowKey='_id' // Asegúrate de que este sea el identificador correcto de los usuarios
-      />
+      {error && <p className='error'>{error}</p>}
+      {users && users.length > 0 ? (
+        <Table
+          dataSource={users}
+          columns={columns}
+          rowKey='_id'
+          pagination={{
+            current: currentPage,
+            pageSize,
+            total: users.length,
+          }}
+          onChange={handleTableChange}
+        />
+      ) : (
+        <Empty description='No hay usuarios disponibles.' />
+      )}
     </div>
   )
 }

@@ -1,0 +1,30 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #f8f9fa;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+}
+
+.header__right {
+  display: flex;
+  align-items: center;
+}
+
+.header__icon {
+  color: #007a83;
+  font-size: 24px;
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.header__logo {
+  height: 2rem;
+  margin-left: 20px;
+  cursor: pointer;
+}

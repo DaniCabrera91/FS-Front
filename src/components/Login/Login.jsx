@@ -55,6 +55,11 @@ const Login = () => {
       if (result.meta.requestStatus === 'fulfilled') {
         localStorage.setItem('token', result.payload.token)
         navigate('/user/dashboard')
+
+        //prueba para probar metodos más facil
+        localStorage.setItem('dni', dni); 
+
+
       } else {
         console.error('Error en el login:', result.error)
         alert(result.error.message || 'Error en el inicio de sesión')

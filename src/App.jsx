@@ -7,6 +7,7 @@ import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import TheHeader from './components/TheHeader/TheHeader'
 import './App.scss'
+import MyFinances from './components/MyFinances/MyFinances'
 
 function App() {
   return (
@@ -41,6 +42,14 @@ function App() {
             element={
               <PrivateRoute type='user'>
                 <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path='/user/finances'
+            element={
+              <PrivateRoute type='user'>
+                <MyFinances/>
               </PrivateRoute>
             }
           />

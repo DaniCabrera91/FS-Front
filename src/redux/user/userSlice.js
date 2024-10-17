@@ -10,8 +10,7 @@ export const login = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  },
-)
+  })
 
 export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
   try {
@@ -63,8 +62,8 @@ const userSlice = createSlice({
         state.token = null
         state.isLoggedIn = false
       })
-  },
-})
+    }
+  })
 
 export const {} = userSlice.actions
 export default userSlice.reducer

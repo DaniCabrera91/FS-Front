@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { getTotalBalance, getMonthlyTransactions } from '../../redux/trans/transSlice';
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { getTotalBalance, getMonthlyTransactions } from '../../redux/trans/transSlice'
 
-import TheFooter from '../TheFooter/TheFooter';
-import Chart from '../Chart/Chart';
-import CategoryCard from '../CategoryCard/CategoryCard';
+import TheFooter from '../TheFooter/TheFooter'
+import Chart from '../Chart/Chart'
+import CategoryCard from '../CategoryCard/CategoryCard'
 
 function MyFinances() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const { totalBalance, transactions, isLoading, error, monthlyIncome } = useSelector((state) => state.trans)
 
@@ -32,32 +32,40 @@ function MyFinances() {
         </p>
 
         <Chart />
+
+
         <div className="flex border-b mt-4">
-          <button className="px-4 py-2 text-red-500 border-b-2 border-red-500">Ingresos</button>
-          <button className="px-4 py-2 text-gray-600">Gastos</button>
+          <button className="px-4 py-2 text-red-500 border-b-2 border-red-500">Gastos</button>
+          <button className="px-4 py-2 text-gray-600">Ingresos</button>
         </div>
 
         {/* logica para crear las cartas de gastos mensuales por categoria  */}
         {transactions && transactions.map((category) => (
-            Object.keys(category).map((key) => {
-              const amount = category[key].transactions.reduce((total, t) => total + t.amount, 0);
-              const percentage = monthlyIncome > 0 ? (amount / monthlyIncome) * 100 : 0;
+          Object.keys(category).map((key) => {
+            const amount = category[key].transactions.reduce((total, t) => total + t.amount, 0)
+           /*  console.log("monthly income" + monthlyIncome)
+            console.log("amount" +amount) */
+            const percentage = monthlyIncome > 0 ? (Math.abs(amount) / monthlyIncome) * 100 : 0
 
-              return (
+            return (
+              category[key].name !== 'Ingresos' ? (
                 <CategoryCard
                   key={key}
                   name={category[key].name}
-                  amount={amount}
-                  percentage={percentage}
+                  amount={Math.abs(amount).toFixed(2)}
+                  percentage={percentage.toFixed()}
                 />
-              )
-            })
-          ))}
-          
-        <TheFooter />
+              ) : null
+            )
+          })
+        ))
+        }
+
       </div>
+
+        <TheFooter />
     </>
   )
 }
 
-export default MyFinances;
+export default MyFinances

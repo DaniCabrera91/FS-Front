@@ -9,8 +9,7 @@ const getAllTransactions = async () => {
 }
 
 //añadir posibilidad de month y year
-const getMonthlyTransactions = async () => {
-  const dni = localStorage.getItem('dni')
+const getMonthlyTransactions = async (dni) => {
   const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni })
 
   let monthlyIncome = 0
@@ -24,6 +23,55 @@ const getMonthlyTransactions = async () => {
     })
   })
   return { transactions: response.data.categories, monthlyIncome }
+}
+
+const getMonthlyTransactionsByMonth = async (dni, year, month) => {
+  try {
+    console.log("getMonthlyTransactionsByMonth dni"+dni+" year "+year+" month "+month)
+  const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni, month, year })
+console.log(response)
+  const transactions = response.data.categories
+  let income = 0;
+  let expenses = 0;
+
+  transactions.forEach(category => {
+    Object.values(category).forEach(cat => {
+      cat.transactions.forEach(transaction => {
+        if (transaction.type === 'incomes') {
+          income += transaction.amount;
+        } else if (transaction.type === 'expenses') {
+          expenses += transaction.amount;
+        }
+      })
+    })
+  })
+
+  return { month, income, expenses };
+} catch (error) {
+  console.error(`Error al obtener las transacciones del mes ${month}:`, error);
+  throw error;
+}
+}
+
+const getLastFiveMonthsData = async (dni) => {
+  console.log("getLastFiveMonthsData dni "+dni)
+  const currentDate = new Date()
+  const currentMonth = currentDate.getMonth() + 1
+  const currentYear = currentDate.getFullYear()
+
+  const results = []
+  
+  for (let i = 0; i < 5; i++) {
+   
+    const month = currentMonth - i
+    const year = month <= 0 ? currentYear - 1 : currentYear
+    const adjustedMonth = month <= 0 ? month + 12 : month
+    
+    const monthlyData = await getMonthlyTransactionsByMonth(dni, year, adjustedMonth)
+    results.push(monthlyData)
+  }
+
+  return results
 }
 
 const getTotalBalance = async () => {
@@ -53,6 +101,8 @@ const transService = {
   getAllTransactions,
   getMonthlyTransactions,
   getTotalBalance,
+  getMonthlyTransactionsByMonth,
+  getLastFiveMonthsData,
 }
 
 export default transService

@@ -21,7 +21,6 @@ export const getMonthlyTransactions = createAsyncThunk(
   async (dni, thunkAPI) => {
     try {
       const response = await transService.getMonthlyTransactions(dni)
-      console.log(response)
       return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)

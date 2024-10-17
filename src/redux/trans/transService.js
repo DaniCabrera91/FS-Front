@@ -21,7 +21,6 @@ const getMonthlyTransactions = async (dni) => {
         }
         else{
           monthlyExpense+= transaction.amount
-          console.log("desde servi ce" +monthlyExpense)
         }
       })
     })
@@ -55,7 +54,6 @@ const getMonthlyTransactionsByMonth = async (dni, year, month) => {
 }
 
 const getLastFiveMonthsData = async (dni) => {
-  console.log("getLastFiveMonthsData dni "+dni)
   const currentDate = new Date()
   const currentMonth = currentDate.getMonth() + 1
   const currentYear = currentDate.getFullYear()

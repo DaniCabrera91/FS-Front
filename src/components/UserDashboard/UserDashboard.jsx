@@ -1,12 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ProjectPlannerCard from '../ProjectPlannerCard/ProjectPlannerCard' // Asegúrate de que la ruta sea correcta
+import './UserDashboard.styled.scss'
 
 const Home = () => {
   const navigate = useNavigate()
 
   const handleMyFinancesClick = () => {
-    navigate('/user/my-finances')
+    navigate('/user/finances')
   }
 
   // Ejemplos de proyectos ficticios de ahorro para mostrar en el dashboard
@@ -33,8 +34,9 @@ const Home = () => {
     <div>
       <h1>Home Dashboard</h1>
 
-      {/* Botón existente de My Finances */}
-      <button onClick={handleMyFinancesClick}>My Finances</button>
+      <button onClick={handleMyFinancesClick} className='financesBtn'>
+        Mis Finanzas
+      </button>
 
       {/* Sección de Proyectos */}
       <h2>Mis Objetivos de Ahorro</h2>

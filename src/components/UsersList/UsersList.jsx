@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table, Button, Empty, Spin, message } from 'antd'
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
@@ -6,9 +6,11 @@ import { getAllUsers, deleteUser } from '../../redux/admin/adminSlice'
 
 const UsersList = ({ onEditUser }) => {
   const dispatch = useDispatch()
-  const { users, isLoading, error } = useSelector((state) => state.admin)
-  const [currentPage, setCurrentPage] = React.useState(1)
-  const [pageSize, setPageSize] = React.useState(10)
+  const { users, isLoading, error, totalUsers } = useSelector(
+    (state) => state.admin,
+  )
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
 
   useEffect(() => {
     dispatch(getAllUsers({ page: currentPage, limit: pageSize }))
@@ -78,7 +80,7 @@ const UsersList = ({ onEditUser }) => {
           pagination={{
             current: currentPage,
             pageSize,
-            total: users.length,
+            total: totalUsers, // Aquí se usa totalUsers en lugar de users.length
           }}
           onChange={handleTableChange}
         />

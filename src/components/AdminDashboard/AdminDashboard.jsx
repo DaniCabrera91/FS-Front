@@ -19,17 +19,19 @@ const AdminDashboard = () => {
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
 
+  const usersPerPage = 10 // Definir un límite como constante
+
   useEffect(() => {
     if (!isLoggedIn) {
       navigate('/admin/login')
       return
     }
     setIsLoading(true)
-    dispatch(getAllUsers({ page: 1, limit: 10 }))
+    dispatch(getAllUsers({ page: 1, limit: usersPerPage })) // Usar la constante
       .unwrap()
       .catch((error) => message.error('Error al cargar los usuarios.'))
       .finally(() => setIsLoading(false))
-  }, [navigate, isLoggedIn, dispatch])
+  }, [navigate, isLoggedIn, dispatch, usersPerPage])
 
   const handleEditUser = (userId) => {
     setEditingUserId(userId)
@@ -58,7 +60,7 @@ const AdminDashboard = () => {
       }
 
       handleCancel()
-      await dispatch(getAllUsers({ page: 1, limit: 10 }))
+      await dispatch(getAllUsers({ page: 1, limit: usersPerPage })) // Usar la constante aquí también
     } catch (error) {
       message.error('Error al guardar el usuario.')
     } finally {

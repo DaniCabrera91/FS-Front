@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import CategoryCard from './CategoryCard'
 
 function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
-  
   const [selectedType, setSelectedType] = useState('incomes')
 
   const handleButtonClick = (type) => {
@@ -11,33 +10,50 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
 
   return (
     <>
-      <div className="flex border-b mt-4">
+      <div className='flex border-b mt-4'>
         <button
-          className={`incomes px-4 py-2 ${selectedType === 'incomes' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-600'}`}
+          className={`incomes px-4 py-2 ${
+            selectedType === 'incomes'
+              ? 'text-red-500 border-b-2 border-red-500'
+              : 'text-gray-600'
+          }`}
           onClick={() => handleButtonClick('incomes')}
         >
           Ingresos
         </button>
         <button
-          className={`expenses px-4 py-2 ${selectedType === 'expenses' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-600'}`}
+          className={`expenses px-4 py-2 ${
+            selectedType === 'expenses'
+              ? 'text-red-500 border-b-2 border-red-500'
+              : 'text-gray-600'
+          }`}
           onClick={() => handleButtonClick('expenses')}
         >
           Gastos
         </button>
       </div>
 
-      {transactions && transactions.map((category) => (
-        Object.keys(category).map((key) => {
-          const amount = category[key].transactions.reduce((total, t) => total + t.amount, 0)
+      {/* aquí se gestionan las cards */}
+      {transactions &&
+        transactions.map((category) =>
+          Object.keys(category).map((key) => {
+            const amount = category[key].transactions.reduce(
+              (total, t) => total + t.amount,
+              0,
+            )
 
-          const percentage = selectedType === 'expenses'
-            ? (monthlyExpense > 0 ? (Math.abs(amount) / monthlyExpense) * 100 : 0)
-            : (monthlyIncome > 0 ? (Math.abs(amount) / monthlyIncome) * 100 : 0)
+            const percentage =
+              selectedType === 'expenses'
+                ? monthlyExpense > 0
+                  ? (Math.abs(amount) / monthlyExpense) * 100
+                  : 0
+                : monthlyIncome > 0
+                ? (Math.abs(amount) / monthlyIncome) * 100
+                : 0
 
-          const type = selectedType === 'expenses' ? 'expenses' : 'incomes'
+            const type = selectedType === 'expenses' ? 'expenses' : 'incomes'
 
-          return (
-            category[key].name !== 'Ingresos' ? (
+            return category[key].name !== 'Ingresos' ? (
               <CategoryCard
                 key={key}
                 name={category[key].name}
@@ -46,9 +62,8 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
                 type={type}
               />
             ) : null
-          )
-        })
-      ))}
+          }),
+        )}
     </>
   )
 }

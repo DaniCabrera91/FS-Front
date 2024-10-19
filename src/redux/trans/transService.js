@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:3000/trans'
 const getAllTransactions = async () => {
   const dni = localStorage.getItem('dni')
   const response = await axios.post(`${API_URL}/getByUserDni`, { dni })
-  return response.data;
+  return response.data
 }
 
 const getMonthlyTransactions = async (dni) => {
@@ -13,43 +13,51 @@ const getMonthlyTransactions = async (dni) => {
 
   let monthlyIncome = 0
   let monthlyExpense = 0
-  response.data.categories.forEach(category => {
-    Object.values(category).forEach(cat => {
-      cat.transactions.forEach(transaction => {
+  response.data.categories.forEach((category) => {
+    console.log(response.data)
+    Object.values(category).forEach((cat) => {
+      cat.transactions.forEach((transaction) => {
         if (transaction.type === 'incomes') {
           monthlyIncome += transaction.amount
-        }
-        else{
-          monthlyExpense+= transaction.amount
+        } else {
+          monthlyExpense += transaction.amount
         }
       })
     })
   })
-  return { transactions: response.data.categories, monthlyIncome, monthlyExpense: Math.abs(monthlyExpense) }
+  return {
+    transactions: response.data.categories,
+    monthlyIncome,
+    monthlyExpense: Math.abs(monthlyExpense),
+  }
 }
 
 const getMonthlyTransactionsByMonth = async (dni, year, month) => {
   try {
-  const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni, month, year })
+    const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, {
+      dni,
+      month,
+      year,
+    })
     const transactions = response.data.categories
-    let income = 0;
-    let expenses = 0;
+    let income = 0
+    let expenses = 0
 
-    transactions.forEach(category => {
-      Object.values(category).forEach(cat => {
-        cat.transactions.forEach(transaction => {
+    transactions.forEach((category) => {
+      Object.values(category).forEach((cat) => {
+        cat.transactions.forEach((transaction) => {
           if (transaction.type === 'incomes') {
-            income += transaction.amount;
+            income += transaction.amount
           } else if (transaction.type === 'expenses') {
-            expenses += transaction.amount;
+            expenses += transaction.amount
           }
         })
       })
     })
-    return { month, income, expenses };
+    return { month, income, expenses }
   } catch (error) {
-    console.error(`Error al obtener las transacciones del mes ${month}:`, error);
-    throw error;
+    console.error(`Error al obtener las transacciones del mes ${month}:`, error)
+    throw error
   }
 }
 
@@ -59,14 +67,17 @@ const getLastFiveMonthsData = async (dni) => {
   const currentYear = currentDate.getFullYear()
 
   const results = []
-  
+
   for (let i = 0; i < 5; i++) {
-   
     const month = currentMonth - i
     const year = month <= 0 ? currentYear - 1 : currentYear
     const adjustedMonth = month <= 0 ? month + 12 : month
-    
-    const monthlyData = await getMonthlyTransactionsByMonth(dni, year, adjustedMonth)
+
+    const monthlyData = await getMonthlyTransactionsByMonth(
+      dni,
+      year,
+      adjustedMonth,
+    )
     results.push(monthlyData)
   }
 
@@ -75,16 +86,16 @@ const getLastFiveMonthsData = async (dni) => {
 
 const getTotalBalance = async () => {
   try {
-    const data = await getAllTransactions();
+    const data = await getAllTransactions()
 
-    let totalBalance = 0;
-    data.categories.forEach(category => {
-      Object.values(category).forEach(cat => { 
-        cat.transactions.forEach(transaction => { 
+    let totalBalance = 0
+    data.categories.forEach((category) => {
+      Object.values(category).forEach((cat) => {
+        cat.transactions.forEach((transaction) => {
           if (transaction.type === 'incomes') {
             totalBalance += transaction.amount
           } else if (transaction.type === 'expenses') {
-            totalBalance += transaction.amount;
+            totalBalance += transaction.amount
           }
         })
       })

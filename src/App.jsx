@@ -15,6 +15,7 @@ import TheHeader from './components/TheHeader/TheHeader'
 import TheHeaderLogin from './components/TheHeaderLogin/TheHeaderLogin'
 import './App.scss'
 import MyFinances from './components/MyFinances/MyFinances'
+// import Categories from './components/Categories/Categories'
 
 const HeaderSelector = () => {
   const location = useLocation()
@@ -66,7 +67,7 @@ function App() {
             path='/user/finances'
             element={
               <PrivateRoute type='user'>
-                <MyFinances/>
+                <MyFinances />
               </PrivateRoute>
             }
           />

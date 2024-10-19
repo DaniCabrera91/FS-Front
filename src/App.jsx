@@ -13,6 +13,7 @@ import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import TheHeader from './components/TheHeader/TheHeader'
 import TheHeaderLogin from './components/TheHeaderLogin/TheHeaderLogin'
+import TheFooter from './components/TheFooter/TheFooter' // Importar el Footer
 import './App.scss'
 import MyFinances from './components/MyFinances/MyFinances'
 
@@ -25,12 +26,23 @@ const HeaderSelector = () => {
   return isLoginPage ? <TheHeaderLogin /> : <TheHeader />
 }
 
+const FooterSelector = () => {
+  const location = useLocation()
+
+  const isLoginPage =
+    location.pathname === '/login' || location.pathname === '/admin/login'
+
+  const isAdminDashboard = location.pathname === '/admin/dashboard'
+
+  // Mostrar el Footer solo si no es página de login ni el AdminDashboard
+  return !isLoginPage && !isAdminDashboard ? <TheFooter /> : null
+}
+
 function App() {
   return (
     <div className='App'>
       <BrowserRouter>
         <HeaderSelector />
-
         <Routes>
           <Route
             path='/'
@@ -66,11 +78,12 @@ function App() {
             path='/user/finances'
             element={
               <PrivateRoute type='user'>
-                <MyFinances/>
+                <MyFinances />
               </PrivateRoute>
             }
           />
         </Routes>
+        <FooterSelector /> {/* Añadir el FooterSelector aquí */}
       </BrowserRouter>
     </div>
   )

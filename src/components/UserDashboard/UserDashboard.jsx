@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import ProjectPlannerCard from '../ProjectPlannerCard/ProjectPlannerCard' // Asegúrate de que la ruta sea correcta
 import './UserDashboard.styled.scss'
+import App from './test/App'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -31,29 +32,32 @@ const Home = () => {
   ]
 
   return (
-    <div>
-      <h1>Home Dashboard</h1>
+    // <div>
+    //   <h1>Home Dashboard</h1>
 
-      <button onClick={handleMyFinancesClick} className='financesBtn'>
-        Mis Finanzas
-      </button>
+    //   <button onClick={handleMyFinancesClick} className='financesBtn'>
+    //     Mis Finanzas
+    //   </button>
 
-      {/* Sección de Proyectos */}
-      <h2>Mis Objetivos de Ahorro</h2>
-      <div className='project-cards'>
-        {projects.map((project) => (
-          <div key={project.id} style={{ marginBottom: '20px' }}>
-            <ProjectPlannerCard
-              projectName={project.name}
-              estimatedCost={project.estimatedCost}
-              monthlySavings={project.monthlySavings}
-              currentSavings={project.currentSavings}
-              targetDate={project.targetDate}
-            />
-          </div>
-        ))}
-      </div>
-    </div>
+    //   {/* Sección de Proyectos */}
+    //   <h2>Mis Objetivos de Ahorro</h2>
+    //   <div className='project-cards'>
+    //     {projects.map((project) => (
+    //       <div key={project.id} style={{ marginBottom: '20px' }}>
+    //         <ProjectPlannerCard
+    //           projectName={project.name}
+    //           estimatedCost={project.estimatedCost}
+    //           monthlySavings={project.monthlySavings}
+    //           currentSavings={project.currentSavings}
+    //           targetDate={project.targetDate}
+    //         />
+    //       </div>
+    //     ))}
+    //   </div>
+    // </div>
+    <>
+    <App/>
+    </>
   )
 }
 

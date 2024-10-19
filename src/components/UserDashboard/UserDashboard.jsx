@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate, useSelector } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import './UserDashboard.styled.scss'
 import AccountSummary from './AccountSummary'
 import FinanceOverview from './FinanceOverview'
@@ -46,9 +46,9 @@ const Home = () => {
           <AccountSummary />
 
           <div className="bg-white rounded-lg p-4 mb-4" onClick={handleClick}>
-              <div className="flex items-center text-red-600">
-                  <span className="text-sm">Mis finanzas</span>
-                  <ChevronRight className="w-4 h-4 ml-1" />
+              <div className="flex justify-between items-center">
+                  <span className="text-sm text-red-600 font-semibold">Mis finanzas</span>
+                  <ChevronRight className="w-4 h-4 ml-1 text-red-600" />
               </div>
           </div>
 

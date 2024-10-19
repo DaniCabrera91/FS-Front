@@ -12,8 +12,8 @@ export default function TransactionList() {
   return (
     <div className="bg-white rounded-lg p-4">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-sm font-semibold">Últimos movimientos</h2>
-        <span className="text-sm text-red-600">Ver más</span>
+        <h2 className="text-sm font-semibold text-red-600">Últimos movimientos</h2>
+        <span className="text-sm ">Ver más</span>
       </div>
       {transactions.map((transaction, index) => (
         <div key={index} className="flex items-center justify-between py-2 border-b last:border-b-0">

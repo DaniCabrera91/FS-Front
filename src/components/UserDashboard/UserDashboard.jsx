@@ -1,5 +1,5 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSelector } from 'react-router-dom'
 import './UserDashboard.styled.scss'
 import AccountSummary from './AccountSummary'
 import FinanceOverview from './FinanceOverview'

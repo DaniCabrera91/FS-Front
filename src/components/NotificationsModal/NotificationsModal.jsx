@@ -1,21 +1,16 @@
-import React, { useState } from 'react'
-import { Modal, Button } from 'antd' // Usamos Ant Design para los modales y botones
+import React from 'react'
+import { Modal } from 'antd' // Usamos Ant Design para los modales
+import { BellOutlined } from '@ant-design/icons'
 
-const NotificationsModal = () => {
-  const [visible, setVisible] = useState(false)
-
-  // Simulamos algunas notificaciones como ejemplo
-  const notifications = [
-    { message: 'Tu objetivo de ahorro "Viaje a Europa" está en buen camino.' },
-    { message: 'Recuerda actualizar tus gastos mensuales.' },
-    { message: 'Has alcanzado el 50% de tu objetivo "Comprar una Laptop".' },
-  ]
-
+const NotificationsModal = ({ visible, setVisible, notifications = [] }) => {
+  // Establecer valor predeterminado
   return (
     <div>
-      <Button type='primary' onClick={() => setVisible(true)}>
-        Ver Notificaciones
-      </Button>
+      <BellOutlined
+        className='header__icon'
+        onClick={() => setVisible(true)} // Controlamos el estado del modal al hacer clic en la campana
+        aria-label='Notifications'
+      />
 
       <Modal
         title='Notificaciones'

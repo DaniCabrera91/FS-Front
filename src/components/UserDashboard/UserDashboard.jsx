@@ -16,7 +16,7 @@ const Home = () => {
       id: 1,
       name: 'Viaje a Europa',
       estimatedCost: 2000, // Objetivo de ahorro en euros
-      monthlySavings: 200, // Ahorros mensuales
+      monthlySavings: 1000, // Ahorros mensuales
       currentSavings: 600, // Ahorros actuales
       targetDate: '2024-12-01', // Fecha límite para alcanzar el objetivo
     },

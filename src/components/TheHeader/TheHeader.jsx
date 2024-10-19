@@ -1,11 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
-import {
-  BellOutlined,
-  MenuOutlined,
-  LogoutOutlined,
-  LeftOutlined,
-} from '@ant-design/icons'
+import { BellOutlined, LeftOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/user/userSlice'
 import { logoutAdmin } from '../../redux/admin/adminSlice'
@@ -20,7 +15,7 @@ const TheHeader = () => {
 
   const { user } = useSelector((state) => state.user)
   const { isLoggedIn, tokenAdmin } = useSelector((state) => state.admin)
-  const notifications = useSelector((state) => state.notifications) // Traemos las notificaciones del estado Redux
+  const notifications = useSelector((state) => state.notifications) || [] // Asegurarte que no sea undefined
 
   const [isModalVisible, setIsModalVisible] = useState(false) // Estado local para mostrar/ocultar modal
 
@@ -46,6 +41,9 @@ const TheHeader = () => {
     location.pathname !== '/admin/dashboard' &&
     location.pathname !== '/user/dashboard'
 
+  // Comprobar si estamos en la vista de usuario
+  const isUserView = location.pathname.includes('/user')
+
   return (
     <div className='header'>
       <div className='header__left'>
@@ -69,23 +67,17 @@ const TheHeader = () => {
         {user || isLoggedIn ? (
           <>
             {/* Ícono de campana que abre el modal */}
-            <BellOutlined
-              className='header__icon'
-              onClick={() => setIsModalVisible(true)} // Controlamos el estado del modal al hacer clic en la campana
-              aria-label='Notifications'
-            />
-            <MenuOutlined className='header__icon' aria-label='Menu' />
+            {isUserView && (
+              <NotificationsModal
+                visible={isModalVisible} // Control de visibilidad del modal
+                setVisible={setIsModalVisible} // Función para cambiar la visibilidad
+                notifications={notifications} // Pasar las notificaciones desde Redux
+              />
+            )}
             <LogoutOutlined
               className='header__icon'
               onClick={onLogout}
               aria-label='Logout'
-            />
-
-            {/* Agregar el componente del modal aquí */}
-            <NotificationsModal
-              visible={isModalVisible} // Control de visibilidad del modal
-              setVisible={setIsModalVisible} // Función para cambiar la visibilidad
-              notifications={notifications} // Pasar las notificaciones desde Redux
             />
           </>
         ) : (

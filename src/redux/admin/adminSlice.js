@@ -37,6 +37,19 @@ export const getAllUsers = createAsyncThunk(
   },
 )
 
+export const getUserByDni = createAsyncThunk(
+  'admins/getUserByDni', // Corrige el prefijo para que sea 'admins'
+  async (dni, { rejectWithValue }) => {
+    try {
+      const response = await adminService.getUserByDni(dni)
+      return response
+    } catch (error) {
+      console.error('Error al obtener las transacciones:', error) // Log de error
+      return rejectWithValue(error.response ? error.response.data : error)
+    }
+  },
+)
+
 export const createUser = createAsyncThunk(
   'admins/createUser',
   async (userData, thunkAPI) => {
@@ -101,14 +114,27 @@ export const createTransaction = createAsyncThunk(
   },
 )
 
+export const updateTransaction = createAsyncThunk(
+  'admins/updateTransaction',
+  async ({ transactionId, transactionData }, thunkAPI) => {
+    try {
+      const response = await adminService.updateTransaction(
+        transactionId,
+        transactionData,
+      )
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  },
+)
+
 export const deleteTransaction = createAsyncThunk(
   'admins/deleteTransaction',
   async (transactionId, thunkAPI) => {
     try {
-      const updatedTransactions = await adminService.deleteTransaction(
-        transactionId,
-      )
-      return updatedTransactions
+      await adminService.deleteTransaction(transactionId)
+      return transactionId // Devuelve el ID de la transacción eliminada
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -125,6 +151,8 @@ const adminSlice = createSlice({
     error: null,
     users: [],
     transactions: [],
+    currentUser: null,
+    user: null,
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -153,10 +181,13 @@ const adminSlice = createSlice({
       .addCase(getAllUsers.fulfilled, (state, action) => {
         state.users = action.payload
       })
+      .addCase(getUserByDni.fulfilled, (state, action) => {
+        state.currentUser = action.payload.user // Almacena el usuario en el estado
+        state.transactions = action.payload.transactions // Almacena las transacciones
+      })
       .addCase(createUser.fulfilled, (state, action) => {
         state.users.push(action.payload)
       })
-
       .addCase(updateUser.fulfilled, (state, action) => {
         const updatedUser = action.payload.updatedUser
         const index = state.users.findIndex(
@@ -168,6 +199,33 @@ const adminSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         state.users = state.users.filter((user) => user._id !== action.payload)
+      })
+      .addCase(getAllTransactions.fulfilled, (state, action) => {
+        state.transactions = action.payload // Almacena todas las transacciones en el estado
+      })
+      .addCase(createTransaction.fulfilled, (state, action) => {
+        state.transactions.push(action.payload) // Añade la nueva transacción
+      })
+      .addCase(updateTransaction.fulfilled, (state, action) => {
+        const updatedTransaction = action.payload // Asegúrate de que aquí esté la transacción actualizada
+        const index = state.transactions.findIndex(
+          (transaction) => transaction._id === updatedTransaction._id,
+        )
+        if (index !== -1) {
+          state.transactions[index] = updatedTransaction
+        }
+      })
+      .addCase(deleteTransaction.fulfilled, (state, action) => {
+        state.transactions = state.transactions.filter(
+          (transaction) => transaction._id !== action.payload,
+        )
+      })
+      .addCase(getAllTransactions.pending, (state) => {
+        state.isLoading = true // Muestra un estado de carga cuando se está obteniendo transacciones
+      })
+      .addCase(getAllTransactions.rejected, (state, action) => {
+        state.isLoading = false // Para cuando la carga de transacciones falla
+        state.error = action.payload // Guarda el error
       })
   },
 })

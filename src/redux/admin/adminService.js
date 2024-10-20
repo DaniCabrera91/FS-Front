@@ -40,6 +40,14 @@ const getAllUsers = async () => {
   return response.data
 }
 
+const getUserByDni = async (dni) => {
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
+  const response = await axios.get(`${API_URL}/user-by-dni/${dni}`, {
+    headers: { Authorization: tokenAdmin },
+  })
+  return response.data
+}
+
 const createUser = async (userData) => {
   const tokenAdmin = localStorage.getItem('tokenAdmin')
   try {
@@ -96,6 +104,18 @@ const createTransaction = async (transactionData) => {
   return getAllTransactions()
 }
 
+const updateTransaction = async (transactionId, transactionData) => {
+  const tokenAdmin = localStorage.getItem('tokenAdmin')
+  const response = await axios.put(
+    `${API_URL}/update-transaction/${transactionId}`,
+    transactionData,
+    {
+      headers: { Authorization: tokenAdmin },
+    },
+  )
+  return response.data // Asegúrate de que esto devuelva la transacción actualizada
+}
+
 const deleteTransaction = async (transactionId) => {
   const tokenAdmin = localStorage.getItem('tokenAdmin')
   await axios.delete(`${API_URL}/delete-transaction/${transactionId}`, {
@@ -109,11 +129,13 @@ const adminService = {
   loginAdmin,
   logoutAdmin,
   getAllUsers,
+  getUserByDni,
   createUser,
   updateUser,
   deleteUser,
   getAllTransactions,
   createTransaction,
+  updateTransaction,
   deleteTransaction,
 }
 

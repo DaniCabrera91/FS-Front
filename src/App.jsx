@@ -16,7 +16,9 @@ import TheHeaderLogin from './components/TheHeaderLogin/TheHeaderLogin'
 import TheFooter from './components/TheFooter/TheFooter' // Importar el Footer
 import './App.scss'
 import MyFinances from './components/MyFinances/MyFinances'
-// import Categories from './components/Categories/Categories'
+// Imports para la vista detalle de las categorías
+import CategoryCardPanel from './components/CategoryCard/CategoryCardPanel'
+import CategoryDetails from './components/CategoryCard/CategoryDetails'
 
 const HeaderSelector = () => {
   const location = useLocation()
@@ -83,6 +85,8 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route path='/' element={<CategoryCardPanel />} />
+          <Route path='/category/:name' element={<CategoryDetails />} />
         </Routes>
         <FooterSelector /> {/* Añadir el FooterSelector aquí */}
       </BrowserRouter>

@@ -30,7 +30,6 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
   try {
     await userService.logout()
-    //thunkAPI.dispatch(resetState())
     return
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data)
@@ -40,7 +39,16 @@ export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
 const userSlice = createSlice({
   name: 'user',
   initialState,
-  reducers: {},
+  reducers: {
+    // Acción para reiniciar el estado cuando el usuario hace logout
+    resetState: (state) => {
+      state.user = null
+      state.token = null
+      state.isLoggedIn = false
+      state.isLoading = false
+      state.error = null
+    },
+  },
   extraReducers: (builder) => {
     builder
       // Estado cuando la acción de login está pendiente
@@ -74,8 +82,6 @@ const userSlice = createSlice({
       })
       // Estado cuando el logout es exitoso
       .addCase(logout.fulfilled, (state) => {
-        dispatch(resetState())
-
         state.user = null
         state.token = null
         state.isLoggedIn = false
@@ -88,5 +94,5 @@ const userSlice = createSlice({
   },
 })
 
-export const {} = userSlice.actions
+export const { resetState } = userSlice.actions
 export default userSlice.reducer

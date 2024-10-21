@@ -1,6 +1,4 @@
 import axios from 'axios'
-import userService from '../user/userService'
-
 import categories from "../../utils/categories"
 
 const API_URL = 'http://localhost:3000/trans'
@@ -14,7 +12,6 @@ const getAllTransactions = async () => {
 const getAllTransactionsByCategory = async (dni, category) => {
   try {
     const categoryEntry = Object.entries(categories).find(([key, value]) => value.name === category)
-
     if (!categoryEntry) throw new Error('Categoría no encontrada')
     
     const [categoryKey] = categoryEntry
@@ -40,25 +37,32 @@ const getAllTransactionsByCategory = async (dni, category) => {
             categoryName = matchingItem.name
           }
         })
-
         if (!icon) {
           icon = '../assets/other.svg'
         }
-
         return {
           ...trans,
           icon,
           categoryName,
         }
       })
-
       const sortedTransactions = transactionsWithIcons.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      return { transactions: sortedTransactions }
-    }
+      
+      const currentYear = new Date().getFullYear()
 
+      const totalAnnualExpense = sortedTransactions.reduce((annualExpense, trans) => {
+        const transactionYear = new Date(trans.createdAt).getFullYear()
+        if (trans.type === 'expenses' && transactionYear === currentYear) {
+          annualExpense += trans.amount
+        }
+        return annualExpense
+      }, 0)
+      
+      return { transactions: sortedTransactions, totalAnnualExpense: Math.abs(totalAnnualExpense) }
+    }
   } catch (error) {
     console.error('Error fetching transactions:', error)
-    return { transactions: [] }
+    return { transactions: [], totalAnnualExpense: 0 }
   }
 }
 
@@ -108,7 +112,7 @@ const getMonthlyTransactionsByMonth = async (dni, year, month) => {
   }
 }
 
-
+// para mostrar en "ultiomos movimientos"
 const getThreeMonthsData = async (dni) => {
   try {
     const response = await axios.post(`${API_URL}/getThreeMonthsByUserDni`, { dni })
@@ -143,7 +147,7 @@ const getThreeMonthsData = async (dni) => {
   }
 }
 
-
+// para la tabla de "mis finanzas"
 const getLastFiveMonthsData = async (dni) => {
   const currentDate = new Date()
   const currentMonth = currentDate.getMonth() + 1

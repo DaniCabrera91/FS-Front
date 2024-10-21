@@ -7,7 +7,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 const CategoryDetail = () => {
   const { name } = useParams()
   const dispatch = useDispatch()
-  const { transactionsPerCategory, isLoading, error } = useSelector((state) => state.trans)
+  const { transactionsPerCategory, totalAnnualExpense, isLoading, error } = useSelector((state) => state.trans)
 
   useEffect(() => {
     const dni = localStorage.getItem('dni')
@@ -15,6 +15,11 @@ const CategoryDetail = () => {
       dispatch(getAllTransactionsByCategory({dni, category: name}))
     }
   }, [dispatch, name])
+
+  const formatBalance = (balance) => {
+    if (isNaN(balance)) return '0.00'
+    return balance.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
 
   if (isLoading) {
     return <div>Cargando...</div>
@@ -46,9 +51,9 @@ const CategoryDetail = () => {
         <div className="flexmb-2 ">
           <h2 className="text-sm text-600 mb-1 font-semibold">Educación y cultura</h2>
         </div>
-        //gasto anual por categoria
-        <h1 className="text-3xl font-bold mb-4">5,000.10€</h1>
-        <h3 className="text-sm font-medium mb-1 font-semibold">Gastos Totales</h3> 
+     
+        <h1 className="text-3xl font-bold mb-4">{formatBalance(totalAnnualExpense.toFixed(2))} €</h1>
+        <h3 className="text-sm font-medium mb-1 font-semibold">Gasto Anual</h3> 
       </div>
 
       <main className="p-4">
@@ -59,6 +64,7 @@ const CategoryDetail = () => {
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="name" axisLine={false} tickLine={false} />
+          {/* <YAxis  domain={[0, maxValue]} hide /> */}
           <YAxis hide />
           <Tooltip />
           <Bar dataKey="expense" fill="#3E413F"  radius={[10, 10, 0, 0]} barSize={15}/>

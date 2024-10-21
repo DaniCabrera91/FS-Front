@@ -90,6 +90,7 @@ const transSlice = createSlice({
     totalBalance: 0,
     monthlyIncome: 0,
     monthlyExpense: 0,
+    totalAnnualExpense: 0,
     lastFiveMonthsData: [],
     isLoading: false,
     error: null,
@@ -168,6 +169,7 @@ const transSlice = createSlice({
     .addCase(getAllTransactionsByCategory.fulfilled, (state, action) => {
       state.isLoading = false
       state.transactionsPerCategory = action.payload.transactions 
+      state.totalAnnualExpense = action.payload.totalAnnualExpense
     })
     .addCase(getAllTransactionsByCategory.rejected, (state, action) => {
       state.isLoading = false

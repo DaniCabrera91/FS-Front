@@ -8,9 +8,9 @@ const login = async (userData) => {
   return response.data
 }
 
-const getInitialBalance = async (dni) => {
-  const response = await axios.post(`${API_URL}/getInitialBalance`, { dni })
-  return response.data.assets
+const getUserData = async (dni) => {
+  const response = await axios.post(`${API_URL}/getUserData`, { dni })
+  return response.data
 }
 
 const logout = async () => {
@@ -33,7 +33,7 @@ const logout = async () => {
 
 const userService = {
   login,
-  getInitialBalance,
+  getUserData,
   logout,
 }
 

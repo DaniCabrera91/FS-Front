@@ -8,6 +8,8 @@ const initialToken = localStorage.getItem('token') || null
 const initialState = {
   user: initialUser, // Inicializa con el usuario de localStorage si está disponible
   token: initialToken, // Inicializa con el token de localStorage si está disponible
+  initialBalance: null,
+  iban: null,
   isLoggedIn: !!initialToken, // Establece el estado de autenticación basado en la existencia del token
   isLoading: false,
   error: null,
@@ -36,13 +38,17 @@ export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
   }
 })
 
-export const getInitialBalance = createAsyncThunk(
-  'user/getInitialBalance',
-  async (dni, _, thunkAPI) => {
+export const getUserData = createAsyncThunk(
+  'user/getUserData',
+  async (dni, thunkAPI) => {
     try {
-      const balance = await userService.getInitialBalance(dni)
-      console.log(balance)
-      return balance
+      const response = await userService.getUserData(dni)
+      console.log(response)
+
+      return {
+        initialBalance: response.assets,
+        iban: response.iban, 
+      };
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
@@ -103,6 +109,19 @@ const userSlice = createSlice({
         localStorage.removeItem('user')
         localStorage.removeItem('token')
         localStorage.removeItem('dni')
+      })
+      .addCase(getUserData.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getUserData.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.initialBalance = action.payload.initialBalance
+        state.iban = action.payload.iban
+      })
+      .addCase(getUserData.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
       })
   },
 })

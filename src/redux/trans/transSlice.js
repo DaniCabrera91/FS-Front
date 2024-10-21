@@ -57,9 +57,9 @@ export const getThreeMonthsData = createAsyncThunk(
 // Obtener el balance total por dni
 export const getTotalBalance = createAsyncThunk(
   'transactions/getTotalBalance',
-  async (dni, thunkAPI) => {
+  async ({ dni, initialBalance }, thunkAPI) => {
     try {
-      const response = await transService.getTotalBalance(dni)
+      const response = await transService.getTotalBalance(dni, initialBalance)
       return response
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)

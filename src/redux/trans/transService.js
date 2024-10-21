@@ -164,14 +164,12 @@ const getLastFiveMonthsData = async (dni) => {
 }
 
 
-const getTotalBalance = async (dni) => {
+const getTotalBalance = async (dni, initialBalance) => { 
   try {
-    const initialBalance = await userService.getInitialBalance(dni)
-    console.log(initialBalance)
     const data = await getAllTransactions(dni)
-
     let totalBalance = initialBalance
 
+ 
     data.categories.forEach(category => {
       Object.values(category).forEach(cat => {
         cat.transactions.forEach(transaction => {
@@ -183,12 +181,13 @@ const getTotalBalance = async (dni) => {
         })
       })
     })
-    console.log(totalBalance)
     return totalBalance
   } catch (error) {
     console.error('Error al obtener el balance total:', error)
+    throw error
   }
 }
+
 
 
 // Exportar los servicios

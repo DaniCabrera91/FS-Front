@@ -5,8 +5,10 @@ import {
   getTotalBalance,
   getMonthlyTransactions,
 } from '../../redux/trans/transSlice'
+import {
+  getUserData,
+} from '../../redux/user/userSlice'
 
-import TheFooter from '../TheFooter/TheFooter'
 import Chart from '../Chart/Chart'
 import CategoryCardPanel from '../CategoryCard/CategoryCardPanel'
 
@@ -22,11 +24,19 @@ function MyFinances() {
     monthlyIncome,
     monthlyExpense,
   } = useSelector((state) => state.trans)
+  const {
+    initialBalance,
+  } = useSelector((state) => state.user)
+
   useEffect(() => {
     const dni = localStorage.getItem('dni')
     if (dni) {
-      dispatch(getTotalBalance(dni))
-      dispatch(getMonthlyTransactions(dni))
+      dispatch(getUserData(dni)) 
+      .unwrap()
+      .then(() => {
+        dispatch(getTotalBalance({ dni, initialBalance }))
+        dispatch(getMonthlyTransactions(dni))
+      })
     }
   }, [dispatch])
 

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getAllTransactionsByCategory } from '../../redux/trans/transSlice'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
 
 const CategoryDetail = () => {
   const { name } = useParams()
@@ -28,9 +29,64 @@ const CategoryDetail = () => {
     return <div>No hay detalles disponibles para esta categoría.</div>
   }
 
+  const data = [
+    { name: 'Jun', expense: 800 },
+    { name: 'Jul', expense: 900 },
+    { name: 'Ago', expense: 500 },
+    { name: 'Sep', expense: 1000 },
+    { name: 'Oct', expense: 400 },
+  ]
+
   return (
     <>
-        <div className="bg-white rounded-lg p-4">
+
+<div className="min-h-screen bg-gray-100">
+
+<div className="mx-8 p-4">
+        <div className="flexmb-2 ">
+          <h2 className="text-sm text-600 mb-1 font-semibold">Educación y cultura</h2>
+        </div>
+        //gasto anual por categoria
+        <h1 className="text-3xl font-bold mb-4">5,000.10€</h1>
+        <h3 className="text-sm font-medium mb-1 font-semibold">Gastos Totales</h3> 
+      </div>
+
+      <main className="p-4">
+      
+              
+        <div className="h-64 w-full p-4">
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart data={data}>
+          <CartesianGrid strokeDasharray="3 3" vertical={false} />
+          <XAxis dataKey="name" axisLine={false} tickLine={false} />
+          <YAxis hide />
+          <Bar dataKey="expense" fill="#4B5563" radius={[4, 4, 0, 0]} />
+        </BarChart>
+      </ResponsiveContainer>
+      <div className="flex justify-between text-sm text-gray-600 mt-2">
+        <span>Gastos</span>
+        <span>1000€</span>
+      </div>
+      <p className="text-xs text-gray-500 mt-1">Representa un 24% de tu gasto total</p>
+    </div>
+
+      </main>
+     
+    </div>
+
+
+    <div className="bg-white rounded-lg p-4 card-transition">
+   
+    <div className="bg-white p-4 rounded-t-3xl shadow-lg ">
+        <h2 className="text-lg font-semibold mb-2">Movimientos</h2>
+        <div className="h-px bg-gray-200 mb-2"></div>
+        <div className="flex justify-between text-sm text-gray-600">
+          <span>Todos los movimientos</span>
+          <span>01 oct - 30 oct</span>
+        </div>
+      
+
+        <div className="bg-white rounded-lg p-4 my-2">
             {transactionsPerCategory.map((transaction, index) => {
                 const date = new Date(transaction.createdAt)
                 const formattedDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
@@ -49,6 +105,9 @@ const CategoryDetail = () => {
                 )
             })}
             </div>
+            </div>
+            </div>
+           
     </>
   )
 }

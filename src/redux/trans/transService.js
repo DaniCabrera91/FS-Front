@@ -15,6 +15,7 @@ const getMonthlyTransactions = async (dni) => {
   let monthlyIncome = 0
   let monthlyExpense = 0
   response.data.categories.forEach((category) => {
+    console.log(response.data)
     Object.values(category).forEach((cat) => {
       cat.transactions.forEach((transaction) => {
         if (transaction.type === 'incomes') {
@@ -43,6 +44,7 @@ const getMonthlyTransactionsByMonth = async (dni, year, month) => {
     const transactions = response.data.categories
     let income = 0
     let expenses = 0
+
     transactions.forEach((category) => {
       Object.values(category).forEach((cat) => {
         cat.transactions.forEach((transaction) => {
@@ -87,6 +89,7 @@ const getLastFiveMonthsData = async (dni) => {
 const getTotalBalance = async () => {
   try {
     const data = await getAllTransactions()
+
     let totalBalance = 0
     data.categories.forEach((category) => {
       Object.values(category).forEach((cat) => {

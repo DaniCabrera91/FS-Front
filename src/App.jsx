@@ -16,7 +16,13 @@ import TheHeaderLogin from './components/TheHeaderLogin/TheHeaderLogin'
 import TheFooter from './components/TheFooter/TheFooter' // Importar el Footer
 import './App.scss'
 import MyFinances from './components/MyFinances/MyFinances'
+<<<<<<< HEAD
 import CategoryDetail from './components/CategoryDetail/CategoryDetail'
+=======
+// Imports para la vista detalle de las categorías
+import CategoryCardPanel from './components/CategoryCard/CategoryCardPanel'
+import CategoryDetails from './components/CategoryCard/CategoryDetails'
+>>>>>>> categories
 
 const HeaderSelector = () => {
   const location = useLocation()
@@ -27,9 +33,18 @@ const HeaderSelector = () => {
 
 const FooterSelector = () => {
   const location = useLocation()
+<<<<<<< HEAD
   const isLoginPage =
     location.pathname === '/login' || location.pathname === '/admin/login'
   const isAdminDashboard = location.pathname === '/admin/dashboard'
+=======
+
+  const isLoginPage =
+    location.pathname === '/login' || location.pathname === '/admin/login'
+
+  const isAdminDashboard = location.pathname === '/admin/dashboard'
+
+>>>>>>> categories
   // Mostrar el Footer solo si no es página de login ni el AdminDashboard
   return !isLoginPage && !isAdminDashboard ? <TheFooter /> : null
 }
@@ -73,6 +88,7 @@ function App() {
             element={
               <PrivateRoute type='user'>
                 <MyFinances />
+<<<<<<< HEAD
               </PrivateRoute>
             }
           />
@@ -81,9 +97,13 @@ function App() {
             element={
               <PrivateRoute type='user'>
                 <CategoryDetail />
+=======
+>>>>>>> categories
               </PrivateRoute>
             }
           />
+          <Route path='/' element={<CategoryCardPanel />} />
+          <Route path='/category/:name' element={<CategoryDetails />} />
         </Routes>
         <FooterSelector /> {/* Añadir el FooterSelector aquí */}
       </BrowserRouter>

@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import transService from './transService'
+import axios from 'axios'
 
 // Obtener todas las transacciones por dni
 export const getAllTransactions = createAsyncThunk(
@@ -11,7 +12,7 @@ export const getAllTransactions = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  }
+  },
 )
 
 // Obtiene las transacciones del mes actual por dni
@@ -25,7 +26,7 @@ export const getMonthlyTransactions = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  }
+  },
 )
 
 // Obtener el balance total por dni
@@ -38,7 +39,7 @@ export const getTotalBalance = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  }
+  },
 )
 
 // Obtiene los ingresos y gastos del mes actual y los 4 anteriores
@@ -50,9 +51,21 @@ export const getLastFiveMonthsData = createAsyncThunk(
       const response = await transService.getLastFiveMonthsData(dni)
       return response
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data)
     }
-  }
+  },
+)
+
+// Obtener detalles de la categoría por dni y nombre de categoría
+export const getCategoryDetails = createAsyncThunk(
+  'transactions/getCategoryDetails',
+  async ({ dni, category }) => {
+    const response = await axios.post('/api/trans/getTransactionsByCategory', {
+      dni,
+      category,
+    })
+    return response.data
+  },
 )
 
 const transSlice = createSlice({
@@ -63,63 +76,76 @@ const transSlice = createSlice({
     monthlyIncome: 0,
     monthlyExpense: 0,
     lastFiveMonthsData: [],
+    categoryDetails: {},
     isLoading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-    .addCase(getAllTransactions.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    .addCase(getAllTransactions.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.transactions = action.payload.categories
-    })
-    .addCase(getAllTransactions.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload
-    })
-    .addCase(getTotalBalance.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    .addCase(getTotalBalance.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.totalBalance = action.payload
-    })
-    .addCase(getTotalBalance.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload
-    })
-    .addCase(getMonthlyTransactions.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    .addCase(getMonthlyTransactions.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.transactions = action.payload.transactions 
-      state.monthlyIncome = action.payload.monthlyIncome 
-      state.monthlyExpense = action.payload.monthlyExpense 
-    })
-    .addCase(getMonthlyTransactions.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload
-    })
-    .addCase(getLastFiveMonthsData.pending, (state) => {
-      state.isLoading = true
-      state.error = null
-    })
-    .addCase(getLastFiveMonthsData.fulfilled, (state, action) => {
-      state.isLoading = false
-      state.lastFiveMonthsData = action.payload
-    })
-    .addCase(getLastFiveMonthsData.rejected, (state, action) => {
-      state.isLoading = false
-      state.error = action.payload
-    })
-  }
+      .addCase(getAllTransactions.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getAllTransactions.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.transactions = action.payload.categories
+      })
+      .addCase(getAllTransactions.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(getTotalBalance.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getTotalBalance.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.totalBalance = action.payload
+      })
+      .addCase(getTotalBalance.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(getMonthlyTransactions.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getMonthlyTransactions.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.transactions = action.payload.transactions
+        state.monthlyIncome = action.payload.monthlyIncome
+        state.monthlyExpense = action.payload.monthlyExpense
+      })
+      .addCase(getMonthlyTransactions.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(getLastFiveMonthsData.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getLastFiveMonthsData.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.lastFiveMonthsData = action.payload
+      })
+      .addCase(getLastFiveMonthsData.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
+      })
+      .addCase(getCategoryDetails.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getCategoryDetails.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.categoryDetails = action.payload
+      })
+      .addCase(getCategoryDetails.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.error.message
+      })
+  },
 })
 
 export default transSlice.reducer

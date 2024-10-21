@@ -21,7 +21,7 @@ export const getAllTransactionsByCategory = createAsyncThunk(
       const response = await transService.getAllTransactionsByCategory(dni, category)
       return response
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data)
     }
   }
 )

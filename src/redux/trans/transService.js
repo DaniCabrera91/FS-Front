@@ -87,6 +87,62 @@ const getMonthlyTransactions = async (dni) => {
 }
 
 
+// para la tabla de "mis finanzas"
+const getLastFiveMonthsData = async (dni) => {
+  const currentDate = new Date()
+  const currentMonth = currentDate.getMonth() + 1
+  const currentYear = currentDate.getFullYear()
+
+  const results = []
+  
+  for (let i = 0; i < 5; i++) {
+   
+    const month = currentMonth - i
+    const year = month <= 0 ? currentYear - 1 : currentYear
+    const adjustedMonth = month <= 0 ? month + 12 : month
+    
+    const monthlyData = await getMonthlyTransactionsByMonth(dni, year, adjustedMonth)
+    results.push(monthlyData)
+  }
+  console.log("results")
+  console.log(results)
+  return results
+}
+
+// const getLastFiveMonthsData = async (dni, category = null) => {
+//   const currentDate = new Date()
+//   const currentMonth = currentDate.getMonth() + 1
+//   const currentYear = currentDate.getFullYear()
+
+//   const results = []
+
+//   let categoryKey = null
+//   if (category) {
+//     const categoryEntry = Object.entries(categories).find(([key, value]) => value.name === category)
+//     if (!categoryEntry) throw new Error('Categoría no encontrada')
+//     [categoryKey] = categoryEntry
+//   }
+
+//   for (let i = 0; i < 5; i++) {
+//     const month = currentMonth - i
+//     const year = month <= 0 ? currentYear - 1 : currentYear
+//     const adjustedMonth = month <= 0 ? month + 12 : month
+
+//     const monthlyData = await getMonthlyTransactionsByMonth(dni, year, adjustedMonth)
+
+//     const transactionsToPush = categoryKey 
+//       ? monthlyData.transactions.filter(trans => trans.category === categoryKey) 
+//       : monthlyData.transactions
+    
+//     results.push(transactionsToPush)
+//   }
+
+//   return results
+// }
+
+
+
+
 const getMonthlyTransactionsByMonth = async (dni, year, month) => {
   try {
   const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni, month, year })
@@ -147,25 +203,7 @@ const getThreeMonthsData = async (dni) => {
   }
 }
 
-// para la tabla de "mis finanzas"
-const getLastFiveMonthsData = async (dni) => {
-  const currentDate = new Date()
-  const currentMonth = currentDate.getMonth() + 1
-  const currentYear = currentDate.getFullYear()
 
-  const results = []
-  
-  for (let i = 0; i < 5; i++) {
-   
-    const month = currentMonth - i
-    const year = month <= 0 ? currentYear - 1 : currentYear
-    const adjustedMonth = month <= 0 ? month + 12 : month
-    
-    const monthlyData = await getMonthlyTransactionsByMonth(dni, year, adjustedMonth)
-    results.push(monthlyData)
-  }
-  return results
-}
 
 
 const getTotalBalance = async (dni, initialBalance) => { 

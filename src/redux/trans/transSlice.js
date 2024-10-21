@@ -28,6 +28,20 @@ export const getMonthlyTransactions = createAsyncThunk(
   }
 )
 
+
+export const getThreeMonthsData = createAsyncThunk(
+  'transactions/getThreeMonthsData',
+  async (dni, thunkAPI) => {
+    try {
+      const response = await transService.getThreeMonthsData(dni)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
+)
+
+
 // Obtener el balance total por dni
 export const getTotalBalance = createAsyncThunk(
   'transactions/getTotalBalance',
@@ -50,7 +64,7 @@ export const getLastFiveMonthsData = createAsyncThunk(
       const response = await transService.getLastFiveMonthsData(dni)
       return response
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data);
+      return thunkAPI.rejectWithValue(error.response.data)
     }
   }
 )
@@ -59,6 +73,7 @@ const transSlice = createSlice({
   name: 'transactions',
   initialState: {
     transactions: [],
+    threeMonthsTransactions: [],
     totalBalance: 0,
     monthlyIncome: 0,
     monthlyExpense: 0,
@@ -66,7 +81,9 @@ const transSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetState: () => initialState
+  },
   extraReducers: (builder) => {
     builder
     .addCase(getAllTransactions.pending, (state) => {
@@ -104,6 +121,18 @@ const transSlice = createSlice({
       state.monthlyExpense = action.payload.monthlyExpense 
     })
     .addCase(getMonthlyTransactions.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    })
+    .addCase(getThreeMonthsData.pending, (state) => {
+      state.isLoading = true
+      state.error = null
+    })
+    .addCase(getThreeMonthsData.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.threeMonthsTransactions = action.payload.transactions 
+    })
+    .addCase(getThreeMonthsData.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.payload
     })

@@ -1,32 +1,39 @@
-import React from 'react'
-import { ShoppingCart, ShoppingBag, Stethoscope, Droplet } from 'lucide-react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getThreeMonthsData } from '../../redux/trans/transSlice'
 
-const transactions = [
-  { icon: ShoppingCart, name: 'Mercadona', date: '14 mayo', amount: -56.30 },
-  { icon: ShoppingBag, name: 'Shopify', date: '14 mayo', amount: -26.75 },
-  { icon: Stethoscope, name: 'Clínica', date: '13 mayo', amount: -130.00 },
-  { icon: Droplet, name: 'Gasolina', date: '13 mayo', amount: -66.20 },
-]
+export default function TransactionList({ limit }) {
+  const dispatch = useDispatch()
+  const { threeMonthsTransactions } = useSelector((state) => state.trans)
 
-export default function TransactionList() {
+  useEffect(() => {
+    const dni = localStorage.getItem('dni')
+    if (dni) {
+      dispatch(getThreeMonthsData(dni))
+    }
+  }, [dispatch])
+
+  const displayedTransactions = limit ? threeMonthsTransactions.slice(0, limit) : threeMonthsTransactions
+
   return (
     <div className="bg-white rounded-lg p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-sm font-semibold text-red-600">Últimos movimientos</h2>
-        <span className="text-sm ">Ver más</span>
-      </div>
-      {transactions.map((transaction, index) => (
-        <div key={index} className="flex items-center justify-between py-2 border-b last:border-b-0">
-          <div className="flex items-center">
-            <transaction.icon className="w-8 h-8 mr-3 text-gray-600" />
-            <div>
-              <p className="font-semibold">{transaction.name}</p>
-              <p className="text-xs text-gray-500">{transaction.date}</p>
+      {displayedTransactions.map((transaction, index) => {
+        const date = new Date(transaction.createdAt)
+        const formattedDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
+
+        return (
+          <div key={index} className="flex items-center justify-between py-2 border-b last:border-b-0">
+            <div className="flex items-center">
+              <img src={transaction.icon} alt={transaction.category} className="w-8 h-8 mr-3 text-gray-600" />
+              <div>
+                <p className="font-semibold">{transaction.categoryName}</p>
+                <p className="text-xs text-gray-500">{formattedDate}</p>
+              </div>
             </div>
+            <span className="font-semibold">{transaction.amount.toFixed(2)}€</span>
           </div>
-          <span className="font-semibold">{transaction.amount.toFixed(2)}€</span>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }

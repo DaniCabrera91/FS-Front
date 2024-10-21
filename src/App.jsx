@@ -16,6 +16,7 @@ import TheHeaderLogin from './components/TheHeaderLogin/TheHeaderLogin'
 import TheFooter from './components/TheFooter/TheFooter' // Importar el Footer
 import './App.scss'
 import MyFinances from './components/MyFinances/MyFinances'
+import CategoryDetail from './components/CategoryDetail/CategoryDetail'
 
 const HeaderSelector = () => {
   const location = useLocation()
@@ -82,8 +83,16 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path='/category/:name'
+            element={
+              <PrivateRoute type='user'>
+                <CategoryDetail />
+              </PrivateRoute>
+            }
+          />
         </Routes>
-        <FooterSelector /> {/* Añadir el FooterSelector aquí */}
+        <FooterSelector />
       </BrowserRouter>
     </div>
   )

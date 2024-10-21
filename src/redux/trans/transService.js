@@ -1,5 +1,6 @@
 import axios from 'axios'
 
+
 import categories from "../../utils/categories"
 
 const API_URL = 'http://localhost:3000/trans'
@@ -10,6 +11,56 @@ const getAllTransactions = async () => {
   return response.data
 }
 
+const getAllTransactionsByCategory = async (dni, category) => {
+  try {
+    const categoryEntry = Object.entries(categories).find(([key, value]) => value.name === category)
+
+    if (!categoryEntry) throw new Error('Categoría no encontrada')
+    
+    const [categoryKey] = categoryEntry
+    const response = await axios.post(`${API_URL}/getByUserDni`, { dni, category: categoryKey })
+    
+    const categoriesArray = response.data.categories
+
+    if (categoriesArray.length) {
+      const categoryData = categoriesArray[0][categoryKey]
+      const transactions = categoryData.transactions
+      
+      const transactionsWithIcons = transactions.map((trans) => {
+        let icon = null
+        let categoryName = null
+
+        Object.keys(categories).forEach((categoryKey) => {
+          const category = categories[categoryKey]
+          const matchingItem = category.items.find(item => item.type === trans.category)
+
+          if (matchingItem) {
+            console.log("match")
+            icon = matchingItem.icon
+            categoryName = matchingItem.name
+          }
+        })
+
+        if (!icon) {
+          icon = '../assets/other.svg'
+        }
+
+        return {
+          ...trans,
+          icon,
+          categoryName,
+        }
+      })
+
+      const sortedTransactions = transactionsWithIcons.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      return { transactions: sortedTransactions }
+    }
+
+  } catch (error) {
+    console.error('Error fetching transactions:', error)
+    return { transactions: [] }
+  }
+}
 
 const getMonthlyTransactions = async (dni) => {
   const response = await axios.post(`${API_URL}/getMonthlyByUserDni`, { dni })
@@ -75,13 +126,9 @@ const getThreeMonthsData = async (dni) => {
           categoryName = matchingItem.name
         }
       })
-
-
       if (!icon) {
         icon = '../assets/other.svg'
       }
-
-
       return {
         ...trans,
         icon,
@@ -113,7 +160,6 @@ const getLastFiveMonthsData = async (dni) => {
     const monthlyData = await getMonthlyTransactionsByMonth(dni, year, adjustedMonth)
     results.push(monthlyData)
   }
-
   return results
 }
 
@@ -148,6 +194,7 @@ const transService = {
   getMonthlyTransactionsByMonth,
   getLastFiveMonthsData,
   getThreeMonthsData,
+  getAllTransactionsByCategory,
 }
 
 export default transService

@@ -27,7 +27,11 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
       </div>
 
       {transactions && transactions.map((category) => (
+      
         Object.keys(category).map((key) => {
+
+          console.log('Contenido de category[key]:', category[key])
+          
           const amount = category[key].transactions.reduce((total, t) => total + t.amount, 0)
 
           const percentage = selectedType === 'expenses'
@@ -36,8 +40,12 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
 
           const type = selectedType === 'expenses' ? 'expenses' : 'incomes'
 
+          
+          
+
           return (
             category[key].name !== 'Ingresos' ? (
+              
               <CategoryCard
                 key={key}
                 name={category[key].name}

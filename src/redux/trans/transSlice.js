@@ -14,6 +14,18 @@ export const getAllTransactions = createAsyncThunk(
   }
 )
 
+export const getAllTransactionsByCategory = createAsyncThunk(
+  'transactions/getAllTransactionsByCategory',
+  async ({ dni, category }, thunkAPI) => {
+    try {
+      const response = await transService.getAllTransactionsByCategory(dni, category)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+)
+
 // Obtiene las transacciones del mes actual por dni
 // añadir posibilidad de pasar month y year
 export const getMonthlyTransactions = createAsyncThunk(
@@ -73,6 +85,7 @@ const transSlice = createSlice({
   name: 'transactions',
   initialState: {
     transactions: [],
+    transactionsPerCategory: [],
     threeMonthsTransactions: [],
     totalBalance: 0,
     monthlyIncome: 0,
@@ -145,6 +158,18 @@ const transSlice = createSlice({
       state.lastFiveMonthsData = action.payload
     })
     .addCase(getLastFiveMonthsData.rejected, (state, action) => {
+      state.isLoading = false
+      state.error = action.payload
+    })
+    .addCase(getAllTransactionsByCategory.pending, (state) => {
+      state.isLoading = true
+      state.error = null
+    })
+    .addCase(getAllTransactionsByCategory.fulfilled, (state, action) => {
+      state.isLoading = false
+      state.transactionsPerCategory = action.payload.transactions 
+    })
+    .addCase(getAllTransactionsByCategory.rejected, (state, action) => {
       state.isLoading = false
       state.error = action.payload
     })

@@ -30,6 +30,7 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
   try {
     await userService.logout()
+    //thunkAPI.dispatch(resetState())
     return
   } catch (error) {
     return thunkAPI.rejectWithValue(error.response.data)
@@ -73,6 +74,8 @@ const userSlice = createSlice({
       })
       // Estado cuando el logout es exitoso
       .addCase(logout.fulfilled, (state) => {
+        dispatch(resetState())
+
         state.user = null
         state.token = null
         state.isLoggedIn = false
@@ -80,6 +83,7 @@ const userSlice = createSlice({
         // Eliminar el usuario y el token de localStorage
         localStorage.removeItem('user')
         localStorage.removeItem('token')
+        localStorage.removeItem('dni')
       })
   },
 })

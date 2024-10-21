@@ -12,11 +12,11 @@ export const getAllTransactions = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  },
+  }
 )
 
 // Obtiene las transacciones del mes actual por dni
-// añadir posibilidad de pasar month y year
+// Añadir posibilidad de pasar month y year
 export const getMonthlyTransactions = createAsyncThunk(
   'transactions/getMonthlyTransactions',
   async (dni, thunkAPI) => {
@@ -26,7 +26,19 @@ export const getMonthlyTransactions = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  },
+  }
+)
+
+export const getThreeMonthsData = createAsyncThunk(
+  'transactions/getThreeMonthsData',
+  async (dni, thunkAPI) => {
+    try {
+      const response = await transService.getThreeMonthsData(dni)
+      return response
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  }
 )
 
 // Obtener el balance total por dni
@@ -39,7 +51,7 @@ export const getTotalBalance = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  },
+  }
 )
 
 // Obtiene los ingresos y gastos del mes actual y los 4 anteriores
@@ -53,7 +65,7 @@ export const getLastFiveMonthsData = createAsyncThunk(
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data)
     }
-  },
+  }
 )
 
 // Obtener detalles de la categoría por dni y nombre de categoría
@@ -65,13 +77,14 @@ export const getCategoryDetails = createAsyncThunk(
       category,
     })
     return response.data
-  },
+  }
 )
 
 const transSlice = createSlice({
   name: 'transactions',
   initialState: {
     transactions: [],
+    threeMonthsTransactions: [],
     totalBalance: 0,
     monthlyIncome: 0,
     monthlyExpense: 0,
@@ -80,7 +93,9 @@ const transSlice = createSlice({
     isLoading: false,
     error: null,
   },
-  reducers: {},
+  reducers: {
+    resetState: () => initialState
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAllTransactions.pending, (state) => {
@@ -144,6 +159,18 @@ const transSlice = createSlice({
       .addCase(getCategoryDetails.rejected, (state, action) => {
         state.isLoading = false
         state.error = action.error.message
+      })
+      .addCase(getThreeMonthsData.pending, (state) => {
+        state.isLoading = true
+        state.error = null
+      })
+      .addCase(getThreeMonthsData.fulfilled, (state, action) => {
+        state.isLoading = false
+        state.threeMonthsTransactions = action.payload.transactions 
+      })
+      .addCase(getThreeMonthsData.rejected, (state, action) => {
+        state.isLoading = false
+        state.error = action.payload
       })
   },
 })

@@ -1,6 +1,7 @@
 import axios from 'axios'
+import categories from "../../utils/categories"
 
-const API_URL = '/trans'
+const API_URL = 'http://localhost:3000/trans'
 
 // Obtener todas las transacciones por dni
 const getAllTransactions = async () => {
@@ -15,7 +16,6 @@ const getMonthlyTransactions = async (dni) => {
   let monthlyIncome = 0
   let monthlyExpense = 0
   response.data.categories.forEach((category) => {
-    console.log(response.data)
     Object.values(category).forEach((cat) => {
       cat.transactions.forEach((transaction) => {
         if (transaction.type === 'incomes') {
@@ -64,6 +64,43 @@ const getMonthlyTransactionsByMonth = async (dni, year, month) => {
 }
 
 // Obtener datos de los últimos cinco meses
+const getThreeMonthsData = async (dni) => {
+  try {
+    const response = await axios.post(`${API_URL}/getThreeMonthsByUserDni`, { dni })
+
+    const transactionsWithIcons = response.data.transactions.map((trans) => {
+      let icon = null
+      let categoryName = null
+
+      Object.keys(categories).forEach((categoryKey) => {
+        const category = categories[categoryKey]
+        const matchingItem = category.items.find(item => item.type === trans.category)
+
+        if (matchingItem) {
+          icon = matchingItem.icon
+          categoryName = matchingItem.name
+        }
+      })
+
+      if (!icon) {
+        icon = '../assets/other.svg'
+      }
+
+      return {
+        ...trans,
+        icon,
+        categoryName,
+      }
+    })
+
+    return { transactions: transactionsWithIcons }
+  } catch (error) {
+    console.error('Error fetching transactions:', error)
+    return { transactions: [] }
+  }
+}
+
+// Obtener los datos de los últimos cinco meses
 const getLastFiveMonthsData = async (dni) => {
   const currentDate = new Date()
   const currentMonth = currentDate.getMonth() + 1
@@ -89,15 +126,15 @@ const getLastFiveMonthsData = async (dni) => {
 const getTotalBalance = async () => {
   try {
     const data = await getAllTransactions()
-
     let totalBalance = 0
+
     data.categories.forEach((category) => {
       Object.values(category).forEach((cat) => {
         cat.transactions.forEach((transaction) => {
           if (transaction.type === 'incomes') {
             totalBalance += transaction.amount
           } else if (transaction.type === 'expenses') {
-            totalBalance += transaction.amount
+            totalBalance -= transaction.amount
           }
         })
       })
@@ -125,6 +162,7 @@ const transService = {
   getMonthlyTransactionsByMonth,
   getLastFiveMonthsData,
   getCategoryDetails,
+  getThreeMonthsData,
 }
 
 export default transService

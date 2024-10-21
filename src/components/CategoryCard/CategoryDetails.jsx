@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import ExpenseDetails from './ExpenseDetails'
 import IncomeDetails from './IncomeDetails'
-import categories from './categories' // Adjust the import path as needed
+import categories from "../../utils/categories"
 //
 // const [selectedCategory, setSelectedCategory] = useState(null)
 // import {

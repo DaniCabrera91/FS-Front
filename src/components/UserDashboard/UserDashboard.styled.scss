@@ -10,7 +10,6 @@
 .card-transition {
   transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Suaviza la transición */
   position: relative;
-  z-index: 1;
 }
 
 .card-hidden {

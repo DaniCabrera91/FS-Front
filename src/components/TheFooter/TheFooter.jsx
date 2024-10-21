@@ -1,13 +1,12 @@
 import React from 'react'
 import { Home, RefreshCw, PlusCircle, HelpCircle } from 'lucide-react'
-import { useNavigate } from 'react-router-dom' // Importar useNavigate
+import { useNavigate } from 'react-router-dom'
 
 export default function TheFooter() {
-  const navigate = useNavigate() // Inicializar useNavigate
+  const navigate = useNavigate()
 
-  // Función para navegar a la página de inicio
   const goToHome = () => {
-    navigate('/') // Navegar a la ruta "/"
+    navigate('/')
   }
 
   return (
@@ -18,7 +17,6 @@ export default function TheFooter() {
           onClick={goToHome}
         >
           {' '}
-          {/* Agregar onClick aquí */}
           <Home size={24} />
           <span className='text-xs mt-1'>Home</span>
         </button>

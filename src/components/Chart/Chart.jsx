@@ -38,15 +38,14 @@ function Chart() {
       <ResponsiveContainer width="100%" height={200}>
         <BarChart data={data}>
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis domain={[0, maxValue]} />
+          <XAxis dataKey="month" axisLine={false} tickLine={false}/>
+          <YAxis  domain={[0, maxValue]} hide />
           <Tooltip />
-          <Bar dataKey="Ingresos" fill="#E0001A" />
-          <Bar dataKey="Gastos" fill="#3E413F" />
+          <Bar dataKey="Ingresos" fill="#E0001A" radius={[10, 10, 0, 0]} barSize={15} />
+          <Bar dataKey="Gastos" fill="#3E413F" radius={[10, 10, 0, 0]} barSize={15}/>
         </BarChart>
       </ResponsiveContainer>
     </>
   )
 }
-
 export default Chart

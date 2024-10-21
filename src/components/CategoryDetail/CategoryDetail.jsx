@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getAllTransactionsByCategory } from '../../redux/trans/transSlice'
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, ResponsiveContainer } from 'recharts'
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 
 const CategoryDetail = () => {
   const { name } = useParams()
@@ -60,7 +60,8 @@ const CategoryDetail = () => {
           <CartesianGrid strokeDasharray="3 3" vertical={false} />
           <XAxis dataKey="name" axisLine={false} tickLine={false} />
           <YAxis hide />
-          <Bar dataKey="expense" fill="#4B5563" radius={[4, 4, 0, 0]} />
+          <Tooltip />
+          <Bar dataKey="expense" fill="#3E413F"  radius={[10, 10, 0, 0]} barSize={15}/>
         </BarChart>
       </ResponsiveContainer>
       <div className="flex justify-between text-sm text-gray-600 mt-2">

@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import userService from '../user/userService'
 
 import categories from "../../utils/categories"
 
@@ -164,27 +164,32 @@ const getLastFiveMonthsData = async (dni) => {
 }
 
 
-const getTotalBalance = async () => {
+const getTotalBalance = async (dni) => {
   try {
-    const data = await getAllTransactions()
+    const initialBalance = await userService.getInitialBalance(dni)
+    console.log(initialBalance)
+    const data = await getAllTransactions(dni)
 
-    let totalBalance = 0
+    let totalBalance = initialBalance
+
     data.categories.forEach(category => {
-      Object.values(category).forEach(cat => { 
-        cat.transactions.forEach(transaction => { 
+      Object.values(category).forEach(cat => {
+        cat.transactions.forEach(transaction => {
           if (transaction.type === 'incomes') {
             totalBalance += transaction.amount
           } else if (transaction.type === 'expenses') {
-            totalBalance += transaction.amount
+            totalBalance -= transaction.amount
           }
         })
       })
     })
+    console.log(totalBalance)
     return totalBalance
   } catch (error) {
     console.error('Error al obtener el balance total:', error)
   }
 }
+
 
 // Exportar los servicios
 const transService = {

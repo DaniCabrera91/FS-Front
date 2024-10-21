@@ -36,6 +36,19 @@ export const logout = createAsyncThunk('user/logout', async (_, thunkAPI) => {
   }
 })
 
+export const getInitialBalance = createAsyncThunk(
+  'user/getInitialBalance',
+  async (dni, _, thunkAPI) => {
+    try {
+      const balance = await userService.getInitialBalance(dni)
+      console.log(balance)
+      return balance
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data)
+    }
+  },
+)
+
 const userSlice = createSlice({
   name: 'user',
   initialState,

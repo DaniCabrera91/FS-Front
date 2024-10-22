@@ -8,20 +8,37 @@
   font-weight: normal;
   font-style: normal;
 }
+
 html,
 body {
   height: 100%;
+  margin: 0;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  background-color: #f4f5f6;
 }
+
 .phone {
   width: 375px;
-  max-width: 100%;
-  margin: 0 auto;
   height: 100vh;
   border: 1px solid #f4f5f6;
   box-shadow: 0 0 10px #bdb8aa;
-  background-color: #f4f5f6;
   font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  //padding: 20px;
 }
+
+// .card {
+//   background-color: white; /* Color de fondo para las cartas */
+//   margin: 10px 0; /* Margen entre cartas */
+//   padding: 20px; /* Espaciado interno para las cartas */
+//   border-radius: 8px; /* Bordes redondeados opcionales */
+//   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra opcional */
+// }
+
+// .card-container {
+//   flex-grow: 1; /* Para que las cartas ocupen el espacio restante */
+//   padding: 10px; /* Espaciado interno opcional */
+// }

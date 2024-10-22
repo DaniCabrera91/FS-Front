@@ -67,7 +67,7 @@ const Home = () => {
               <div className="flex justify-between items-center">
                 <span className="text-sm text-red-600 font-semibold">Mis finanzas</span>
                 <div className="flex justify-between items-center">
-                <InfoButton/>
+                  <InfoButton/>
                   <ChevronRight className="w-4 h-4 ml-1 text-red-600" />
                 </div>
               </div>

@@ -21,6 +21,7 @@ import travel from '../assets/icons/plane.svg'
 import taxes from '../assets/icons/hand-coins.svg'
 import cash from '../assets/icons/coins.svg'
 import refrigerator from '../assets/icons/refrigerator.svg'
+import info from '../assets/icons/info.svg'
 
 
 const iconPaths = {
@@ -47,6 +48,7 @@ const iconPaths = {
     taxes,
     cash,
     refrigerator,
+    info,
 }
 
 export default iconPaths

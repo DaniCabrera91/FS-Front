@@ -6,6 +6,8 @@ import FinanceOverview from './FinanceOverview'
 import TransactionList from './TransactionList'
 import { ChevronRight } from 'lucide-react'
 import ProjectPlannerCard from '../ProjectPlannerCard/ProjectPlannerCard'
+import iconPaths from '../../utils/iconPath'
+import InfoButton from '../InfoButton/InfoButton.jsx'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -64,7 +66,10 @@ const Home = () => {
             <div className={`bg-white rounded-lg p-4 mb-4 ${fadeOtherCards ? 'card-fade card-fade-hidden' : ''}`} onClick={handleClick}>
               <div className="flex justify-between items-center">
                 <span className="text-sm text-red-600 font-semibold">Mis finanzas</span>
-                <ChevronRight className="w-4 h-4 ml-1 text-red-600" />
+                <div className="flex justify-between items-center">
+                <InfoButton/>
+                  <ChevronRight className="w-4 h-4 ml-1 text-red-600" />
+                </div>
               </div>
             </div>
 

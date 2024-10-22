@@ -41,7 +41,7 @@ function Chart() {
           <XAxis dataKey="month" axisLine={false} tickLine={false}/>
           <YAxis  domain={[0, maxValue]} hide />
           <Tooltip />
-          <Bar dataKey="Ingresos" fill="#E0001A" radius={[10, 10, 0, 0]} barSize={15} />
+          <Bar dataKey="Ingresos" fill="#E30613" radius={[10, 10, 0, 0]} barSize={15} />
           <Bar dataKey="Gastos" fill="#3E413F" radius={[10, 10, 0, 0]} barSize={15}/>
         </BarChart>
       </ResponsiveContainer>

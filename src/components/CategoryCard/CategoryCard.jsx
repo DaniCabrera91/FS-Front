@@ -25,7 +25,7 @@ export default function CategoryCard({ name, percentage, amount, type }) {
         </div>
         <div className="text-right "> 
           <div className="flex justify-between items-center">
-            <InfoButton/>
+            <InfoButton ariaLabel={`${name} category info button`}/>
             <ChevronRight className="text-gray-400" />
           </div>
           <div className="flex justify-between items-center">

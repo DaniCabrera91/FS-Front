@@ -6,8 +6,8 @@ const InfoButton = ({ ariaLabel }) => {
     e.stopPropagation() //para que solo se ejecute este onclick y no el de la carta en el que está colocado
 
     switch (ariaLabel) {
-      case 'Info Button':
-        console.log('Abriendo modal de información...')
+      case 'Gastos e Ingresos estimados info button':
+        console.log('Abriendo modal de información Gastos e Ingresos estimados info button...')
         break
       case 'Settings Button':
         console.log('Abriendo modal de configuración...')

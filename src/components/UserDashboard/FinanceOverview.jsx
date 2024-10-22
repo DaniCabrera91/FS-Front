@@ -8,7 +8,7 @@ export default function FinanceOverview() {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-sm text-red-600 font-semibold">Gastos e Ingresos estimados</h2>
         <div className="flex justify-between items-center">
-          <InfoButton/>
+          <InfoButton ariaLabel="Gastos e Ingresos estimados info button"/>
           <ChevronRight className="w-4 h-4 text-red-600" />
         </div>
       </div>

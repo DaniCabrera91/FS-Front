@@ -10,6 +10,8 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
 
   return (
     <>
+    <h2 className="font-semibold mb-2">Movimientos</h2>
+        
       <div className="flex border-b mt-4">
         <button
           className={`incomes px-4 py-2 ${selectedType === 'incomes' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-600'}`}
@@ -24,6 +26,11 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
           Gastos
         </button>
       </div>
+      <div className="h-px bg-gray-200 mb-2"></div>
+        <div className="flex justify-between text-sm text-gray-600 mb-2">
+          <span>Gastos por categoría</span>
+          <span>01 oct - 30 oct</span>
+        </div>
 
       {transactions && transactions.map((category) => (
         Object.keys(category).map((key) => {

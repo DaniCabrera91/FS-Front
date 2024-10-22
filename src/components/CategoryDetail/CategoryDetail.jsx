@@ -84,7 +84,7 @@ const CategoryDetail = () => {
 
     <div className="bg-white rounded-lg p-4 card-transition">
     <div className="bg-white p-4 rounded-t-3xl shadow-lg ">
-        <h2 className="text-lg font-semibold mb-2">Movimientos</h2>
+        <h2 className="font-semibold mb-2">Movimientos</h2>
         <div className="h-px bg-gray-200 mb-2"></div>
         <div className="flex justify-between text-sm text-gray-600">
           <span>Todos los movimientos</span>

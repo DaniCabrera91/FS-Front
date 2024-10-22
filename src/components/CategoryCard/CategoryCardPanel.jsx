@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import CategoryCard from './CategoryCard'
 
 function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
-  
   const [selectedType, setSelectedType] = useState('incomes')
 
   const handleButtonClick = (type) => {
@@ -27,10 +26,7 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
       </div>
 
       {transactions && transactions.map((category) => (
-      
         Object.keys(category).map((key) => {
-
-          console.log('Contenido de category[key]:', category[key])
           
           const amount = category[key].transactions.reduce((total, t) => total + t.amount, 0)
 
@@ -39,9 +35,6 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
             : (monthlyIncome > 0 ? (Math.abs(amount) / monthlyIncome) * 100 : 0)
 
           const type = selectedType === 'expenses' ? 'expenses' : 'incomes'
-
-          
-          
 
           return (
             category[key].name !== 'Ingresos' ? (

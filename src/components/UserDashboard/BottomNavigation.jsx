@@ -5,7 +5,7 @@ export default function BottomNavigation() {
   return (
     <nav className="flex justify-around items-center bg-white py-2 border-t">
       <button className="flex flex-col items-center">
-        <Home className="w-6 h-6 text-red-600" />
+        <Home className="w-6 h-6 kbred" />
         <span className="text-xs mt-1">Home</span>
       </button>
       <button className="flex flex-col items-center">

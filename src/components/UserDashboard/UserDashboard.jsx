@@ -65,10 +65,10 @@ const Home = () => {
 
             <div className={`bg-white rounded-lg p-4 mb-4 ${fadeOtherCards ? 'card-fade card-fade-hidden' : ''}`} onClick={handleClick}>
               <div className="flex justify-between items-center">
-                <span className="text-sm text-red-600 font-semibold">Mis finanzas</span>
+                <span className="text-sm kbred font-semibold">Mis finanzas</span>
                 <div className="flex justify-between items-center">
                   <InfoButton/>
-                  <ChevronRight className="w-4 h-4 ml-1 text-red-600" />
+                  <ChevronRight className="w-4 h-4 ml-1 kbred" />
                 </div>
               </div>
             </div>
@@ -79,7 +79,7 @@ const Home = () => {
 
             <div className={`bg-white rounded-lg p-4 card-transition ${cardTransition ? 'card-hidden' : ''}`}>
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-sm font-semibold text-red-600">Últimos movimientos</h2>
+                <h2 className="text-sm font-semibold kbred">Últimos movimientos</h2>
                 <button
                   onClick={handleShowMore}
                   className="text-sm hover:underline"

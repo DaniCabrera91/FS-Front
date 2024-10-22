@@ -33,7 +33,7 @@ export default function AccountSummary() {
     <>
       <div className="mx-8 p-4">
         <div className="flex justify-between mb-2 ">
-          <h2 className="text-sm text-red-600 mb-1 font-semibold">Cuenta Personal</h2>
+          <h2 className="text-sm kbred mb-1 font-semibold">Cuenta Personal</h2>
           <p className="text-xs text-gray-500 mb-2">{displayIban}</p>
         </div>
         <h3 className="text-sm font-medium mb-1 font-semibold">Saldo Total</h3>

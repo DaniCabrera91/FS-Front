@@ -42,18 +42,18 @@ function MyFinances() {
 
   return (
     <>
-      <div className='my-10 text-center '>Mis finanzas</div>
+      <div className='my-10 text-center text-lg font-semibold'>Mis finanzas</div>
 
       <div className='bg-white rounded-lg shadow p-4 mb-4 mx-6'>
-        <h2 className='text-lg font-semibold mb-2'>Ingresos y gastos</h2>
+        <h2 className=' font-semibold mb-2'>Ingresos y gastos</h2>
         <p className='text-sm text-gray-600 mb-4'>
           Consulta, ordena, agrupa y compara tus gastos e ingresos
         </p>
 
         <Chart />
 
-        <div className='flex justify-between mt-4 text-sm'>
-          <div>
+        <div className='flex flex-col mt-4 text-sm'>
+          <div className='mb-2'>
             <span className='inline-block w-3 h-3 bg-red-500 mr-2'></span>
             Ingresos
             <span className='ml-2 font-semibold'>

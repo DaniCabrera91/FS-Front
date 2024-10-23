@@ -4,6 +4,7 @@ import { loginAdmin } from '../../redux/admin/adminSlice'
 import { useNavigate } from 'react-router-dom'
 import Keyboard from '../Keyboard/Keyboard'
 import './AdminLogin.styled.scss'
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 
 const AdminLogin = () => {
   const dispatch = useDispatch()
@@ -16,6 +17,7 @@ const AdminLogin = () => {
   })
 
   const { email, password } = formData
+  const [passwordVisible, setPasswordVisible] = useState(false)
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -79,7 +81,7 @@ const AdminLogin = () => {
         <div className='form-group'>
           <label htmlFor='password'>Contraseña</label>
           <input
-            type='password'
+            type={passwordVisible ? 'text' : 'password'}
             id='password'
             name='password'
             value={password}
@@ -87,6 +89,12 @@ const AdminLogin = () => {
             placeholder='Clave'
             required
           />
+           <span
+              className='eye-icon'
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+            </span>
         </div>
         {error && (
           <p className='error'>

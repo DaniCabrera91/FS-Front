@@ -37,6 +37,27 @@ $primary-color: #007a87;
     }
   }
 
+  .password-field {
+    .input-group {
+      input {
+        padding-right: 40px;
+      }
+
+      .eye-icon {
+        position: absolute;
+        right: 50px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #aaa;
+        top: 34%;
+        transform: translateY(-50%);
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
   .submit-footer {
     margin-top: 3rem;
     width: 20rem;

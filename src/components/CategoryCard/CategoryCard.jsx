@@ -14,22 +14,30 @@ export default function CategoryCard({ name, percentage, amount, type }) {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow px-4 py-2 mb-2" onClick={handleClick}>
-      <div className="flex items-center justify-between py-3 border-b last:border-b-0">
+    <div
+      className='bg-white rounded-lg shadow px-4 py-2 mb-2'
+      onClick={handleClick}
+    >
+      <div className='flex items-center justify-between py-3 border-b last:border-b-0'>
         <div>
-          <h3 className="font-semibold text-red-500">{name}</h3>
-          <div className="w-24 h-1 bg-gray-200 mt-1">
-            <div className="h-full bg-red-500" style={{ width: `${percentage}%` }}></div>
+          <h3 className='font-semibold text-red-500'>{name}</h3>
+          <div className='w-24 h-1 bg-gray-200 mt-1'>
+            <div
+              className='h-full bg-red-500'
+              style={{ width: `${percentage}%` }}
+            ></div>
           </div>
-          <p className="text-sm text-gray-600 mt-1">{percentage}% de tu {displayType} mensual</p>
+          <p className='text-sm text-gray-600 mt-1'>
+            {percentage}% de tu {displayType} mensual
+          </p>
         </div>
-        <div className="text-right "> 
-          <div className="flex justify-between items-center">
-            <InfoButton ariaLabel={`${name} category info button`}/>
-            <ChevronRight className="text-gray-400" />
+        <div className='text-right '>
+          <div className='flex justify-between items-center'>
+            <InfoButton ariaLabel={`${name} category info button`} />
+            <ChevronRight className='text-gray-400' />
           </div>
-          <div className="flex justify-between items-center">
-          <p className="font-semibold">{amount}€</p>
+          <div className='flex justify-between items-center'>
+            <p className='font-semibold'>{amount}€</p>
           </div>
         </div>
       </div>

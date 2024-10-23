@@ -64,13 +64,13 @@ const Home = () => {
   ]
   
   const flickityOptions = {
-    cellAlign: 'center',  // Ajusta el alineamiento de las celdas (izquierda, centro, derecha)
-    contain: false,      // Asegura que el contenido no se desborde
-    freeScroll: false,   // Permite desplazarse libremente
-    wrapAround: true,   // Hace que el carrusel sea infinito
-    initialIndex: 0,    // Empieza desde el primer elemento (puedes cambiar a 2 como lo tienes si es lo que deseas)
+    cellAlign: 'center',
+    contain: false,
+    freeScroll: false,
+    wrapAround: true,
+    initialIndex: 0,
     pageDots: true, 
-  };
+  }
   
   return (
     <div className='flex flex-col h-screen bg-gray-100'>
@@ -133,7 +133,7 @@ const Home = () => {
               </div>
               <TransactionList limit={5} />
             </div>
-            <div className='mt-4'>
+            <div className='flex justify-center mt-4'>
               <h2>Mis Objetivos de Ahorro</h2>
             </div>
             <div className='project-cards'>

@@ -8,6 +8,13 @@ import { ChevronRight } from 'lucide-react'
 import ProjectPlannerCard from '../ProjectPlannerCard/ProjectPlannerCard'
 import InfoButton from '../InfoButton/InfoButton'
 import Modal from '../Modal/Modal'
+import "flickity/css/flickity.css"
+
+// Commonjs
+import Flickity from 'react-flickity-component';
+
+
+
 
 const Home = () => {
   const navigate = useNavigate()
@@ -16,13 +23,13 @@ const Home = () => {
   const [fadeOtherCards, setFadeOtherCards] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState({ title: '', text: '' })
-
+  
   const handleClick = () => {
     setTimeout(() => {
       navigate('/user/finances')
     }, 250)
   }
-
+  
   const handleShowMore = () => {
     setCardTransition(true)
     setFadeOtherCards(true)
@@ -31,12 +38,12 @@ const Home = () => {
       setFadeOtherCards(false)
     }, 500)
   }
-
+  
   const handleInfoClick = (title, text) => {
     setModalContent({ title, text })
     setIsModalOpen(true)
   }
-
+  
   const projects = [
     {
       id: 1,
@@ -55,7 +62,16 @@ const Home = () => {
       targetDate: '2024-08-01',
     },
   ]
-
+  
+  const flickityOptions = {
+    cellAlign: 'center',  // Ajusta el alineamiento de las celdas (izquierda, centro, derecha)
+    contain: false,      // Asegura que el contenido no se desborde
+    freeScroll: false,   // Permite desplazarse libremente
+    wrapAround: true,   // Hace que el carrusel sea infinito
+    initialIndex: 0,    // Empieza desde el primer elemento (puedes cambiar a 2 como lo tienes si es lo que deseas)
+    pageDots: true, 
+  };
+  
   return (
     <div className='flex flex-col h-screen bg-gray-100'>
       <main className='flex-1 overflow-y-auto p-4'>
@@ -117,25 +133,25 @@ const Home = () => {
               </div>
               <TransactionList limit={5} />
             </div>
-            <h2>Mis Objetivos de Ahorro</h2>
+            <div className='mt-4'>
+              <h2>Mis Objetivos de Ahorro</h2>
+            </div>
             <div className='project-cards'>
-              {projects.map((project) => (
-                <div
-                  key={project.id}
-                  style={{ marginBottom: '20px' }}
-                  className={`${
-                    fadeOtherCards ? 'card-fade card-fade-hidden' : ''
-                  }`}
-                >
-                  <ProjectPlannerCard
-                    projectName={project.name}
-                    estimatedCost={project.estimatedCost}
-                    monthlySavings={project.monthlySavings}
-                    currentSavings={project.currentSavings}
-                    targetDate={project.targetDate}
-                  />
-                </div>
-              ))}
+
+            <Flickity className={'carousel'} elementType={'div'} options={flickityOptions}>
+  {projects.map((project) => (
+    <div key={project.id} className="carousel-cell mx-5 mb-5">
+      <ProjectPlannerCard
+        projectName={project.name}
+        estimatedCost={project.estimatedCost}
+        monthlySavings={project.monthlySavings}
+        currentSavings={project.currentSavings}
+        targetDate={project.targetDate}
+      />
+    </div>
+  ))}
+</Flickity>
+
             </div>
           </>
         )}

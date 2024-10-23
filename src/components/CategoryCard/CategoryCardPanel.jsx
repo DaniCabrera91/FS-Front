@@ -10,8 +10,7 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
 
   return (
     <>
-    <h2 className="font-semibold mb-2">Movimientos</h2>
-        
+          
       <div className="flex border-b mt-4">
         <button
           className={`incomes px-4 py-2 ${selectedType === 'incomes' ? 'text-red-500 border-b-2 border-red-500' : 'text-gray-600'}`}

@@ -1,3 +1,32 @@
+
+.project-cards {
+  margin-bottom: 30px;
+  .carousel {
+    .carousel-cell {
+      width: 300px;
+      height: auto;
+      margin-right: 20px;
+    }
+  }
+}
+
+.flickity-prev-next-button {
+  background: transparent !important; // Evitar que tenga fondo azul al hacer clic
+  border-radius: 0 !important; // Quitar el redondeo en las esquinas
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1) !important; // Color de fondo solo en hover
+  }
+}
+
+// Ajustar el espaciado de las flechas
+.flickity-prev-next-button.previous {
+  left: -50px; // Aumentar el espacio hacia la izquierda
+}
+
+.flickity-prev-next-button.next {
+  right: -50px; // Aumentar el espacio hacia la derecha
+}
+
 /* Estilos para el switch */
 .taktik-container {
   display: flex;

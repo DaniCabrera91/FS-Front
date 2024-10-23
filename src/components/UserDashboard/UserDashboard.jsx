@@ -12,6 +12,7 @@ import "flickity/css/flickity.css"
 
 // Commonjs
 import Flickity from 'react-flickity-component';
+import AddProjectCard from '../ProjectPlannerCard/AddProjectPlannerCard'
 
 
 
@@ -137,21 +138,22 @@ const Home = () => {
               <h2>Mis Objetivos de Ahorro</h2>
             </div>
             <div className='project-cards'>
-
-            <Flickity className={'carousel'} elementType={'div'} options={flickityOptions}>
-  {projects.map((project) => (
-    <div key={project.id} className="carousel-cell mx-5 mb-5">
-      <ProjectPlannerCard
-        projectName={project.name}
-        estimatedCost={project.estimatedCost}
-        monthlySavings={project.monthlySavings}
-        currentSavings={project.currentSavings}
-        targetDate={project.targetDate}
-      />
-    </div>
-  ))}
-</Flickity>
-
+              <Flickity className={'carousel'} elementType={'div'} options={flickityOptions}>
+                {projects.map((project) => (
+                  <div key={project.id} className="carousel-cell mx-5 mb-5">
+                    <ProjectPlannerCard
+                      projectName={project.name}
+                      estimatedCost={project.estimatedCost}
+                      monthlySavings={project.monthlySavings}
+                      currentSavings={project.currentSavings}
+                      targetDate={project.targetDate}
+                    />
+                  </div>
+                ))}
+                <div className="carousel-cell mx-5 mb-5">
+                  <AddProjectCard />
+                </div>
+              </Flickity>
             </div>
           </>
         )}

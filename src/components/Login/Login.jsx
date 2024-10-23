@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { login } from '../../redux/user/userSlice'
 import { useNavigate } from 'react-router-dom'
@@ -36,8 +36,6 @@ const Login = () => {
     dispatch(login({ dni, password })).then((result) => {
       if (result.meta.requestStatus === 'fulfilled') {
         navigate('/user/dashboard')
-
-        //prueba para probar metodos más facil
         localStorage.setItem('dni', dni)
       } else {
         console.error('Error en el login:', result.error)
@@ -74,28 +72,27 @@ const Login = () => {
             <p className='error'>{error.message}</p>
           )}
         </div>
+
+        {/* Contenedor con el input y el icono */}
         <div className='form-group password-field'>
-          <input
-            type={passwordVisible ? 'text' : 'password'}
-            id='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-            placeholder='Introduce tu contraseña'
-            required
-            autoComplete='current-password'
-          />
-          {passwordVisible ? (
-            <EyeOutlined
-              className='eye-icon'
-              onClick={() => setPasswordVisible(false)}
+          <div className='input-group'>
+            <input
+              type={passwordVisible ? 'text' : 'password'}
+              id='password'
+              name='password'
+              value={password}
+              onChange={onChange}
+              placeholder='Introduce tu contraseña'
+              required
+              autoComplete='current-password'
             />
-          ) : (
-            <EyeInvisibleOutlined
+            <span
               className='eye-icon'
-              onClick={() => setPasswordVisible(true)}
-            />
-          )}
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+            </span>
+          </div>
           {error && error.field === 'password' && (
             <p className='error'>{error.message}</p>
           )}

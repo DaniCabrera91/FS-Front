@@ -1,6 +1,7 @@
 $primary-color: #007a87;
 
 .login-container {
+  margin-top: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -16,12 +17,9 @@ $primary-color: #007a87;
   }
 
   .form-group {
+    width: 100%;
+    max-width: 400px;
     margin-bottom: 15px;
-
-    label {
-      display: block;
-      margin-bottom: 5px;
-    }
 
     input {
       width: 100%;
@@ -34,7 +32,34 @@ $primary-color: #007a87;
     .error {
       color: red;
       font-size: 0.9em;
+      margin-top: 5px;
     }
+  }
+
+  .password-field {
+    .input-group {
+      input {
+        padding-right: 40px; /* Mismo padding para dar espacio al ícono */
+      }
+
+      .eye-icon {
+        position: absolute;
+        right: 50px;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #aaa;
+        top: 34%;
+        transform: translateY(-50%);
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .form-group input {
+    padding-right: 40px;
   }
 
   .biometric-login {

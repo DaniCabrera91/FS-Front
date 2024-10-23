@@ -1,0 +1,64 @@
+// Modal.scss
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw; // Asegura que el overlay cubra toda la ventana
+  height: 100vh; // Asegura que el overlay cubra toda la ventana
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background-color: white;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 380px; // Limita el ancho máximo del modal
+  width: 90%; // Ajusta el ancho al 90% del viewport para dispositivos pequeños
+  max-height: 80vh; // Limita la altura máxima del modal
+  overflow-y: auto; // Permite el desplazamiento si el contenido es demasiado alto
+  box-sizing: border-box;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+  margin-bottom: 16px;
+}
+
+.modal-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+}
+
+.close-button {
+  color: #6b7280;
+  cursor: pointer;
+  font-size: 24px;
+  background: none;
+  border: none;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.accept-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  border: none;
+}

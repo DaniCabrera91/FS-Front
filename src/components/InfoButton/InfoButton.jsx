@@ -1,30 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import iconPaths from '../../utils/iconPath'
+import Modal from '../Modal/Modal'
 
-const InfoButton = ({ ariaLabel }) => {
+const InfoButton = ({ ariaLabel, title, content }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   const handleClick = (e) => {
-    e.stopPropagation() //para que solo se ejecute este onclick y no el de la carta en el que está colocado
+    e.stopPropagation()
+    setIsOpen(true)
+  }
 
-    switch (ariaLabel) {
-      case 'Gastos e Ingresos estimados info button':
-        console.log('Abriendo modal de información Gastos e Ingresos estimados info button...')
-        break
-      case 'Settings Button':
-        console.log('Abriendo modal de configuración...')
-        break
-      default:
-        console.log('Botón sin acción específica')
-    }
+  const handleClose = () => {
+    setIsOpen(false)
   }
 
   return (
-    <button
-      onClick={handleClick}
-      className="p-1 focus:outline-none"
-      aria-label={ariaLabel}
-    >
-      <img src={iconPaths.info} alt={ariaLabel} className="inline-block w-4 h-4 ml-2" />
-    </button>
+    <>
+      <button
+        onClick={handleClick}
+        className='p-1 focus:outline-none'
+        aria-label={ariaLabel}
+      >
+        <img
+          src={iconPaths.info}
+          alt={ariaLabel}
+          className='inline-block w-4 h-4 ml-2'
+        />
+      </button>
+      <Modal isOpen={isOpen} title={title} onClose={handleClose}>
+        {content}
+      </Modal>
+    </>
   )
 }
 

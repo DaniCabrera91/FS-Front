@@ -6,13 +6,16 @@ import FinanceOverview from './FinanceOverview'
 import TransactionList from './TransactionList'
 import { ChevronRight } from 'lucide-react'
 import ProjectPlannerCard from '../ProjectPlannerCard/ProjectPlannerCard'
-import InfoButton from '../InfoButton/InfoButton.jsx'
+import InfoButton from '../InfoButton/InfoButton'
+import Modal from '../Modal/Modal'
 
 const Home = () => {
   const navigate = useNavigate()
   const [showMore, setShowMore] = useState(false)
   const [cardTransition, setCardTransition] = useState(false)
   const [fadeOtherCards, setFadeOtherCards] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [modalContent, setModalContent] = useState({ title: '', text: '' })
 
   const handleClick = () => {
     setTimeout(() => {
@@ -23,14 +26,17 @@ const Home = () => {
   const handleShowMore = () => {
     setCardTransition(true)
     setFadeOtherCards(true)
-
     setTimeout(() => {
       setShowMore(true)
       setFadeOtherCards(false)
     }, 500)
   }
 
-  // Ejemplos de proyectos ficticios de ahorro para mostrar en el dashboard
+  const handleInfoClick = (title, text) => {
+    setModalContent({ title, text })
+    setIsModalOpen(true)
+  }
+
   const projects = [
     {
       id: 1,
@@ -61,7 +67,6 @@ const Home = () => {
         ) : (
           <>
             <AccountSummary />
-
             <div
               className={`bg-white rounded-lg p-4 mb-4 ${
                 fadeOtherCards ? 'card-fade card-fade-hidden' : ''
@@ -73,12 +78,20 @@ const Home = () => {
                   Mis finanzas
                 </span>
                 <div className='flex justify-between items-center'>
-                  <InfoButton />
+                  <InfoButton
+                    ariaLabel='Gastos e Ingresos estimados info button'
+                    title='¿Quieres saber en que estás gastando tus ahorros?'
+                    content={
+                      <p>
+                        Aquí puedes ver información detallada sobre los gastos
+                        estimados.
+                      </p>
+                    }
+                  />
                   <ChevronRight className='w-4 h-4 ml-1 kbred' />
                 </div>
               </div>
             </div>
-
             <div
               className={`finance-overview ${
                 fadeOtherCards ? 'card-fade card-fade-hidden' : ''
@@ -86,7 +99,6 @@ const Home = () => {
             >
               <FinanceOverview />
             </div>
-
             <div
               className={`bg-white rounded-lg p-4 card-transition ${
                 cardTransition ? 'card-hidden' : ''
@@ -105,13 +117,12 @@ const Home = () => {
               </div>
               <TransactionList limit={5} />
             </div>
-
-            <h2 className='section-title mt-6'>Mis Objetivos de Ahorro</h2>
-            <div className='project-cards mt-4'>
+            <h2>Mis Objetivos de Ahorro</h2>
+            <div className='project-cards'>
               {projects.map((project) => (
                 <div
                   key={project.id}
-                  style={{ marginBottom: '10px' }}
+                  style={{ marginBottom: '20px' }}
                   className={`${
                     fadeOtherCards ? 'card-fade card-fade-hidden' : ''
                   }`}
@@ -129,6 +140,13 @@ const Home = () => {
           </>
         )}
       </main>
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        title={modalContent.title}
+      >
+        <p>{modalContent.text}</p>
+      </Modal>
     </div>
   )
 }

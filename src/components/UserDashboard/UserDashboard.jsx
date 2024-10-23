@@ -10,9 +10,9 @@ import InfoButton from '../InfoButton/InfoButton'
 import Modal from '../Modal/Modal'
 import "flickity/css/flickity.css"
 
-// Commonjs
 import Flickity from 'react-flickity-component';
-import AddProjectCard from '../ProjectPlannerCard/AddProjectPlannerCard'
+import AddProjectCard from '../ProjectPlannerCard/AddProjectCard'
+
 
 
 

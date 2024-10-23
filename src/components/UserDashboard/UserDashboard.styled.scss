@@ -20,11 +20,11 @@
 
 // Ajustar el espaciado de las flechas
 .flickity-prev-next-button.previous {
-  left: -50px; // Aumentar el espacio hacia la izquierda
+  left: -50px;
 }
 
 .flickity-prev-next-button.next {
-  right: -50px; // Aumentar el espacio hacia la derecha
+  right: -50px;
 }
 
 /* Estilos para el switch */
@@ -67,7 +67,7 @@
   bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
-  border-radius: 34px; /* Bordes redondeados */
+  border-radius: 34px;
 }
 
 .slider:before {
@@ -79,7 +79,7 @@
   bottom: 4px;
   background-color: white;
   transition: 0.4s;
-  border-radius: 50%; /* Botón redondeado */
+  border-radius: 50%;
 }
 
 input:checked + .slider {

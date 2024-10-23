@@ -90,7 +90,7 @@ const Login = () => {
               className='eye-icon'
               onClick={() => setPasswordVisible(!passwordVisible)}
             >
-              {passwordVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+              {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
             </span>
           </div>
           {error && error.field === 'password' && (

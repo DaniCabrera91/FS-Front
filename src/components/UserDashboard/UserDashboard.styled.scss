@@ -1,3 +1,67 @@
+/* Estilos para el switch */
+.taktik-container {
+  display: flex;
+  align-items: center; /* Alinea verticalmente el texto y el switch */
+  margin-top: 16px; /* Espacio superior para separar del contenido anterior */
+  padding: 10px; /* Espacio alrededor del contenedor */
+  border-radius: 8px; /* Bordes redondeados para el contenedor */
+  background-color: #f9f9f9; /* Color de fondo claro para resaltar */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para destacar */
+}
+
+.taktik-label {
+  font-size: 1rem; /* Tamaño de fuente un poco más grande */
+  font-weight: bold; /* Negrita para destacar */
+  color: #007a83; /* Color que combine con el switch */
+  margin-right: 12px; /* Espacio entre el texto y el switch */
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px; /* Bordes redondeados */
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%; /* Botón redondeado */
+}
+
+input:checked + .slider {
+  background-color: #007a83; /* Color del switch cuando está activo */
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px); /* Movimiento del botón al activar */
+}
+
+/* Resto de tus estilos */
 .financesBtn {
   width: 70%;
   padding: 0.5rem;
@@ -23,4 +87,65 @@
 
 .card-fade-hidden {
   opacity: 0;
+}
+
+.section-title {
+  color: #e3342f; /* Rojo kbred */
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-top: 20px;
+}
+
+.project-cards {
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease-in-out;
+  margin-top: 20px; /* Margen superior adicional para separar las partes */
+}
+
+.mt-4 {
+  padding: 0;
+  margin: 0;
+}
+
+.project-card:hover {
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.indicator-green {
+  background-color: #4caf50;
+}
+
+.indicator-yellow {
+  background-color: #ffeb3b;
+}
+
+.indicator-red {
+  background-color: #f44336;
+}
+
+.card-on-track {
+  border-left: 4px solid #4caf50;
+}
+
+.card-needs-review {
+  border-left: 4px solid #ffeb3b;
+}
+
+.card-off-track {
+  border-left: 4px solid #f44336;
 }

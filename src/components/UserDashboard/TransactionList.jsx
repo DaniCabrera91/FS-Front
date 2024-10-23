@@ -13,24 +13,38 @@ export default function TransactionList({ limit }) {
     }
   }, [dispatch])
 
-  const displayedTransactions = limit ? threeMonthsTransactions.slice(0, limit) : threeMonthsTransactions
+  const displayedTransactions = limit
+    ? threeMonthsTransactions.slice(0, limit)
+    : threeMonthsTransactions
 
   return (
-    <div className="bg-white rounded-lg p-4">
+    <div className='bg-white rounded-lg p-4'>
       {displayedTransactions.map((transaction, index) => {
         const date = new Date(transaction.createdAt)
-        const formattedDate = `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })}`
+        const formattedDate = `${date.getDate()} ${date.toLocaleString(
+          'default',
+          { month: 'long' },
+        )}`
 
         return (
-          <div key={index} className="flex items-center justify-between py-2 border-b last:border-b-0">
-            <div className="flex items-center">
-              <img src={transaction.icon} alt={transaction.category} className="w-8 h-8 mr-3 text-gray-600" />
+          <div
+            key={index}
+            className='flex items-center justify-between py-2 border-b last:border-b-0'
+          >
+            <div className='flex items-center'>
+              <img
+                src={transaction.icon}
+                alt={transaction.category}
+                className='w-8 h-8 mr-3 text-gray-600'
+              />
               <div>
-                <p className="font-semibold">{transaction.categoryName}</p>
-                <p className="text-xs text-gray-500">{formattedDate}</p>
+                <p className='font-semibold'>{transaction.categoryName}</p>
+                <p className='text-xs text-gray-500'>{formattedDate}</p>
               </div>
             </div>
-            <span className="font-semibold">{transaction.amount.toFixed(2)}€</span>
+            <span className='font-semibold'>
+              {transaction.amount.toFixed(2)}€
+            </span>
           </div>
         )
       })}

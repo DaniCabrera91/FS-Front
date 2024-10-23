@@ -7,47 +7,72 @@ const ProjectPlannerCard = ({
   currentSavings,
   targetDate,
 }) => {
-  // Calcular meses restantes hasta la fecha del objetivo
+  const [isTaktikActive, setIsTaktikActive] = useState(false)
+
+  const handleTaktikSwitch = () => {
+    setIsTaktikActive(!isTaktikActive)
+  }
+
   const calculateMonthsRemaining = () => {
     const today = new Date()
     const target = new Date(targetDate)
     const diffInMonths =
       (target.getFullYear() - today.getFullYear()) * 12 +
       (target.getMonth() - today.getMonth())
-    return diffInMonths > 0 ? diffInMonths : 0 // Asegurarse que no sea negativo
+    return diffInMonths > 0 ? diffInMonths : 0
   }
 
-  // Calcular si el objetivo es alcanzable
   const calculateStatus = () => {
     const monthsRemaining = calculateMonthsRemaining()
     const neededSavings = estimatedCost - currentSavings
     const totalPossibleSavings = monthsRemaining * monthlySavings
 
-    // Evaluar estado del proyecto basado en el tiempo y ahorros
     if (totalPossibleSavings >= neededSavings) {
-      return 'green' // Buen camino
+      return 'on-track'
     } else if (
       totalPossibleSavings > 0 &&
       totalPossibleSavings < neededSavings
     ) {
-      return 'yellow' // Necesitas revisar
+      return 'needs-review'
     } else {
-      return 'red' // Imposible lograrlo
+      return 'off-track'
     }
   }
 
-  const statusColor = calculateStatus()
+  const status = calculateStatus()
 
   return (
     <div
-      className='project-card'
-      style={{
-        border: `2px solid ${statusColor}`,
-        padding: '20px',
-        borderRadius: '10px',
-      }}
+      className={`project-card card-transition ${
+        status === 'off-track'
+          ? 'card-off-track'
+          : status === 'needs-review'
+          ? 'card-needs-review'
+          : 'card-on-track'
+      }`}
     >
-      <h2>{projectName || 'Nombre del Proyecto'}</h2>
+      <div className='header-section flex justify-between items-center'>
+        <h2 className='text-xl font-semibold'>
+          {projectName || 'Nombre del Proyecto'}
+        </h2>
+        <span
+          className={`status-indicator ${
+            status === 'on-track'
+              ? 'indicator-green'
+              : status === 'needs-review'
+              ? 'indicator-yellow'
+              : 'indicator-red'
+          }`}
+          aria-label={`Estado del proyecto: ${
+            status === 'on-track'
+              ? 'Posible'
+              : status === 'needs-review'
+              ? 'Revisar Ahorros'
+              : 'Imposible'
+          }`}
+        ></span>
+      </div>
+
       <p>
         <strong>Objetivo de Ahorro:</strong> €{estimatedCost}
       </p>
@@ -62,20 +87,26 @@ const ProjectPlannerCard = ({
         {new Date(targetDate).toLocaleDateString()}
       </p>
 
-      <div
-        style={{
-          backgroundColor: statusColor,
-          color: 'white',
-          padding: '10px',
-          borderRadius: '5px',
-        }}
-      >
+      <div className='status-message bg-gray-100 text-sm p-2 mt-3 rounded'>
         Estado del Objetivo:{' '}
-        {statusColor === 'green'
+        {status === 'on-track'
           ? 'Posible'
-          : statusColor === 'yellow'
+          : status === 'needs-review'
           ? 'Revisar Ahorros'
           : 'Imposible'}
+      </div>
+
+      {/* Sección del switch para Ahorro Taktik */}
+      <div className='taktik-container'>
+        <span className='taktik-label'>Ahorro Taktik</span>
+        <label className='switch'>
+          <input
+            type='checkbox'
+            checked={isTaktikActive}
+            onChange={handleTaktikSwitch}
+          />
+          <span className='slider round'></span>
+        </label>
       </div>
     </div>
   )

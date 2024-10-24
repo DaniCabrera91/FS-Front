@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loginAdmin } from '../../redux/admin/adminSlice'
 import { useNavigate } from 'react-router-dom'
 import Keyboard from '../Keyboard/Keyboard'
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 import './AdminLogin.styled.scss'
 
 const AdminLogin = () => {
@@ -16,6 +17,7 @@ const AdminLogin = () => {
   })
 
   const { email, password } = formData
+  const [passwordVisible, setPasswordVisible] = useState(false)
 
   const onChange = (e) => {
     setFormData((prevState) => ({
@@ -76,18 +78,29 @@ const AdminLogin = () => {
             required
           />
         </div>
-        <div className='form-group'>
+
+        {/* Contenedor con el input y el icono */}
+        <div className='form-group password-field'>
           <label htmlFor='password'>Contraseña</label>
-          <input
-            type='password'
-            id='password'
-            name='password'
-            value={password}
-            onChange={onChange}
-            placeholder='Clave'
-            required
-          />
+          <div className='input-group'>
+            <input
+              type={passwordVisible ? 'text' : 'password'}
+              id='password'
+              name='password'
+              value={password}
+              onChange={onChange}
+              placeholder='Clave'
+              required
+            />
+            <span
+              className='eye-icon'
+              onClick={() => setPasswordVisible(!passwordVisible)}
+            >
+              {passwordVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
+            </span>
+          </div>
         </div>
+
         {error && (
           <p className='error'>
             {error.message || 'Credenciales incorrectas. Inténtalo de nuevo.'}

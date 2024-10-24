@@ -119,7 +119,7 @@ const UsersList = ({ onEditUser, onUserSelect }) => {
       <UserSearch onSearch={handleSearch} />
       <Table
         columns={columns}
-        dataSource={filteredUsers.map((user) => ({ ...user, key: user._id }))} // Agregado key aquí
+        dataSource={filteredUsers.map((user) => ({ ...user, key: user._id }))}
         rowKey='_id'
         pagination={{ pageSize: 10, onChange: handleTableChange }}
         locale={{

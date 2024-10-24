@@ -113,7 +113,7 @@ const updateTransaction = async (transactionId, transactionData) => {
       headers: { Authorization: tokenAdmin },
     },
   )
-  return response.data // Asegúrate de que esto devuelva la transacción actualizada
+  return response.data
 }
 
 const deleteTransaction = async (transactionId) => {

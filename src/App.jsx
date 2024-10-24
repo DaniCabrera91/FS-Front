@@ -13,7 +13,7 @@ import AdminDashboard from './components/AdminDashboard/AdminDashboard'
 import PrivateRoute from './components/PrivateRoute/PrivateRoute'
 import TheHeader from './components/TheHeader/TheHeader'
 import TheHeaderLogin from './components/TheHeaderLogin/TheHeaderLogin'
-import TheFooter from './components/TheFooter/TheFooter' // Importar el Footer
+import TheFooter from './components/TheFooter/TheFooter'
 import './App.scss'
 import MyFinances from './components/MyFinances/MyFinances'
 import CategoryDetail from './components/CategoryDetail/CategoryDetail'
@@ -35,7 +35,6 @@ const FooterSelector = () => {
 
   const isAdminDashboard = location.pathname === '/admin/dashboard'
 
-  // Mostrar el Footer solo si no es página de login ni el AdminDashboard
   return !isLoginPage && !isAdminDashboard ? <TheFooter /> : null
 }
 

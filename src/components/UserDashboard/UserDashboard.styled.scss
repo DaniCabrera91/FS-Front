@@ -1,4 +1,3 @@
-
 .project-cards {
   margin-bottom: 30px;
   .carousel {
@@ -11,38 +10,36 @@
 }
 
 .flickity-prev-next-button {
-  background: transparent !important; // Evitar que tenga fondo azul al hacer clic
-  border-radius: 0 !important; // Quitar el redondeo en las esquinas
+  background: transparent !important;
+  border-radius: 0 !important;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1) !important; // Color de fondo solo en hover
+    background-color: rgba(0, 0, 0, 0.1) !important;
   }
 }
 
-// Ajustar el espaciado de las flechas
 .flickity-prev-next-button.previous {
-  left: -50px; // Aumentar el espacio hacia la izquierda
+  left: -50px;
 }
 
 .flickity-prev-next-button.next {
-  right: -50px; // Aumentar el espacio hacia la derecha
+  right: -50px;
 }
 
-/* Estilos para el switch */
 .taktik-container {
   display: flex;
-  align-items: center; /* Alinea verticalmente el texto y el switch */
-  margin-top: 16px; /* Espacio superior para separar del contenido anterior */
-  padding: 10px; /* Espacio alrededor del contenedor */
-  border-radius: 8px; /* Bordes redondeados para el contenedor */
-  background-color: #f9f9f9; /* Color de fondo claro para resaltar */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para destacar */
+  align-items: center;
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .taktik-label {
-  font-size: 1rem; /* Tamaño de fuente un poco más grande */
-  font-weight: bold; /* Negrita para destacar */
-  color: #007a83; /* Color que combine con el switch */
-  margin-right: 12px; /* Espacio entre el texto y el switch */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007a83;
+  margin-right: 12px;
 }
 
 .switch {
@@ -67,7 +64,7 @@
   bottom: 0;
   background-color: #ccc;
   transition: 0.4s;
-  border-radius: 34px; /* Bordes redondeados */
+  border-radius: 34px;
 }
 
 .slider:before {
@@ -79,18 +76,17 @@
   bottom: 4px;
   background-color: white;
   transition: 0.4s;
-  border-radius: 50%; /* Botón redondeado */
+  border-radius: 50%;
 }
 
 input:checked + .slider {
-  background-color: #007a83; /* Color del switch cuando está activo */
+  background-color: #007a83;
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px); /* Movimiento del botón al activar */
+  transform: translateX(26px);
 }
 
-/* Resto de tus estilos */
 .financesBtn {
   width: 70%;
   padding: 0.5rem;
@@ -119,7 +115,7 @@ input:checked + .slider:before {
 }
 
 .section-title {
-  color: #e3342f; /* Rojo kbred */
+  color: #e3342f;
   font-size: 0.875rem;
   font-weight: 600;
   margin-top: 20px;
@@ -130,14 +126,44 @@ input:checked + .slider:before {
   flex-direction: column;
 }
 
-.project-card {
-  background-color: white;
+.project-cards {
+  margin-bottom: 30px;
+  .carousel {
+    .carousel-cell {
+      width: 300px;
+      height: auto;
+      margin-right: 20px;
+    }
+  }
+}
+
+.add-new-project-card {
+  background-color: #f0f0f0;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  transition: box-shadow 0.3s ease-in-out;
-  margin-top: 20px; /* Margen superior adicional para separar las partes */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 200px;
+
+  .add-project-icon {
+    font-size: 2rem;
+    color: #007a87;
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #007a87;
+  }
+
+  &:hover {
+    background-color: #e0e0e0;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .mt-4 {

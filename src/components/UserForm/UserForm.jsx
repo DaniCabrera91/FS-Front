@@ -6,7 +6,6 @@ const UserForm = ({ userId, onSave }) => {
   const dispatch = useDispatch()
   const users = useSelector((state) => state.admin.users)
 
-  // Estado inicial del usuario (sin el campo "assets" y "password")
   const [user, setUser] = useState({
     name: '',
     surname: '',
@@ -16,7 +15,6 @@ const UserForm = ({ userId, onSave }) => {
     city: '',
   })
 
-  // Cargar los datos del usuario si se está editando
   useEffect(() => {
     if (userId) {
       const userToEdit = users.find((u) => u._id === userId)
@@ -25,7 +23,7 @@ const UserForm = ({ userId, onSave }) => {
           name: userToEdit.name,
           surname: userToEdit.surname,
           birth_date: userToEdit.birth_date
-            ? new Date(userToEdit.birth_date).toISOString().substring(0, 10) // Convertir la fecha a formato YYYY-MM-DD
+            ? new Date(userToEdit.birth_date).toISOString().substring(0, 10)
             : '',
           dni: userToEdit.dni,
           email: userToEdit.email,
@@ -33,7 +31,6 @@ const UserForm = ({ userId, onSave }) => {
         })
       }
     } else {
-      // Si no es edición, reseteamos los campos
       setUser({
         name: '',
         surname: '',
@@ -45,7 +42,6 @@ const UserForm = ({ userId, onSave }) => {
     }
   }, [userId, users])
 
-  // Manejo de cambios en los campos del formulario
   const handleChange = (e) => {
     const { name, value } = e.target
     setUser({
@@ -54,7 +50,6 @@ const UserForm = ({ userId, onSave }) => {
     })
   }
 
-  // Al enviar el formulario, llama la función `onSave` con los datos del usuario
   const handleSubmit = async (e) => {
     e.preventDefault()
     onSave(user)
@@ -69,7 +64,7 @@ const UserForm = ({ userId, onSave }) => {
         <input
           type='text'
           name='name'
-          value={user.name || ''} // Asegurarse de que los valores sean controlados
+          value={user.name || ''}
           onChange={handleChange}
           placeholder='Nombre'
           required

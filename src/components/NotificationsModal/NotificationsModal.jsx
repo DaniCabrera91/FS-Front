@@ -1,14 +1,13 @@
 import React from 'react'
-import { Modal } from 'antd' // Usamos Ant Design para los modales
+import { Modal } from 'antd'
 import { BellOutlined } from '@ant-design/icons'
 
 const NotificationsModal = ({ visible, setVisible, notifications = [] }) => {
-  // Establecer valor predeterminado
   return (
     <div>
       <BellOutlined
         className='header__icon'
-        onClick={() => setVisible(true)} // Controlamos el estado del modal al hacer clic en la campana
+        onClick={() => setVisible(true)}
         aria-label='Notifications'
       />
 

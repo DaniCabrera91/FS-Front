@@ -17,6 +17,8 @@ $primary-color: #007a87;
 
   .form-group {
     margin-bottom: 15px;
+    width: 100%;
+    max-width: 400px;
 
     label {
       display: block;
@@ -29,11 +31,36 @@ $primary-color: #007a87;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
+      padding-right: 40px;
     }
 
     .error {
       color: red;
       font-size: 0.9em;
+    }
+  }
+
+  .password-field {
+    .input-group {
+      position: relative;
+
+      input {
+        padding-right: 40px;
+      }
+
+      .eye-icon {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #aaa;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
     }
   }
 

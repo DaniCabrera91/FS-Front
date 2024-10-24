@@ -8,13 +8,9 @@ import { ChevronRight } from 'lucide-react'
 import ProjectPlannerCard from '../ProjectPlannerCard/ProjectPlannerCard'
 import InfoButton from '../InfoButton/InfoButton'
 import Modal from '../Modal/Modal'
-import "flickity/css/flickity.css"
+import 'flickity/css/flickity.css'
 
-// Commonjs
-import Flickity from 'react-flickity-component';
-
-
-
+import Flickity from 'react-flickity-component'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -23,13 +19,13 @@ const Home = () => {
   const [fadeOtherCards, setFadeOtherCards] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [modalContent, setModalContent] = useState({ title: '', text: '' })
-  
+
   const handleClick = () => {
     setTimeout(() => {
       navigate('/user/finances')
     }, 250)
   }
-  
+
   const handleShowMore = () => {
     setCardTransition(true)
     setFadeOtherCards(true)
@@ -38,40 +34,45 @@ const Home = () => {
       setFadeOtherCards(false)
     }, 500)
   }
-  
+
   const handleInfoClick = (title, text) => {
     setModalContent({ title, text })
     setIsModalOpen(true)
   }
-  
+
   const projects = [
     {
       id: 1,
-      name: 'Viaje a Europa',
-      estimatedCost: 2000,
-      monthlySavings: 1000,
-      currentSavings: 600,
-      targetDate: '2024-12-01',
+      name: 'Renovar Ordenador',
+      estimatedCost: 800,
+      monthlySavings: 50,
+      currentSavings: 800,
+      targetDate: '2024-08-01',
     },
     {
       id: 2,
-      name: 'Comprar una Laptop',
-      estimatedCost: 1200,
-      monthlySavings: 100,
-      currentSavings: 500,
-      targetDate: '2024-08-01',
+      name: 'Viaje a Europa',
+      estimatedCost: 4000,
+      monthlySavings: 50,
+      currentSavings: 800,
+      targetDate: '2025-18-01',
+    },
+
+    {
+      id: 'demo',
+      name: 'Añadir nuevo proyecto',
     },
   ]
-  
+
   const flickityOptions = {
-    cellAlign: 'center',  // Ajusta el alineamiento de las celdas (izquierda, centro, derecha)
-    contain: false,      // Asegura que el contenido no se desborde
-    freeScroll: false,   // Permite desplazarse libremente
-    wrapAround: true,   // Hace que el carrusel sea infinito
-    initialIndex: 0,    // Empieza desde el primer elemento (puedes cambiar a 2 como lo tienes si es lo que deseas)
-    pageDots: true, 
-  };
-  
+    cellAlign: 'center',
+    contain: false,
+    freeScroll: false,
+    wrapAround: true,
+    initialIndex: 0,
+    pageDots: true,
+  }
+
   return (
     <div className='flex flex-col h-screen bg-gray-100'>
       <main className='flex-1 overflow-y-auto p-4'>
@@ -96,7 +97,7 @@ const Home = () => {
                 <div className='flex justify-between items-center'>
                   <InfoButton
                     ariaLabel='Gastos e Ingresos estimados info button'
-                    title='¿Quieres saber en que estás gastando tus ahorros?'
+                    title='¿Quieres saber en qué estás gastando tus ahorros?'
                     content={
                       <p>
                         Aquí puedes ver información detallada sobre los gastos
@@ -137,21 +138,37 @@ const Home = () => {
               <h2>Mis Objetivos de Ahorro</h2>
             </div>
             <div className='project-cards'>
-
-            <Flickity className={'carousel'} elementType={'div'} options={flickityOptions}>
-  {projects.map((project) => (
-    <div key={project.id} className="carousel-cell mx-5 mb-5">
-      <ProjectPlannerCard
-        projectName={project.name}
-        estimatedCost={project.estimatedCost}
-        monthlySavings={project.monthlySavings}
-        currentSavings={project.currentSavings}
-        targetDate={project.targetDate}
-      />
-    </div>
-  ))}
-</Flickity>
-
+              <Flickity
+                className={'carousel'}
+                elementType={'div'}
+                options={flickityOptions}
+              >
+                {projects.map((project) => (
+                  <div key={project.id} className='carousel-cell mx-5 mb-5'>
+                    {project.id === 'demo' ? (
+                      <div
+                        className='project-card add-new-project-card flex justify-center items-center cursor-pointer'
+                        onClick={() =>
+                          alert('Funcionalidad para agregar un nuevo proyecto')
+                        }
+                      >
+                        <div className='text-center'>
+                          <span className='add-project-icon'>+</span>
+                          <p>Añadir nuevo proyecto</p>
+                        </div>
+                      </div>
+                    ) : (
+                      <ProjectPlannerCard
+                        projectName={project.name}
+                        estimatedCost={project.estimatedCost}
+                        monthlySavings={project.monthlySavings}
+                        currentSavings={project.currentSavings}
+                        targetDate={project.targetDate}
+                      />
+                    )}
+                  </div>
+                ))}
+              </Flickity>
             </div>
           </>
         )}

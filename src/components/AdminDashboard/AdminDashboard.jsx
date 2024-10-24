@@ -69,7 +69,6 @@ const AdminDashboard = () => {
         await dispatch(createUser(userData)).unwrap()
         message.success('Usuario creado con éxito.')
       }
-      // Actualiza la lista de usuarios localmente
       dispatch(getAllUsers({ page: 1, limit: usersPerPage }))
       handleUserModalCancel()
     } catch (error) {
@@ -105,7 +104,6 @@ const AdminDashboard = () => {
 
       message.success('Transacción actualizada con éxito.')
 
-      // Actualiza la lista de transacciones localmente
       setSelectedTransactions((prev) =>
         prev.map((trans) =>
           trans._id === editingTransactionId
@@ -121,8 +119,8 @@ const AdminDashboard = () => {
   }
 
   const handleCreateTransaction = async () => {
-    setEditingTransactionId(null) // No estamos editando, así que no hay ID de transacción
-    setIsTransactionModalVisible(true) // Mostrar modal para crear transacción
+    setEditingTransactionId(null)
+    setIsTransactionModalVisible(true)
   }
 
   const handleDeleteTransaction = (transactionId) => {
@@ -138,7 +136,6 @@ const AdminDashboard = () => {
           .then(() => {
             message.success('Transacción eliminada con éxito.')
 
-            // Filtra la transacción eliminada del estado local
             setSelectedTransactions((prev) =>
               prev.filter((trans) => trans._id !== transactionId),
             )
@@ -158,7 +155,6 @@ const AdminDashboard = () => {
       ).unwrap()
       message.success('Transacción creada con éxito.')
 
-      // Agregar la nueva transacción a la lista de transacciones seleccionadas
       setSelectedTransactions((prev) => [...prev, newTransaction])
       handleTransactionModalCancel()
     } catch (error) {

@@ -17,7 +17,7 @@
   }
 }
 
-.flickity-prev-next-button.previous {
+.flickity-prev-next-buttons.previous {
   left: -50px;
 }
 
@@ -142,9 +142,28 @@ input:checked + .slider:before {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 20px;
-  transition: box-shadow 0.3s ease-in-out;
-  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 200px; // Ajusta el alto a tus necesidades
+
+  .add-project-icon {
+    font-size: 2rem;
+    color: #007a87; // Color del símbolo "+"
+    font-weight: bold;
+  }
+
+  p {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #007a87;
+  }
+
+  &:hover {
+    background-color: #e0e0e0; // Cambia el color al hacer hover
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+  }
 }
 
 .mt-4 {

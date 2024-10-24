@@ -1,6 +1,12 @@
 import React, { useState } from 'react'
 
-const ProjectPlannerCard = ({ projectName, estimatedCost, monthlySavings, currentSavings, targetDate}) => {
+const ProjectPlannerCard = ({
+  projectName,
+  estimatedCost,
+  monthlySavings,
+  currentSavings,
+  targetDate,
+}) => {
   const [isTaktikActive, setIsTaktikActive] = useState(false)
 
   const handleTaktikSwitch = () => {
@@ -90,7 +96,6 @@ const ProjectPlannerCard = ({ projectName, estimatedCost, monthlySavings, curren
           : 'Imposible'}
       </div>
 
-      {/* Sección del switch para Ahorro Taktik */}
       <div className='taktik-container'>
         <span className='taktik-label'>Ahorro Taktik</span>
         <label className='switch'>

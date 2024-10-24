@@ -31,7 +31,7 @@ $primary-color: #007a87;
       border: 1px solid #ccc;
       border-radius: 4px;
       box-sizing: border-box;
-      padding-right: 40px;
+      padding-right: 40px; /* Espacio para el ícono del ojo */
     }
 
     .error {
@@ -42,32 +42,20 @@ $primary-color: #007a87;
 
   .password-field {
     .input-group {
-<<<<<<< HEAD
       position: relative;
 
-=======
->>>>>>> refs/remotes/origin/develop
       input {
         padding-right: 40px;
       }
 
       .eye-icon {
         position: absolute;
-<<<<<<< HEAD
         right: 10px;
         top: 50%;
         transform: translateY(-50%);
         cursor: pointer;
         font-size: 1.5rem;
         color: #aaa;
-=======
-        right: 50px;
-        cursor: pointer;
-        font-size: 1.5rem;
-        color: #aaa;
-        top: 34%;
-        transform: translateY(-50%);
->>>>>>> refs/remotes/origin/develop
 
         &:hover {
           color: $primary-color;
@@ -75,10 +63,7 @@ $primary-color: #007a87;
       }
     }
   }
-<<<<<<< HEAD
 
-=======
->>>>>>> refs/remotes/origin/develop
   .submit-footer {
     margin-top: 3rem;
     width: 20rem;

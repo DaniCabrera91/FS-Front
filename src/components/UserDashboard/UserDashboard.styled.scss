@@ -128,7 +128,7 @@ input:checked + .slider:before {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   transition: box-shadow 0.3s ease-in-out;
-  margin-top: 20px; /* Margen superior adicional para separar las partes */
+  margin-top: 20px;
 }
 
 .project-card:hover {
@@ -155,11 +155,11 @@ input:checked + .slider:before {
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: 200px; // Ajusta el alto a tus necesidades
+  height: 280px;
 
   .add-project-icon {
     font-size: 2rem;
-    color: #007a87; // Color del símbolo "+"
+    color: #007a87;
     font-weight: bold;
   }
 
@@ -170,7 +170,7 @@ input:checked + .slider:before {
   }
 
   &:hover {
-    background-color: #e0e0e0; // Cambia el color al hacer hover
+    background-color: #e0e0e0;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
   }
 }

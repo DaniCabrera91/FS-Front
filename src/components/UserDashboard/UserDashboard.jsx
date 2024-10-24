@@ -147,7 +147,7 @@ const Home = () => {
                   <div key={project.id} className='carousel-cell mx-5 mb-5'>
                     {project.id === 'demo' ? (
                       <div
-                        className='project-card add-new-project-card flex justify-center items-center cursor-pointer'
+                        className='project-card add-new-project-card flex justify-center items-center cursor-pointer border-dashed border-2 border-gray-300'
                         onClick={() =>
                           alert('Funcionalidad para agregar un nuevo proyecto')
                         }

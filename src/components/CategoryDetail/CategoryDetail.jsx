@@ -49,7 +49,7 @@ const CategoryDetail = () => {
 
     <div className="mx-8 p-4">
         <div className="flexmb-2 ">
-        <h2 className="text-sm text-600 mb-1 font-semibold">Educación y cultura</h2>
+        <h2 className="text-sm text-600 mb-1 font-semibold">{name}</h2>
     </div>
         
     <h1 className="text-3xl font-bold mb-4">{formatBalance(totalAnnualExpense.toFixed(2))} €</h1>

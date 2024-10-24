@@ -31,6 +31,7 @@ function CategoryCardPanel({ transactions, monthlyIncome, monthlyExpense }) {
           <span>01 oct - 30 oct</span>
         </div>
 
+        
       {transactions && transactions.map((category) => (
         Object.keys(category).map((key) => {
           

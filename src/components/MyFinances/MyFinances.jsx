@@ -44,7 +44,7 @@ function MyFinances() {
     <>
       <div className='my-10 text-center text-lg font-semibold'>Mis finanzas</div>
 
-      <div className='bg-white rounded-lg shadow p-4 mb-4 mx-6'>
+      <div className='bg-white rounded-lg shadow p-4 mb-16 mx-6'>
         <h2 className=' font-semibold mb-2'>Ingresos y gastos</h2>
         <p className='text-sm text-gray-600 mb-4'>
           Consulta, ordena, agrupa y compara tus gastos e ingresos

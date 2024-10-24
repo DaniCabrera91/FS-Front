@@ -47,7 +47,7 @@ const Home = () => {
       estimatedCost: 800,
       monthlySavings: 50,
       currentSavings: 800,
-      targetDate: '2024-08-01',
+      targetDate: '2025-08-01',
     },
     {
       id: 2,
@@ -55,7 +55,7 @@ const Home = () => {
       estimatedCost: 4000,
       monthlySavings: 50,
       currentSavings: 800,
-      targetDate: '2025-18-01',
+      targetDate: '2025-01-18',
     },
 
     {

@@ -8,9 +8,16 @@ import { ChevronRight } from 'lucide-react'
 import ProjectPlannerCard from '../ProjectPlannerCard/ProjectPlannerCard'
 import InfoButton from '../InfoButton/InfoButton'
 import Modal from '../Modal/Modal'
+<<<<<<< HEAD
 import 'flickity/css/flickity.css'
 
 import Flickity from 'react-flickity-component'
+=======
+import "flickity/css/flickity.css"
+
+import Flickity from 'react-flickity-component';
+import AddProjectCard from '../ProjectPlannerCard/AddProjectCard'
+>>>>>>> refs/remotes/origin/develop
 
 const Home = () => {
   const navigate = useNavigate()
@@ -70,9 +77,15 @@ const Home = () => {
     freeScroll: false,
     wrapAround: true,
     initialIndex: 0,
+<<<<<<< HEAD
     pageDots: true,
   }
 
+=======
+    pageDots: true, 
+  }
+  
+>>>>>>> refs/remotes/origin/develop
   return (
     <div className='flex flex-col h-screen bg-gray-100'>
       <main className='flex-1 overflow-y-auto p-4'>
@@ -134,10 +147,11 @@ const Home = () => {
               </div>
               <TransactionList limit={5} />
             </div>
-            <div className='mt-4'>
+            <div className='flex justify-center mt-4'>
               <h2>Mis Objetivos de Ahorro</h2>
             </div>
             <div className='project-cards'>
+<<<<<<< HEAD
               <Flickity
                 className={'carousel'}
                 elementType={'div'}
@@ -168,6 +182,23 @@ const Home = () => {
                     )}
                   </div>
                 ))}
+=======
+              <Flickity className={'carousel'} elementType={'div'} options={flickityOptions}>
+                {projects.map((project) => (
+                  <div key={project.id} className="carousel-cell mx-5 mb-5">
+                    <ProjectPlannerCard
+                      projectName={project.name}
+                      estimatedCost={project.estimatedCost}
+                      monthlySavings={project.monthlySavings}
+                      currentSavings={project.currentSavings}
+                      targetDate={project.targetDate}
+                    />
+                  </div>
+                ))}
+                <div className="carousel-cell mx-5 mb-5">
+                  <AddProjectCard />
+                </div>
+>>>>>>> refs/remotes/origin/develop
               </Flickity>
             </div>
           </>

@@ -97,7 +97,7 @@ input:checked + .slider:before {
 }
 
 .card-transition {
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Suaviza la transición */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   position: relative;
 }
 
@@ -142,6 +142,7 @@ input:checked + .slider:before {
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+<<<<<<< HEAD
   display: flex;
   justify-content: center;
   align-items: center;
@@ -164,6 +165,11 @@ input:checked + .slider:before {
     background-color: #e0e0e0;
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
   }
+=======
+  margin-bottom: 20px;
+  transition: box-shadow 0.3s ease-in-out;
+  margin-top: 20px;
+>>>>>>> refs/remotes/origin/develop
 }
 
 .mt-4 {

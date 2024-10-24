@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import Keyboard from '../Keyboard/Keyboard'
 import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 import './AdminLogin.styled.scss'
+import { EyeOutlined, EyeInvisibleOutlined } from '@ant-design/icons'
 
 const AdminLogin = () => {
   const dispatch = useDispatch()
@@ -82,23 +83,21 @@ const AdminLogin = () => {
         {/* Contenedor con el input y el icono */}
         <div className='form-group password-field'>
           <label htmlFor='password'>Contraseña</label>
-          <div className='input-group'>
-            <input
-              type={passwordVisible ? 'text' : 'password'}
-              id='password'
-              name='password'
-              value={password}
-              onChange={onChange}
-              placeholder='Clave'
-              required
-            />
-            <span
-              className='eye-icon'
-              onClick={() => setPasswordVisible(!passwordVisible)}
-            >
-              {passwordVisible ? <EyeOutlined /> : <EyeInvisibleOutlined />}
-            </span>
-          </div>
+          <input
+            type={passwordVisible ? 'text' : 'password'}
+            id='password'
+            name='password'
+            value={password}
+            onChange={onChange}
+            placeholder='Clave'
+            required
+          />
+          <span
+            className='eye-icon'
+            onClick={() => setPasswordVisible(!passwordVisible)}
+          >
+            {passwordVisible ? <EyeInvisibleOutlined /> : <EyeOutlined />}
+          </span>
         </div>
 
         {error && (

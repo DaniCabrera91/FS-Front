@@ -11,7 +11,7 @@ The app is integrated within the Kutxabank app, optimized for mobile devices, an
 
 #
 
-**Kutxabank Crews 2024** es una aplicación móvil bancaria diseñada para facilitar la gestión de deudas, proporcionando herramientas útiles para que los usuarios administren sus finanzas de manera eficiente. La plataforma se destaca por su enfoque en **seguridad**, **escalabilidad**, y una **experiencia de usuario fluida y ágil**.
+**Kutxabank Crews 2024** es una aplicación de banca móvil diseñada para facilitar la gestión de la deuda, proporcionando herramientas útiles para que los usuarios administren sus finanzas de manera eficiente. La plataforma destaca por su enfoque en **seguridad**, **escalabilidad**, y una **experiencia de usuario fluida y ágil**.
 
 La aplicación está integrada dentro de la app principal de Kutxabank, optimizada para dispositivos móviles, utilizando una arquitectura **SPA** (Single Page Application) que garantiza una navegación rápida y eficiente.
 
@@ -73,7 +73,7 @@ Para ejecutar este proyecto, será necesario añadir las siguientes variables de
 
 ### 3.4 Usabilidad y Validación
 
-- **Formularios:** Implementación de validaciones básicas en formularios.
+- **Formularios:** Implementación de validaciones en formularios.
 - **Redirecciones:** Basadas en el estado de autenticación del usuario.
 
 ### 3.5 Estilos

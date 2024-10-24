@@ -1,4 +1,3 @@
-// AdminDashboard.styled.scss
 $primary-color: #007a87;
 
 .admin-dashboard {
@@ -40,13 +39,12 @@ $primary-color: #007a87;
     background-color: #007a87;
   }
 
-  // Estilos para el modal
   .ant-modal {
-    max-width: 90%; // Asegúrate de que no supere el 90% del ancho de la pantalla
-    width: auto; // Para que tome el ancho del contenido
+    max-width: 90%;
+    width: auto;
   }
 
   .ant-modal-content {
-    padding: 20px; // Añadir un poco de espacio interior
+    padding: 20px;
   }
 }

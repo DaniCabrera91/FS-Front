@@ -4,7 +4,7 @@ import { BellOutlined, LeftOutlined, LogoutOutlined } from '@ant-design/icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { logout } from '../../redux/user/userSlice'
 import { logoutAdmin } from '../../redux/admin/adminSlice'
-import NotificationsModal from '../NotificationsModal/NotificationsModal' // Importar el modal
+import NotificationsModal from '../NotificationsModal/NotificationsModal'
 import './TheHeader.scss'
 import logo from '../../assets/logoKutxabank.png'
 
@@ -15,9 +15,9 @@ const TheHeader = () => {
 
   const { user } = useSelector((state) => state.user)
   const { isLoggedIn, tokenAdmin } = useSelector((state) => state.admin)
-  const notifications = useSelector((state) => state.notifications) || [] // Asegurarte que no sea undefined
+  const notifications = useSelector((state) => state.notifications) || []
 
-  const [isModalVisible, setIsModalVisible] = useState(false) // Estado local para mostrar/ocultar modal
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
   const onLogout = async (e) => {
     e.preventDefault()
@@ -69,9 +69,9 @@ const TheHeader = () => {
             {/* Ícono de campana que abre el modal */}
             {isUserView && (
               <NotificationsModal
-                visible={isModalVisible} // Control de visibilidad del modal
-                setVisible={setIsModalVisible} // Función para cambiar la visibilidad
-                notifications={notifications} // Pasar las notificaciones desde Redux
+                visible={isModalVisible}
+                setVisible={setIsModalVisible}
+                notifications={notifications}
               />
             )}
             <LogoutOutlined

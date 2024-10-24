@@ -11,14 +11,13 @@
 }
 
 .flickity-prev-next-button {
-  background: transparent !important; // Evitar que tenga fondo azul al hacer clic
-  border-radius: 0 !important; // Quitar el redondeo en las esquinas
+  background: transparent !important;
+  border-radius: 0 !important;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1) !important; // Color de fondo solo en hover
+    background-color: rgba(0, 0, 0, 0.1) !important;
   }
 }
 
-// Ajustar el espaciado de las flechas
 .flickity-prev-next-button.previous {
   left: -50px;
 }
@@ -27,22 +26,21 @@
   right: -50px;
 }
 
-/* Estilos para el switch */
 .taktik-container {
   display: flex;
-  align-items: center; /* Alinea verticalmente el texto y el switch */
-  margin-top: 16px; /* Espacio superior para separar del contenido anterior */
-  padding: 10px; /* Espacio alrededor del contenedor */
-  border-radius: 8px; /* Bordes redondeados para el contenedor */
-  background-color: #f9f9f9; /* Color de fondo claro para resaltar */
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Sombra sutil para destacar */
+  align-items: center;
+  margin-top: 16px;
+  padding: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .taktik-label {
-  font-size: 1rem; /* Tamaño de fuente un poco más grande */
-  font-weight: bold; /* Negrita para destacar */
-  color: #007a83; /* Color que combine con el switch */
-  margin-right: 12px; /* Espacio entre el texto y el switch */
+  font-size: 1rem;
+  font-weight: bold;
+  color: #007a83;
+  margin-right: 12px;
 }
 
 .switch {
@@ -83,14 +81,13 @@
 }
 
 input:checked + .slider {
-  background-color: #007a83; /* Color del switch cuando está activo */
+  background-color: #007a83;
 }
 
 input:checked + .slider:before {
-  transform: translateX(26px); /* Movimiento del botón al activar */
+  transform: translateX(26px);
 }
 
-/* Resto de tus estilos */
 .financesBtn {
   width: 70%;
   padding: 0.5rem;
@@ -101,7 +98,7 @@ input:checked + .slider:before {
 }
 
 .card-transition {
-  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out; /* Suaviza la transición */
+  transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
   position: relative;
 }
 
@@ -119,7 +116,7 @@ input:checked + .slider:before {
 }
 
 .section-title {
-  color: #e3342f; /* Rojo kbred */
+  color: #e3342f;
   font-size: 0.875rem;
   font-weight: 600;
   margin-top: 20px;
@@ -137,7 +134,7 @@ input:checked + .slider:before {
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
   margin-bottom: 20px;
   transition: box-shadow 0.3s ease-in-out;
-  margin-top: 20px; /* Margen superior adicional para separar las partes */
+  margin-top: 20px;
 }
 
 .mt-4 {

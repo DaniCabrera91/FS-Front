@@ -13,10 +13,6 @@ import "flickity/css/flickity.css"
 import Flickity from 'react-flickity-component';
 import AddProjectCard from '../ProjectPlannerCard/AddProjectCard'
 
-
-
-
-
 const Home = () => {
   const navigate = useNavigate()
   const [showMore, setShowMore] = useState(false)

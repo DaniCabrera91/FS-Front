@@ -1,12 +1,6 @@
 import React, { useState } from 'react'
 
-const ProjectPlannerCard = ({
-  projectName,
-  estimatedCost,
-  monthlySavings,
-  currentSavings,
-  targetDate,
-}) => {
+const ProjectPlannerCard = ({ projectName, estimatedCost, monthlySavings, currentSavings, targetDate}) => {
   const [isTaktikActive, setIsTaktikActive] = useState(false)
 
   const handleTaktikSwitch = () => {

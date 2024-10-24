@@ -3,7 +3,6 @@ import { Modal } from 'antd' // Usamos Ant Design para los modales
 import { BellOutlined } from '@ant-design/icons'
 
 const NotificationsModal = ({ visible, setVisible, notifications = [] }) => {
-  // Establecer valor predeterminado
   return (
     <div>
       <BellOutlined

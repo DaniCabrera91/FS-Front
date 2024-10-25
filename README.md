@@ -51,8 +51,6 @@ Para ejecutar este proyecto, será necesario añadir las siguientes variables de
 
 ## Capturas de Pantalla
 
-## Capturas de Pantalla
-
 <p>
     <img src="./src/assets/screenshots/login.png" alt="Login" width="150"/>
     <img src="./src/assets/screenshots/userDash1.png" alt="User Dashboard" width="150"/>

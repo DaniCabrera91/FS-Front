@@ -51,7 +51,17 @@ Para ejecutar este proyecto, será necesario añadir las siguientes variables de
 
 ## Capturas de Pantalla
 
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+## Capturas de Pantalla
+
+<p>
+    <img src="./src/assets/screenshots/login.png" alt="Login" width="150"/>
+    <img src="./src/assets/screenshots/userDash1.png" alt="User Dashboard" width="150"/>
+    <img src="./src/assets/screenshots/ultimosMov.png" alt="Últimos Movimientos" width="150"/>
+    <img src="./src/assets/screenshots/objetivos.png" alt="Objetivos" width="150"/>
+    <img src="./src/assets/screenshots/miFinances1.png" alt="Mis Finanzas 1" width="150"/>
+    <img src="./src/assets/screenshots/myFinances2.png" alt="Mis Finanzas 2" width="150"/>
+    <img src="./src/assets/screenshots/categoryDetail.png" alt="Detalle de Categoría" width="150"/>
+</p>
 
 ## 3. Frontend
 

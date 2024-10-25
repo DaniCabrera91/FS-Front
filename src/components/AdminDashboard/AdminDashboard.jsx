@@ -215,29 +215,30 @@ const AdminDashboard = () => {
 
   return (
     <div className='admin-dashboard'>
-      <h1>Panel de Control del Administrador</h1>
+      <h1>Dashboard de Administración</h1>
 
       <Tabs
         activeKey={activeTabKey}
         onChange={setActiveTabKey}
+        centered
         items={tabItems}
       />
 
-      {/* Modal para editar usuarios */}
       <Modal
         title={editingUserId ? 'Editar Usuario' : 'Crear Usuario'}
         open={isUserModalVisible}
         footer={null}
         onCancel={handleUserModalCancel}
+        centered // Centrado vertical en pantalla móvil
       >
         <UserForm
           userId={editingUserId}
+          className='userForm'
           onSave={handleSaveUser}
           onCancel={handleUserModalCancel}
         />
       </Modal>
 
-      {/* Modal para editar transacciones */}
       <Modal
         title={
           editingTransactionId ? 'Editar Transacción' : 'Crear Transacción'
@@ -245,9 +246,11 @@ const AdminDashboard = () => {
         open={isTransactionModalVisible}
         footer={null}
         onCancel={handleTransactionModalCancel}
+        centered // Centrado vertical en pantalla móvil
       >
         <TransactionForm
           transactionId={editingTransactionId}
+          className='transForm'
           onSave={
             editingTransactionId
               ? handleSaveTransaction

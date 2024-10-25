@@ -37,6 +37,7 @@ $primary-color: #007a87;
   }
 
   .password-field {
+    position: relative;
     .input-group {
       input {
         padding-right: 40px;
@@ -44,11 +45,11 @@ $primary-color: #007a87;
 
       .eye-icon {
         position: absolute;
-        right: 40%;
+        right: 4%;
         cursor: pointer;
         font-size: 1.5rem;
         color: #aaa;
-        top: 31%;
+        top: 50%;
         transform: translateY(-50%);
 
         &:hover {

@@ -6,7 +6,7 @@ $primary-color: #007a87;
   align-items: center;
   padding: 10px; // Reducir padding en pantallas móviles
   width: 100%;
-  max-height: 80vh; // Ajustar el alto máximo para pantallas pequeñas
+  max-height: 100%; // Ajustar el alto máximo para pantallas pequeñas
   overflow-y: auto;
   box-sizing: border-box;
 
@@ -38,7 +38,9 @@ $primary-color: #007a87;
     margin: 0 auto;
     padding: 20px;
   }
-
+  .ant-pagination-options {
+    margin-right: 10%;
+  }
   .ant-btn-primary {
     margin: 0 0 5% 25%;
     background-color: $primary-color;
